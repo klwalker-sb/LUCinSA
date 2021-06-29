@@ -1,0 +1,673 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Downloading process &#8212; LUCinSA</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet" />
+  <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.acff12b8f9c144ce68a297486a2fa670.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Post-download processing" href="Pre_Pipeline.html" />
+    <link rel="prev" title="Processing" href="Processing.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+      <img src="_static/cover.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">LUCinSA</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   Land-Use Change in South America (LUCinSA) Computing Guide
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Project_overview
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Background.html">
+   Project background
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Processing_overview.html">
+   Processing overview
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Computer setup
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Connecting_to_cluster.html">
+   Connecting to the ERI cluster
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="environment_setup.html">
+   Setting up your remote environment
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="TransferingFiles.html">
+   Transfering Files to/from cluster
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Configuring_eosvault.html">
+   Configuring eosvault
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Processing
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Processing.html">
+   Processing
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Downloading process
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Pre_Pipeline.html">
+   Post-download processing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Pipeline.html">
+   Pipeline process
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Computing resources
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro_to_git.html">
+   Intro to git
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="commandLine_bash.html">
+   command line
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="vim.html">
+   Vim
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="slurm.html">
+   Slurm
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="editing_this_guide.html">
+   To edit this guide
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/Downloading.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://klwalker-sb.github.io/LUCinSA/"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://klwalker-sb.github.io/LUCinSA//issues/new?title=Issue%20on%20page%20%2FDownloading.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#get-gridcells-to-download">
+   1. Get gridcells to download
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#edit-the-download-eri-sh-document-for-targeted-grid-cells-and-sensor-product">
+   2. Edit the download_eri.sh document for targeted grid cells and sensor product
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#run-the-process">
+   3. Run the process
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#check-downloading-status">
+   4. Check downloading status:
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#rerun-cells-that-did-not-load-completely">
+   5. Rerun cells that did not load completely
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#move-err-and-out-files-to-new-directory-to-facilitate-tracking-of-new-downloads">
+   6. Move .err and .out files to new directory to facilitate tracking of new downloads
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="downloading-process">
+<h1>Downloading process<a class="headerlink" href="#downloading-process" title="Permalink to this headline">¶</a></h1>
+<p>===============================================================================================================================</p>
+<p>Jordan Graesser’s <code class="docutils literal notranslate"><span class="pre">eosvault</span></code> script drives the download process, <a class="reference external" href="https://github.com/jgrss/eosvault#readme">see here</a> for more information on the script process.</p>
+<p>To run the script:</p>
+<div class="section" id="get-gridcells-to-download">
+<span id="getcells"></span><h2>1. Get gridcells to download<a class="headerlink" href="#get-gridcells-to-download" title="Permalink to this headline">¶</a></h2>
+<p>Find a block of cells in need of processing in the <code class="docutils literal notranslate"><span class="pre">cell_blocks.txt</span></code> file in <code class="docutils literal notranslate"><span class="pre">cel/paraguay_lc</span></code> (anything without an X next to it is free)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">~/../</span>
+<span class="n">cd</span> <span class="n">cel</span><span class="o">/</span><span class="n">paragual_lc</span>
+<span class="n">vim</span> <span class="n">cell_blocks</span><span class="o">.</span><span class="n">txt</span>
+<span class="c1">#&quot;check out&quot; a block of cells by putting an X and your initials next to it. Note your range(s) somewhere.</span>
+<span class="c1">#save the file:</span>
+<span class="p">:</span><span class="n">wq</span>
+<span class="p">[</span><span class="n">Enter</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="edit-the-download-eri-sh-document-for-targeted-grid-cells-and-sensor-product">
+<span id="downloading"></span><h2>2. Edit the download_eri.sh document for targeted grid cells and sensor product<a class="headerlink" href="#edit-the-download-eri-sh-document-for-targeted-grid-cells-and-sensor-product" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">~/</span><span class="n">code</span><span class="o">/</span><span class="n">bash</span><span class="o">/</span>
+<span class="n">vim</span> <span class="n">download_eri</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<p>To edit a line, type <code class="docutils literal notranslate"><span class="pre">i</span></code>, edit as desired, then hit <code class="docutils literal notranslate"><span class="pre">Esc</span></code> key and type <code class="docutils literal notranslate"><span class="pre">:wq</span></code>. Hit <code class="docutils literal notranslate"><span class="pre">Enter</span></code> key
+Go here for <a class="reference internal" href="vim.html#vimcommands"><span class="std std-ref">more info on editing in vim</span></a></p>
+<p>This is the default script (with line numbering added for reference below):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1-  #!/bin/bash -l
+2- 
+3-  #SBATCH -N 1 # number of nodes
+4-  #SBATCH -n 2 # number of cores
+5-  #SBATCH -t 0-04:00 # time (D-HH:MM)
+6-  #SBATCH -p basic
+7-  #SBATCH -o sldown.%N.%a.%j.out # STDOUT
+8-  #SBATCH -e sldown.%N.%a.%j.err # STDERR
+9-  #SBATCH --job-name=&quot;dwn-pry&quot;
+10- #SBATCH --array=894
+11-
+12- sleep $((RANDOM%30+1))
+13- 
+14- # Change permissions on output files
+15- # user = 7 = rwx
+16- # group = 7 = rwx
+17- # others = 4 = r 
+18- #umask 774
+19- 
+20- #####################################################
+21- START_DATE=&quot;2010-03-01&quot;
+22- END_DATE=&quot;2020-11-01&quot;
+23- 
+24- # landsat | sentinel-2
+25- #SATELLITE=&quot;sentinel-2&quot;
+26- #ASSET_ID=&quot;COPERNICUS/S2&quot;
+27- #ASSET_ID=&quot;COPERNICUS/S2_CLOUD_PROBABILITY&quot;
+28- 
+29- # LT05 | LE07 | LC08
+30- LANDSAT_SENSOR=&quot;LC08&quot;
+31- ASSET_ID=&quot;LANDSAT/${LANDSAT_SENSOR}/C01/T1_SR&quot;
+32- SATELLITE=&quot;landsat&quot;
+33- 
+34- # yes | no
+35- IGNORE_INCOMPLETE=&quot;no&quot;
+36- 
+37- BATCH_SIZE=100000
+38- #####################################################
+39- 
+40- # As an array job
+41- GRID_ID=$SLURM_ARRAY_TASK_ID
+42- 
+43- OUT_DIR=&quot;/jad-cel/paraguay_lc/raster/grids&quot;
+44- GRID_FILE=&quot;/jad-cel/paraguay_lc/vector/pry_grids.gpkg&quot;
+45- CONFIG_FILE=&quot;/home/&lt;username&gt;/project/config/config_eri.yaml&quot;
+46- CRS_PROJ4=&quot;+proj=aea +lat_1=-5 +lat_2=-42 +lat_0=-32 +lon_0=-60 +x_0=0 +y_0=0 +ellps=aust_SA +units=m +no_defs &quot;
+47- 
+48- #############################################
+49- # Turn off NumPy parallelism and rely on dask
+50- #############################################
+51- export CLOUDSDK_PYTHON=python3
+52- export OPENBLAS_NUM_THREADS=1
+53- export MKL_NUM_THREADS=1
+54- # This should be sufficient for OpenBlas and MKL
+55- export OMP_NUM_THREADS=1
+56- ################################################
+57- 
+58- # activate the virtual environment
+59- source ~/.nasaenv/bin/activate
+60- 
+61- if [ &quot;$IGNORE_INCOMPLETE&quot; == &quot;yes&quot; ]; then
+62-
+63-   eosvault download --out-dir $OUT_DIR --grid-file $GRID_FILE --grid $GRID_ID --start-date $START_DATE --end-date $END_DATE 64-  --config-file $CONFIG_FILE --batch-size $BATCH_SIZE --max-workers $SLURM_CPUS_ON_NODE --satellite $SATELLITE --asset-id 65-  65-  $ASSET_ID --grid-crs &quot;${CRS_PROJ4}&quot; --ignore-incomplete #--reset-asset #--clear-all #--reset-db
+66- 
+67-  else
+68- 
+69-   eosvault download --out-dir $OUT_DIR --grid-file $GRID_FILE --grid $GRID_ID --start-date $START_DATE --end-date $END_DATE 70-  --config-file $CONFIG_FILE --batch-size $BATCH_SIZE --max-workers $SLURM_CPUS_ON_NODE --satellite $SATELLITE --asset-id 71-  $ASSET_ID --grid-crs &quot;${CRS_PROJ4}&quot; #--reset-asset #--clear-all #--reset-db
+72-
+73-  fi
+74-
+75-  deactivate
+</pre></div>
+</div>
+<p>Most lines should stay as they are.<br />
+<strong>the lines that you need to change are:</strong><br />
+<strong>Grid info:</strong> <code class="docutils literal notranslate"><span class="pre">#SBATCH</span> <span class="pre">--array=</span> </code> (line 10 here). This is where you enter the gridcells you are processing.<br />
+You can enter a range (e.g. 898-908), But be mindful that you are not hogging all the computer bandwidth.</p>
+<div class="admonition-you-can-limit-the-number-of-cells-that-are-processed-at-one-time-by-adding-n admonition">
+<p class="admonition-title">You can limit the number of cells that are processed at one time by adding %n</p>
+<p>For example, 898-908%4 would process 4 cells at a time. When the first 4 finish, the next will start.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Google Earth Engine caps downloading loads, so downloads will fail if too many are processed at once.
+With Sentinel (which are heavy files), %2 is safest. With Landsat %4 is fine.</p>
+</div>
+</div>
+<p><strong>Product info:</strong> Lines following <code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">landsat</span> <span class="pre">|</span> <span class="pre">sentinel-2</span></code> (Lines 25-32 here). This is where you select the satellite product, by uncommenting the corresponding lines (remove the # at the beginning of the line) and commenting those that don’t correspond (replacing the # at the beginning of the line). (Only one product can be run at a time).</p>
+<p><strong><span style='color:purple'> For Sentinel: </span></strong> uncomment <code class="docutils literal notranslate"><span class="pre">SATELLITE=&quot;sentinel-2</span></code> (line 25 here) and <code class="docutils literal notranslate"><span class="pre">ASSET_ID=&quot;COPERNICUS/S2</span></code> (line 26 here) <strong>or</strong> <code class="docutils literal notranslate"><span class="pre">ASSET_ID=COPERNICUS/S2_CLOUD_PROBABILITY</span></code> (line 27 here). (You will do both, but they are sepparate processes).</p>
+<p><strong><span style='color:purple'> For Landsat: </span></strong> uncomment <code class="docutils literal notranslate"><span class="pre">LANDSAT_SENSOR=&quot;LC08&quot;</span></code> <code class="docutils literal notranslate"><span class="pre">ASSET_ID=&quot;LANDSAT/${LANDSAT_SENSOR}/C01/T1_SR&quot;</span></code>and <code class="docutils literal notranslate"><span class="pre">SATELLITE=&quot;landsat&quot;</span></code> (lines 30-32 here). Also change the Landsat sensor (line 30 here) to correspond to the sensor you want to download: “LT05” for Landsat 5, “LE07” for Landsat 7, or “LC08” for Landsat 8 (as noted in line 29). You will do all three, separately.</p>
+<p><strong>Incomplete tag</strong>: Check that <code class="docutils literal notranslate"><span class="pre">IGNORE_INCOMPLETE=</span></code>(line 35 here) is set to “No” for the first run. (You will change this in step 5 if all images don’t download properly the first time.)</p>
+<p>After making these edits, save your script and exit:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#(If in insert mode), use [Esc] to exit insert mode </span>
+<span class="p">:</span><span class="n">wq</span>
+</pre></div>
+</div>
+<p>For further information on the rest of the script (parts you will NOT likely edit):</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Lines 1-10</p>
+<ul>
+<li><p>These are all configuration flags for SLURM.</p></li>
+<li><p>#SBATCH tells SLURM these are not user comments</p></li>
+<li><p>(line 3): We aren’t doing any distributed computing across nodes, so we will always use -N 1.</p></li>
+<li><p>(line 4): -n 8 are the number of CPUs for concurrent or parallel processing (controlled in the Python scripts).</p></li>
+<li><p>(line 5): -t is the estimated max runtime</p></li>
+<li><p>(line 6): -p tells SLURM this job should be sent to the standard partition (there are also ‘short’, ‘gpu’, and ‘largemem’ &gt;available).</p></li>
+<li><p>(line 7&amp;8): -o and -e are output log files</p></li>
+<li><p>(line 9): -job-name is the name of the batch job</p></li>
+<li><p>(line 10): array is the list of gridcells for processing (1,2,3,etc or 1-3)</p></li>
+</ul>
+</li>
+<li><p>Line 12</p>
+<ul>
+<li><p>(line 12): Staggars initiation of downloading to avoid bottleneck that often occurs at very beginning of process</p></li>
+</ul>
+</li>
+<li><p>Lines 14-18</p>
+<ul>
+<li><p>Set file permissions so that everyone in group can manipulate files
+*Lines 21-22</p></li>
+<li><p>User variables for start and end dates to stream. (For this project, the dates are from 1-Mar-2010 to 1-Nov-2020)</p></li>
+</ul>
+</li>
+<li><p>Lines 25-27</p>
+<ul>
+<li><p>For downloading Sentinel-2. Uncomment Line 25 and 26 or 27. (and make sure 29-32 are commented)</p></li>
+</ul>
+</li>
+<li><p>Lines 29-32</p>
+<ul>
+<li><p>For downloading Landsat. (uncomment lines 30-32 and comment lines 25-27)</p></li>
+<li><p>(line 30): Change LANDSAT_SENSOR=”LT05” to download Landsat 5, e.g. (as per options on line 29)</p></li>
+</ul>
+</li>
+<li><p>Lines 34-35</p>
+<ul>
+<li><p>if yes, flag as incomplete if all images did not download correctly. If no, consider complete even if some images are &gt;missing</p></li>
+</ul>
+</li>
+<li><p>Line 37</p>
+<ul>
+<li><p>Do not modify</p></li>
+</ul>
+</li>
+<li><p>Lines 40-41</p>
+<ul>
+<li><p>Names process/files based on grid cell number</p></li>
+</ul>
+</li>
+<li><p>Lines 43-47</p>
+<ul>
+<li><p>File paths for:</p></li>
+<li><p>(lines 43-45) output files (leave as is)</p></li>
+<li><p>(line 46) input configuration file. Make sure [username] is replaced with your own username.</p></li>
+</ul>
+</li>
+<li><p>Lines 48-56</p>
+<ul>
+<li><p>Do not modify.</p></li>
+</ul>
+</li>
+<li><p>Lines 43-47</p>
+<ul>
+<li><p>These are the actual command lines to run the process based on the settings above.</p></li>
+</ul>
+</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="run-the-process">
+<h2>3. Run the process<a class="headerlink" href="#run-the-process" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#if not already in bash directory, navigate there:</span>
+<span class="n">cd</span> <span class="o">~/</span><span class="n">code</span><span class="o">/</span><span class="n">bash</span><span class="o">/</span>
+<span class="c1">#submit the command:</span>
+<span class="n">sbatch</span> <span class="n">download_eri</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Current run-time estimates for single grid cells:</p>
+<ul class="simple">
+<li><p>Sentinel 2: 40min - 1hr</p></li>
+<li><p>Sentinel 2 cloudmasks: 20min</p></li>
+<li><p>Landsat 8: 30-40min</p></li>
+<li><p>Landsat 7: 20-30min</p></li>
+<li><p>Landsat 5: 5-10min</p></li>
+</ul>
+</div>
+<p>To check on job:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cat</span> <span class="n">sldown</span><span class="o">.</span><span class="n">bellows</span><span class="mf">.909.78</span><span class="o">.</span><span class="n">err</span> <span class="p">(</span><span class="k">with</span> <span class="mi">909</span> <span class="o">=</span> <span class="n">grid</span> <span class="n">running</span> <span class="ow">and</span> <span class="mi">78</span> <span class="o">=</span> <span class="n">job</span> <span class="n">number</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To check your position in line:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">squeue</span> <span class="o">-</span><span class="n">u</span> <span class="p">[</span><span class="n">username</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>to see if there are a lot of jobs before you:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">top</span>
+</pre></div>
+</div>
+<p>see <a class="reference internal" href="slurm.html#slurmcommands"><span class="std std-ref">other slurm commands here</span></a></p>
+</div>
+<div class="section" id="check-downloading-status">
+<span id="checkdownload"></span><h2>4. Check downloading status:<a class="headerlink" href="#check-downloading-status" title="Permalink to this headline">¶</a></h2>
+<p>Often some images do not download properly the first time. All images for a grid cell need to be downloaded (or exempted) for the remaining processing steps to work.</p>
+<p>To check whether all images processed for a specific gridcell and task:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cat</span> <span class="n">sldown</span><span class="o">.</span><span class="n">bellows</span><span class="mf">.909.78</span><span class="o">.</span><span class="n">err</span> <span class="p">(</span><span class="k">with</span> <span class="mi">909</span> <span class="o">=</span> <span class="n">grid</span> <span class="n">running</span> <span class="ow">and</span> <span class="mi">78</span> <span class="o">=</span> <span class="n">job</span> <span class="n">numb</span>
+<span class="c1"># or, if multiple gridcells run:</span>
+<span class="n">ls</span> <span class="o">~/</span><span class="n">code</span><span class="o">/</span><span class="n">bash</span><span class="o">/</span>
+<span class="c1"># then for each .err file found:</span>
+<span class="n">cat</span> <span class="p">[</span><span class="n">filename</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>If all images downloaded, you should see:
+<img alt="" src="_images/cat_download.png" /></p>
+<p>If you run many cells in the same job, this will get tedious. Instead, you can generate a figure to see which cells downloaded fully.
+To generate the Download Progress figure:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#Activate virtual environment:</span>
+<span class="n">source</span> <span class="o">.</span><span class="n">nasaenv</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
+<span class="c1">#Run status command:</span>
+<span class="n">eosvault</span> <span class="n">status</span> <span class="o">--</span><span class="n">config</span><span class="o">-</span><span class="n">file</span> <span class="o">~/</span><span class="n">project</span><span class="o">/</span><span class="n">config</span><span class="o">/</span><span class="n">config_eri</span><span class="o">.</span><span class="n">yaml</span> <span class="o">--</span><span class="n">out</span><span class="o">-</span><span class="nb">dir</span> <span class="o">~/</span><span class="n">code</span><span class="o">/</span><span class="n">bash</span> <span class="o">--</span><span class="n">grid</span><span class="o">-</span><span class="n">file</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">cel</span><span class="o">/</span><span class="n">paraguay_lc</span><span class="o">/</span><span class="n">vector</span><span class="o">/</span><span class="n">pry_grids</span><span class="o">.</span><span class="n">gpkg</span> <span class="o">--</span><span class="n">zoom</span>
+<span class="c1">#Deactivate virtual environment:</span>
+<span class="n">deactivate</span>
+</pre></div>
+</div>
+<p>To view the Download Progress figure:
+Download file to view on local computer:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rsync</span> <span class="o">-</span><span class="n">raz</span> <span class="o">--</span><span class="n">progress</span> <span class="o">&lt;</span><span class="n">username</span><span class="o">&gt;</span><span class="nd">@ssh</span><span class="o">.</span><span class="n">eri</span><span class="o">.</span><span class="n">ucsb</span><span class="o">.</span><span class="n">edu</span><span class="p">:</span><span class="o">&lt;</span><span class="n">ERI</span> <span class="n">path</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">local</span> <span class="n">path</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Alternatively, you can view the file though an FPT such as WinSCP.</p>
+<p>The figure will look something like this:
+<img alt="" src="_images/grid_status.png" />
+The key indicates which cells loaded completely for each product. Those not listed need to be redownloaded. (Turquoise (y) means all are good)</p>
+</div>
+<div class="section" id="rerun-cells-that-did-not-load-completely">
+<span id="incomplete"></span><h2>5. Rerun cells that did not load completely<a class="headerlink" href="#rerun-cells-that-did-not-load-completely" title="Permalink to this headline">¶</a></h2>
+<p>For cells that did not load completely, check the .err and .out files:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#i.e for grid cell 909, if 78 is job number for an incomplete process:</span>
+<span class="n">cat</span> <span class="n">sldown</span><span class="o">.</span><span class="n">bellows</span><span class="mf">.909.78</span><span class="o">.</span><span class="n">err</span>
+<span class="n">cat</span> <span class="n">sldown</span><span class="o">.</span><span class="n">bellows</span><span class="mf">.909.78</span><span class="o">.</span><span class="n">out</span> 
+</pre></div>
+</div>
+<p>If the .out file does not indicate any big problems and the slider at the bottom of the .err file is near 100% with only a few files missing in the fraction next to it (e.g. 124/127), you probably do not need to worry about larger issues. These cells do need to be rerun, however, to register correctly in the database for further processing.
+<strong>Repeat steps 2 and 3 above</strong>. In adition to editing the grid cells and sensor to correspond to those that you are rerunning, in the <code class="docutils literal notranslate"><span class="pre">download_eri.sh</span></code> file, you will also change the following line:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yes</span> <span class="o">|</span> <span class="n">no</span>
+<span class="n">IGNORE_INCOMPLETE</span><span class="o">=</span><span class="s2">&quot;no&quot;</span>
+
+<span class="c1">#to </span>
+<span class="n">yes</span> <span class="o">|</span> <span class="n">no</span>
+<span class="n">IGNORE_INCOMPLETE</span><span class="o">=</span><span class="s2">&quot;yes&quot;</span>
+</pre></div>
+</div>
+<p>By setting “Ignore Incomplete” to “yes”, the database will populate correctly even if all of the images do not download. If they do not load the second time, they probably aren’t going to, so you can move on as long as only a few images are missing. Check the .err and .out files to make sure there are no major errors, though.</p>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>Remember to reset “IGNORE_INCOMPLETE=”no”  before beginning new downloads</p>
+</div>
+</div>
+<div class="section" id="move-err-and-out-files-to-new-directory-to-facilitate-tracking-of-new-downloads">
+<h2>6. Move .err and .out files to new directory to facilitate tracking of new downloads<a class="headerlink" href="#move-err-and-out-files-to-new-directory-to-facilitate-tracking-of-new-downloads" title="Permalink to this headline">¶</a></h2>
+<p>All these files will soon make it difficult to find the new ones to monitor. Move them to an archive directory after checking to clean up the clutter.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#Make the directory (first ime only)</span>
+<span class="n">mkdir</span> <span class="n">home</span><span class="o">/&lt;</span><span class="n">username</span><span class="o">&gt;/</span><span class="n">code</span><span class="o">/</span><span class="n">bash</span><span class="o">/</span><span class="n">archive</span><span class="o">/</span>
+<span class="c1">#Move .err and .out files from /bash to /archive</span>
+<span class="n">cd</span> <span class="o">~/</span><span class="n">code</span><span class="o">/</span><span class="n">bash</span><span class="o">/</span>
+<span class="n">mv</span> <span class="o">/</span><span class="n">home</span><span class="o">/&lt;</span><span class="n">username</span><span class="o">&gt;/</span><span class="n">code</span><span class="o">/</span><span class="n">bash</span><span class="o">/*.</span><span class="p">{</span><span class="n">err</span><span class="p">,</span><span class="n">out</span><span class="p">}</span> <span class="o">/</span><span class="n">home</span><span class="o">/&lt;</span><span class="n">username</span><span class="o">&gt;/</span><span class="n">code</span><span class="o">/</span><span class="n">bash</span><span class="o">/</span><span class="n">archive</span><span class="o">/</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="Processing.html" title="previous page">Processing</a>
+    <a class='right-next' id="next-link" href="Pre_Pipeline.html" title="next page">Post-download processing</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Kendra Walker (editor)<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>

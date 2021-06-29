@@ -1,0 +1,585 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Setting up your remote environment &#8212; LUCinSA</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet" />
+  <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.acff12b8f9c144ce68a297486a2fa670.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Transfering Files to/from cluster" href="TransferingFiles.html" />
+    <link rel="prev" title="Connecting to the ERI cluster" href="Connecting_to_cluster.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+      <img src="_static/cover.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">LUCinSA</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   Land-Use Change in South America (LUCinSA) Computing Guide
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Project_overview
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Background.html">
+   Project background
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Processing_overview.html">
+   Processing overview
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Computer setup
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Connecting_to_cluster.html">
+   Connecting to the ERI cluster
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Setting up your remote environment
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="TransferingFiles.html">
+   Transfering Files to/from cluster
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Configuring_eosvault.html">
+   Configuring eosvault
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Processing
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Processing.html">
+   Processing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Downloading.html">
+   Downloading process
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Pre_Pipeline.html">
+   Post-download processing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Pipeline.html">
+   Pipeline process
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Computing resources
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro_to_git.html">
+   Intro to git
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="commandLine_bash.html">
+   command line
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="vim.html">
+   Vim
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="slurm.html">
+   Slurm
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="editing_this_guide.html">
+   To edit this guide
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/environment_setup.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://klwalker-sb.github.io/LUCinSA/"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://klwalker-sb.github.io/LUCinSA//issues/new?title=Issue%20on%20page%20%2Fenvironment_setup.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-general-cluster-environment">
+   The general cluster environment
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#setting-up-a-virtual-environment">
+   Setting up a virtual environment
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#install-python-tools-packages-and-dependencies-from-project-github-scripts">
+     Install Python tools/packages and dependencies from project github scripts:
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#configure-vim-optional">
+     Configure vim (optional)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#add-a-personalized-profile-file-optional">
+     Add a personalized .profile file (optional)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#sourcing-the-profile">
+     Sourcing the profile
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="setting-up-your-remote-environment">
+<h1>Setting up your remote environment<a class="headerlink" href="#setting-up-your-remote-environment" title="Permalink to this headline">¶</a></h1>
+<p>===============================================================================================================================</p>
+<div class="section" id="the-general-cluster-environment">
+<h2>The general cluster environment<a class="headerlink" href="#the-general-cluster-environment" title="Permalink to this headline">¶</a></h2>
+<p>As with most cluster computers, the ERI system uses a UNIX-based shell called “BASH”. This is a very simplified system that interprets code via command-line interface. To interact with the system, you need to use Shell scripting, which is based on UNIX/Linux command language. For a quick review of basic UNIX commands, <a class="reference internal" href="commandLine_bash.html#unix"><span class="std std-ref">see here</span></a>. For a more comprehensive coverage of working with BASH scripting, see these hpc-carpentry lessons on <a class="reference external" href="http://www.hpc-carpentry.org/hpc-shell/02-navigation/index.html">navigating in bash</a> and <a class="reference external" href="http://www.hpc-carpentry.org/hpc-shell/03-files/index.html">file manipulation in bash</a>.</p>
+<p>The point of high-performance computing is to manage and process large work loads. This is acheived through a work load manager, SLURM (Simple Linux Utility for Resource Management). Ultimate processing commands are sent to SLURM from .sh scripts in the bash directory via the command <code class="docutils literal notranslate"><span class="pre">sbatch</span></code>. Any other non-UNIX-based commands are processed within a virtual environment (e.g. via a Python interpreter).</p>
+</div>
+<div class="section" id="setting-up-a-virtual-environment">
+<h2>Setting up a virtual environment<a class="headerlink" href="#setting-up-a-virtual-environment" title="Permalink to this headline">¶</a></h2>
+<p>Virtual environments allow us to customize our coding toolkit and preferences for each project within its own container so that it does not risk interfering with those of other projects or users. Within a virtual environment, you can define the version of Python that will be used, install packages specific to the project, and customize settings to facilitate your interactions, including aliases, which are shortcuts to replace frequently used or cumbersome commands. After connecting to bellows via ssh for the first time, you will need to set up your environment.</p>
+<div class="admonition-make-sure-you-are-in-your-home-directory-when-creating-changing-environment-settings admonition">
+<p class="admonition-title">Make sure you are in your home directory when creating/changing environment settings!</p>
+<p>You should see your username &#64;bellows in the command prompt.
+(there may be numbers in front; this is fine for now and can be taken care of later <a class="reference internal" href="#profileissue"><span class="std std-ref">here</span></a>).<br />
+If you are unsure whether you are in your home directory, type cd ~/</p>
+</div>
+<p>For this project, we will create a virtual environment in Python 3 called .nasaenv (output -&gt; ~/.nasaenv):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="o">-</span><span class="n">m</span> <span class="n">venv</span> <span class="o">.</span><span class="n">nasaenv</span>
+</pre></div>
+</div>
+<p><em><strong>Activate your virtual environment:</strong></em> every time you run code that isn’t BASH/SLURM from within the cluster:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="o">.</span><span class="n">nasaenv</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
+</pre></div>
+</div>
+<p><em><strong>Deactivate the virtual environment:</strong></em> when you are done:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="o">.</span><span class="n">nasaenv</span><span class="p">)</span> <span class="n">deactivate</span>
+</pre></div>
+</div>
+<div class="section" id="install-python-tools-packages-and-dependencies-from-project-github-scripts">
+<h3>Install Python tools/packages and dependencies from project github scripts:<a class="headerlink" href="#install-python-tools-packages-and-dependencies-from-project-github-scripts" title="Permalink to this headline">¶</a></h3>
+<p><strong>While in your home directory,</strong> enter the following commands to setup your Python environment:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>​
+# Activate the virtual environment
+source .nasaenv/bin/activate
+​
+# First update pip and other install tools
+(.nasaenv) pip install -U pip setuptools wheel
+​
+# Install numpy and cython required for compiling .c code
+(.nasaenv) pip install cython numpy
+​
+# Install extra dependencies not installed with packages below
+(.nasaenv) pip install gsutil descartes ray requests opencv-python
+​
+# Install geowombatdev package from github(the dependencies here will take care of most other dependencies)
+(.nasaenv) mkdir tmp
+(.nasaenv) cd tmp/
+(.nasaenv) git clone https://github.com/jgrss/geowombatdev.git
+(.nasaenv) cd geowombatdev/
+(.nasaenv) python setup.py build &amp;&amp; pip install .
+​
+# Install eosvault package from github
+(.nasaenv) cd ~/tmp/
+(.nasaenv) git clone https://github.com/jgrss/eosvault.git
+(.nasaenv) cd eosvault/
+(.nasaenv) python setup.py build &amp;&amp; pip install .
+​
+# Install rastercrf from github
+(.nasaenv) cd ~/tmp/
+(.nasaenv) git clone https://github.com/jgrss/rastercrf.git
+(.nasaenv) cd rastercrf/
+(.nasaenv) ppython setup.py build &amp;&amp; pip install .
+​
+# Install satsmooth from github
+(.nasaenv) cd ~/tmp/
+(.nasaenv) git clone https://github.com/jgrss/satsmooth.git
+(.nasaenv) cd satsmooth/
+(.nasaenv) python setup.py build &amp;&amp; pip install .
+​
+# Install sacfei from github
+(.nasaenv) cd ~/tmp/
+(.nasaenv) git clone https://github.com/jgrss/sacfei.git
+(.nasaenv) cd sacfei/
+(.nasaenv) python setup.py build &amp;&amp; pip install .
+​
+# Install pymorph3 from github
+(.nasaenv) cd ~/tmp/
+(.nasaenv) git clone https://github.com/jgrss/pymorph3.git
+(.nasaenv) cd pymorph3/
+(.nasaenv) python setup.py build &amp;&amp; pip install .
+​
+# Install pytuyau from github
+(.nasaenv) cd ~/tmp/
+(.nasaenv) git clone https://github.com/jgrss/pytuyau.git
+(.nasaenv) cd pytuyau/
+(.nasaenv) python setup.py build &amp;&amp; pip install .
+​
+# Install IPython
+(.nasaenv) pip install ipython[all]
+​
+# Deactivate the virtual environment when finished
+(.nasaenv) deactivate
+</pre></div>
+</div>
+<p><strong>to uninstall and reinstall a package from a github repo:</strong> (i.e. if changes are made to the package that need to be incorporated)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="o">.</span><span class="n">nasaenv</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
+<span class="p">(</span><span class="o">.</span><span class="n">nasaenv</span><span class="p">)</span> <span class="n">pip</span> <span class="n">uninstall</span> <span class="o">&lt;</span><span class="n">package</span><span class="o">&gt;</span> <span class="o">-</span><span class="n">y</span>
+<span class="p">(</span><span class="o">.</span><span class="n">nasaenv</span><span class="p">)</span> <span class="n">cd</span> <span class="o">~/</span><span class="n">tmp</span><span class="o">/&lt;</span><span class="n">package</span> <span class="n">directory</span><span class="o">&gt;</span>
+<span class="c1">#(look up the name of the main branch in the GitHub repo). Here it is &#39;main&#39;, but it could be &#39;master&#39;/&#39;dev&#39;/etc. </span>
+<span class="p">(</span><span class="o">.</span><span class="n">nasaenv</span><span class="p">)</span> <span class="n">git</span> <span class="n">pull</span> <span class="n">origin</span> <span class="n">main</span>
+<span class="p">(</span><span class="o">.</span><span class="n">nasaenv</span><span class="p">)</span> <span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">build</span> <span class="o">&amp;&amp;</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">.</span>
+<span class="p">(</span><span class="o">.</span><span class="n">nasaenv</span><span class="p">)</span> <span class="n">deactivte</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="configure-vim-optional">
+<span id="configvim"></span><h3>Configure vim (optional)<a class="headerlink" href="#configure-vim-optional" title="Permalink to this headline">¶</a></h3>
+<p>Text documents are edited in vim, which is not the most intuitive tool to those unfamiliar with it. Here you can find commands and tips for <a class="reference internal" href="vim.html#vimcommands"><span class="std std-ref">working with vim</span></a>. You can improve your experience with vim by creating a personalized
+<code class="docutils literal notranslate"><span class="pre">.vimrc</span></code> file in your HOME directory ((output -&gt;  ~/.vimrc) to configure vim.</p>
+<p>Here is an example of a <code class="docutils literal notranslate"><span class="pre">.vimrc</span></code> doc (you can clone this from /jad-cel/cel-sandbox/templates):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># Add line numbers
+set number
+​
+au BufNewFile,BufRead *.py
+    \ set tabstop=4 |
+    \ set softtabstop=4 |
+    \ set shiftwidth=4 |
+    \ set textwidth=79 |
+    \ set expandtab |
+    \ set autoindent |
+    \ set fileformat=unix
+	
+highlight BadWhitespace ctermbg=red guibg=darkred
+au BufRead,BufNewFile *.py,*.pyw,*.pyx,*.pxd,*.c,*.h match BadWhitespace /\s\+$/
+​
+set encoding=utf-8
+​
+let python_highlight_all=1
+syntax on
+​
+set cursorline
+​
+set foldmethod=indent
+set foldlevel=99
+​
+set ic
+</pre></div>
+</div>
+</div>
+<div class="section" id="add-a-personalized-profile-file-optional">
+<h3>Add a personalized .profile file (optional)<a class="headerlink" href="#add-a-personalized-profile-file-optional" title="Permalink to this headline">¶</a></h3>
+<p>You can add a personalized <code class="docutils literal notranslate"><span class="pre">.profile</span></code> file in your HOME directory (output -&gt;  ~/.profile).
+This is useful if you want to create keyboard shortcuts (alias) or ensure global variables are properly set.</p>
+<p>Here is an example of things you might want in a <code class="docutils literal notranslate"><span class="pre">.profile</span></code> doc (you can clone this from /jad-cel/cel-sandbox/templates):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># color enhancement for the terminal window
+export PS1=&quot;\[\033[36m\]\u\[\033[m\]@\[\033[32m\]\h:\[\033[33;1m\]\w\[\033[m\]\$ &quot;
+export CLICOLOR=1
+export LSCOLORS=ExFxBxDxCxegedabagacad
+​
+#simpler file navigation:
+alias .1=&#39;cd ../&#39;
+alias .2=&#39;cd ../..&#39;
+alias .3=&#39;cd ../../..&#39;
+​
+# shortcut to list SLURM job status ([username] = your username)
+alias qs=&quot;squeue -u [username]&quot;
+
+if [ -n &quot;$BASH_VERSION&quot; ]; then
+  if [ -f &quot;$HOME/.bashrc&quot; ]; then
+    . &quot;$HOME/.bashrc&quot;
+  fi
+fi
+​
+if [ -d &quot;$HOME/bin&quot; ] ; then
+  PATH=&quot;$HOME/bin:$PATH&quot;
+fi
+​
+# global vars for GDAL
+export CPLUS_INCLUDE_PATH=/usr/include/gdal
+export C_INCLUDE_PATH=/usr/include/gdal
+export GDAL_DATA=/usr/share/gdal/2.2
+</pre></div>
+</div>
+</div>
+<div class="section" id="sourcing-the-profile">
+<span id="profileissue"></span><h3>Sourcing the profile<a class="headerlink" href="#sourcing-the-profile" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Your personalized profile may not function correctly due to an irregular issue in the bash_profile.</p>
+</div>
+<p>You could fix this everytime you log in by sourcing the profile:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="o">.</span><span class="n">profile</span>
+</pre></div>
+</div>
+<p>But better to make the adjustment permanant by adding a<code class="docutils literal notranslate"><span class="pre">.bash_profile</span></code> to your home dirrectory (output -&gt;  ~/.bash_profile) with the following language (you can clone this from /jad-cel/cel-sandbox/templates):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># .bash_profile
+# Get the aliases and functions
+if [ -f ~/.bashrc ]; then
+  . ~/.bashrc
+  fi
+
+if [ -f ~/.profile ]; then 
+  . ~/.profile
+fi
+
+# User specific environment and startup programs
+
+PATH=$PATH:$HOME/bin
+BASH_ENV=$HOME/.bashrc
+
+#export USERNAME BASH_ENV PATH
+export TMOUT=0
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="Connecting_to_cluster.html" title="previous page">Connecting to the ERI cluster</a>
+    <a class='right-next' id="next-link" href="TransferingFiles.html" title="next page">Transfering Files to/from cluster</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Kendra Walker (editor)<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>
