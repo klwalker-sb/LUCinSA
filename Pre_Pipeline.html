@@ -1,0 +1,458 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Post-download processing &#8212; LUCinSA</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet" />
+  <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.acff12b8f9c144ce68a297486a2fa670.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Pipeline process" href="Pipeline.html" />
+    <link rel="prev" title="Downloading process" href="Downloading.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+      <img src="_static/cover.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">LUCinSA</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   Land-Use Change in South America (LUCinSA) Computing Guide
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Project_overview
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Background.html">
+   Project background
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Processing_overview.html">
+   Processing overview
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Computer setup
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Connecting_to_cluster.html">
+   Connecting to the ERI cluster
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="environment_setup.html">
+   Setting up your remote environment
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="TransferingFiles.html">
+   Transfering Files to/from cluster
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Configuring_eosvault.html">
+   Configuring eosvault
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Processing
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Processing.html">
+   Processing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Downloading.html">
+   Downloading process
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Post-download processing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Pipeline.html">
+   Pipeline process
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Computing resources
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro_to_git.html">
+   Intro to git
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="commandLine_bash.html">
+   command line
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="vim.html">
+   Vim
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="slurm.html">
+   Slurm
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="editing_this_guide.html">
+   To edit this guide
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/Pre_Pipeline.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://klwalker-sb.github.io/LUCinSA/"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://klwalker-sb.github.io/LUCinSA//issues/new?title=Issue%20on%20page%20%2FPre_Pipeline.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#edit-the-post-eri-sh-document-for-targeted-grid-cells-and-sensor-product">
+   1. Edit the post_eri.sh document for targeted grid cells and sensor product
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#run-the-process">
+   2. Run the process
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="post-download-processing">
+<span id="post"></span><h1>Post-download processing<a class="headerlink" href="#post-download-processing" title="Permalink to this headline">¶</a></h1>
+<p>================================================================================================================================</p>
+<div class="section" id="edit-the-post-eri-sh-document-for-targeted-grid-cells-and-sensor-product">
+<h2>1. Edit the post_eri.sh document for targeted grid cells and sensor product<a class="headerlink" href="#edit-the-post-eri-sh-document-for-targeted-grid-cells-and-sensor-product" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">~/</span><span class="n">code</span><span class="o">/</span><span class="n">bash</span><span class="o">/</span>
+<span class="n">vim</span> <span class="n">post_eri</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<p>To edit a line, type <code class="docutils literal notranslate"><span class="pre">i</span></code>, edit as desired, then hit <code class="docutils literal notranslate"><span class="pre">Esc</span></code> key and type <code class="docutils literal notranslate"><span class="pre">:wq</span></code>. Hit <code class="docutils literal notranslate"><span class="pre">Enter</span></code> key
+Go here for <a class="reference internal" href="vim.html#vimcommands"><span class="std std-ref">more info on editing in vim</span></a></p>
+<p>This is the default script (with line numbering added for reference below):
+Default script</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1- #!/bin/bash
+2- 
+3-  #SBATCH -N 1 # number of nodes
+4-  #SBATCH -n 8 # number of cores
+5-  #SBATCH -t 0-08:00 # time (D-HH:MM)
+6-  #SBATCH -p basic
+7-  #SBATCH -o slpst.%N.%a.%j.out # STDOUT
+8-  #SBATCH -e slpst.%N.%a.%j.err # STDERR
+9-  #SBATCH --job-name=&quot;pstsa&quot;
+10- #SBATCH --array=911
+11- 
+12- # Change permissions on output files
+13- # user = 7 = rwx
+14- # group = 7 = rwx
+15- # others = 4 = r 
+16- #umask 774
+17- 
+18- #####################################################
+19- 
+20- # landsat | sentinel-2
+21- SATELLITE=&quot;sentinel-2&quot;
+22- ASSET_ID=&quot;COPERNICUS/S2&quot;
+23- 
+24- # LT05 | LE07 | LC08
+25- #LANDSAT_SENSOR=&quot;LC08&quot;
+26- #ASSET_ID=&quot;LANDSAT/${LANDSAT_SENSOR}/C01/T1_SR&quot;
+27- #SATELLITE=&quot;landsat&quot;
+28- 
+29- # There are 2 threads per worker from the config file
+30- NUM_WORKERS=4
+31- BATCH_SIZE=100
+32- #####################################################
+33- 
+34- # As an array job
+35- GRID_ID=$SLURM_ARRAY_TASK_ID
+36- 
+37- IN_DIR=&quot;/jad-cel/paraguay_lc/raster/grids&quot;
+38- CONFIG_FILE=&quot;/home/&lt;username&gt;/project/config/config_eri.yaml&quot;
+39- 
+40- #############################################
+41- # Turn off NumPy parallelism and rely on dask
+42- #############################################
+43- export OPENBLAS_NUM_THREADS=1
+44- export MKL_NUM_THREADS=1
+45- # This should be sufficient for OpenBlas and MKL
+46- export OMP_NUM_THREADS=1
+47- ################################################
+48- 
+49- # activate the virtual environment
+50- source ~/.nasaenv/bin/activate
+51- 
+52- eosvault post --in-dir $IN_DIR --grid $GRID_ID --config-file $CONFIG_FILE --batch-size $BATCH_SIZE --max-workers 
+53- $NUM_WORKERS --satellite $SATELLITE --asset-id $ASSET_ID
+54- 
+55- deactivate
+</pre></div>
+</div>
+<p>Most lines should stay as they are.
+<strong>Do change the path for the CONFIG FILE (line 48)</strong> to include your own username.
+As with the downloading script, <strong>you also need to change Grid info and Product info lines</strong>:<br />
+<strong>Grid info:</strong> <code class="docutils literal notranslate"><span class="pre">#SBATCH</span> <span class="pre">--array=</span> </code> (line 10 here). This is where you enter the gridcells you are processing.<br />
+You can enter a range (e.g. 898-908), But be mindful that you are not hogging all the computer bandwidth.</p>
+<div class="admonition-you-can-limit-the-number-of-cells-that-are-processed-at-one-time-by-adding-n admonition">
+<p class="admonition-title">You can limit the number of cells that are processed at one time by adding %n</p>
+<p>For example, 898-908%4 would process 4 cells at a time. When the first 4 finish, the next will start.</p>
+</div>
+<p><strong>Product info:</strong> Lines following <code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">landsat</span> <span class="pre">|</span> <span class="pre">sentinel-2</span></code> (Lines 20-27 here). This is where you select the satellite product, by uncommenting the corresponding lines (remove the # at the beginning of the line) and commenting those that don’t correspond (replacing the # at the beginning of the line). (Only one product can be run at a time).</p>
+<p><strong><span style='color:purple'> For Sentinel: </span></strong> uncomment <code class="docutils literal notranslate"><span class="pre">SATELLITE=&quot;sentinel-2</span></code> (line 21 here) and <code class="docutils literal notranslate"><span class="pre">ASSET_ID=&quot;COPERNICUS/S2</span></code> (line 22 here).</p>
+<p><strong><span style='color:purple'> For Landsat: </span></strong> uncomment <code class="docutils literal notranslate"><span class="pre">LANDSAT_SENSOR=&quot;LC08&quot;</span></code> <code class="docutils literal notranslate"><span class="pre">ASSET_ID=&quot;LANDSAT/${LANDSAT_SENSOR}/C01/T1_SR&quot;</span></code>and <code class="docutils literal notranslate"><span class="pre">SATELLITE=&quot;landsat&quot;</span></code> (lines 25-27 here). Also change the Landsat sensor (line 30 here) to correspond to the sensor you want to process: “LT05” for Landsat 5, “LE07” for Landsat 7, or “LC08” for Landsat 8 (as noted in line 24). You will do all three, separately.</p>
+</div>
+<div class="section" id="run-the-process">
+<h2>2. Run the process<a class="headerlink" href="#run-the-process" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#if not already in bash directory, navigate there:</span>
+<span class="n">cd</span> <span class="o">~/</span><span class="n">code</span><span class="o">/</span><span class="n">bash</span><span class="o">/</span>
+<span class="c1">#submit the command:</span>
+<span class="n">sbatch</span> <span class="n">post_eri</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Current run-time estimates for single grid cells:</p>
+<ul class="simple">
+<li><p>Sentinel 2:</p></li>
+<li><p>Landsat 8:</p></li>
+<li><p>Landsat 7:</p></li>
+<li><p>Landsat 5:</p></li>
+</ul>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="Downloading.html" title="previous page">Downloading process</a>
+    <a class='right-next' id="next-link" href="Pipeline.html" title="next page">Pipeline process</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Kendra Walker (editor)<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>

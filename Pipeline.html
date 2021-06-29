@@ -1,0 +1,580 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pipeline process &#8212; LUCinSA</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet" />
+  <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.acff12b8f9c144ce68a297486a2fa670.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Intro to git" href="intro_to_git.html" />
+    <link rel="prev" title="Post-download processing" href="Pre_Pipeline.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+      <img src="_static/cover.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">LUCinSA</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   Land-Use Change in South America (LUCinSA) Computing Guide
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Project_overview
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Background.html">
+   Project background
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Processing_overview.html">
+   Processing overview
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Computer setup
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Connecting_to_cluster.html">
+   Connecting to the ERI cluster
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="environment_setup.html">
+   Setting up your remote environment
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="TransferingFiles.html">
+   Transfering Files to/from cluster
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Configuring_eosvault.html">
+   Configuring eosvault
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Processing
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Processing.html">
+   Processing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Downloading.html">
+   Downloading process
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Pre_Pipeline.html">
+   Post-download processing
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Pipeline process
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Computing resources
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro_to_git.html">
+   Intro to git
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="commandLine_bash.html">
+   command line
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="vim.html">
+   Vim
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="slurm.html">
+   Slurm
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="editing_this_guide.html">
+   To edit this guide
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/Pipeline.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://klwalker-sb.github.io/LUCinSA/"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://klwalker-sb.github.io/LUCinSA//issues/new?title=Issue%20on%20page%20%2FPipeline.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#run-the-process">
+   Run the process
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#get-grid-pipeline-status">
+   Get grid pipeline status
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="pipeline-process">
+<span id="pipeline"></span><h1>Pipeline process<a class="headerlink" href="#pipeline-process" title="Permalink to this headline">¶</a></h1>
+<p>===============================================================================================================================</p>
+<p>Jordan Graesser’s <code class="docutils literal notranslate"><span class="pre">pytuyau</span></code> script drives the pipeline process, <a class="reference external" href="https://github.com/jgrss/pytuyau#readme">see here</a> for more information on the script process.</p>
+<p>Pipeline template (with line numbers added for reference below):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1-   #!/bin/bash -l
+2-  
+3-   #SBATCH -N 1 # number of nodes
+4-   #SBATCH -n 8 # number of cores
+5-   #SBATCH -t 0-08:00 # time (D-HH:MM)
+6-   #SBATCH -p basic 
+7-   #SBATCH -o slpipe.%N.%a.%j.out # STDOUT
+8-   #SBATCH -e slpipe.%N.%a.%j.err # STDERR
+9-   #SBATCH --job-name=&quot;slpipe-pre&quot;
+10-  #SBATCH --array=910
+11- 
+12-  #############################################
+13-  # Turn off NumPy parallelism and rely on dask
+14-  #############################################
+15-  export OPENBLAS_NUM_THREADS=1
+16-  export MKL_NUM_THREADS=1
+17-  # This should be sufficient for OpenBlas and MKL
+18-  export OMP_NUM_THREADS=1
+19-  ################################################
+20- 
+21-  # Choices are {preprocess, fusion, topo, reconstruct, segment, classify}
+22-  # 1. preprocess
+23-  #    a. Checks &#39;no data&#39; images
+24-  #    b. Co-registers Sentinel
+25-  # X2. mask
+26-  #    Masks clouds and shadows
+27-  # X3. fusion
+28-  #    - Fusion of Landsat to Sentinel 10m using modified StarFM
+29-  # 4. topo
+30-  #    - not currently implemented
+31-  # 5. reconstruct
+32-  #    - Reconstructs weekly time series using dynamic temporal smoothing (DTS)
+33-  # 6. reindex_vi
+34-  #    - Reindexes weekly vegetation indices to bi-weekly
+35-  # 7. segment
+36-  #    - Segments vegetation objects using SACFEI
+37-  # 8. classify
+38-  #    - Classifies land cover
+39-  # 9. assess
+40-  #    - Assesses land cover predictions
+41-  # 10. clean
+42-  #    - Removes unwanted files
+43-  STEP=&quot;preprocess&quot;
+44- 
+45-  # Comma-separated list of grids to process
+46-  #GRIDS=&quot;250&quot;
+47-  GRIDS=&quot;${SLURM_ARRAY_TASK_ID}&quot;
+48- 
+49-  #########
+50-  # MASKING
+51-  #########
+52- 
+53-  MASK_ONLY=&quot;no&quot;
+54-  REF_RES=40.0
+55-  RESET_CLOUD_DB=&quot;True&quot;
+56- 
+57-  #######
+58-  # CLEAN
+59-  #######
+60- 
+61-  # masks, downloads, nodata, nocoreg, fusion, vis, vrts, old_seg
+62-  #REMOVE_ITEMS=&quot;[downloads,masks,nodata,nocoreg,fusion,vis,vrts]&quot;
+63-  REMOVE_ITEMS=&quot;[]&quot;
+64- 
+65-  ########
+66-  # FUSION
+67-  ########
+68- 
+69-  WINDOW_SIZE=9
+70-  MAX_YEARS=2
+71-  MAX_DAYS=15
+72-  FOVERWRITE=&quot;True&quot;
+73-
+74-  #############
+75-  # RECONSTRUCT
+76-  #############
+77- 
+78-  RINPUT=&quot;ms&quot;
+79-  START_PAD=&quot;2010-03-01&quot;
+80-  START=&quot;2010-07-01&quot;
+81-  END_PAD=&quot;2020-11-01&quot;
+82-  END=&quot;2020-07-01&quot;
+83-  SKIP_INTERVAL=7
+84-  SKIP_YEARS=10
+85-  REC_VI=&quot;evi2&quot;
+86-  ROVERWRITE=&quot;False&quot;
+87-  SM_CHUNKS=512
+88-  PREFILL_GAPS=&quot;True&quot;
+89-  DTS_MAX_WIN=61
+90-  DTS_MIN_WIN=15
+91-  PREFILL_MIN_RSQ=0.2
+92-  PREFILL_YEARS=2
+93-  DTS_t=5
+94- 
+95-  ############
+96-  # REINDEX VI
+97-  ############
+98-  REX_VI=&quot;evi2&quot;
+99-
+100- ##########
+101- # CLASSIFY
+102- ##########
+103-
+104- # sample | fit | fit_predict | predict
+105- CLSMETHOD=&quot;fit&quot;
+106- CINPUT=&quot;ms&quot;
+107- # temperate_gss_vi2; tropical_gss_vi2
+108- CLS_REGION_NAME=&quot;tropical_gss_vi2&quot;
+109- CLS_MODEL_NAME=&quot;${CLS_REGION_NAME}_11_11&quot;
+110- LC_VECTOR=&quot;.kml&quot;
+111- KEEP_FEATURES=&quot;[1,1,1,1]&quot;
+112- # update/overwrite the sample stack
+113- UPDATE_SAMPLES=&quot;True&quot;
+114- # overwrite each grid sample dataset
+115- OVERWRITE_SAMPLES=&quot;False&quot;
+116- OVERWRITE_MODEL=&quot;True&quot;
+117- OVERWRITE_IMAGE=&quot;False&quot;
+118- CLS_BANDS=&quot;[evi2,wi]&quot;
+119- CLS_NITERS=2000
+120-
+121- # OUTPUT files
+122- TRAIN_SAMPLES=&quot;/training/south_america_extract_${CLS_REGION_NAME}.gpkg&quot;
+123- MODEL_FILE=&quot;/training/south_america_${CLS_MODEL_NAME}.model&quot;
+124- 
+125- #########
+126- # SEGMENT
+127- #########
+128- 
+129- # fit | fit_predict | predict
+130- SEGMETHOD=&quot;predict&quot;
+131- OVERWRITE_EDGE_MODEL=&quot;False&quot;
+132- OVERWRITE_EDGE_IMAGE=&quot;True&quot;
+133- OVERWRITE_SEG_IMAGE=&quot;True&quot;
+134- SEG_REGION_NAME=&quot;temperate_gss_vi2&quot;
+135- SEG_BANDS=&quot;[evi2,wi]&quot;
+136- SEG_NITERS=2000
+137- 
+138- SEG_TRAIN_PATH=&quot;/training/edges&quot;
+139- SEG_MODEL_FILE=&quot;/training/south_america_extract_${SEG_REGION_NAME}.edges&quot;
+140- 
+141- ###############################
+142- # DO NOT MODIFY BELOW THIS LINE
+143- ###############################
+144- 
+145- # activate the virtual environment
+146- source ~/.nasaenv/bin/activate
+147- 
+148- CONFIG_UPDATES=&quot;grids:[${GRIDS}] main_path:/home/cel/paraguay_lc/raster/grids num_workers:${SLURM_CPUS_ON_NODE} cloud_mask:reset_db:${RESET_CLOUD_DB} cloud_mask:ref_res:${REF_RES} fusion:window_size:${WINDOW_SIZE} fusion:fill_max_years:${MAX_YEARS} fusion:fill_max_days:${MAX_DAYS} fusion:overwrite:${FOVERWRITE} reconstruct:input:${RINPUT} reconstruct:start_pad:${START_PAD} reconstruct:end_pad:${END_PAD} reconstruct:start:${START} reconstruct:end:${END} reconstruct:skip_interval:${SKIP_INTERVAL} reconstruct:skip_years:${SKIP_YEARS} reconstruct:vi:${REC_VI} reconstruct:overwrite:${ROVERWRITE} reconstruct:chunks:${SM_CHUNKS} reconstruct:smooth_kwargs:max_window:${DTS_MAX_WIN} reconstruct:smooth_kwargs:min_window:${DTS_MIN_WIN} reconstruct:smooth_kwargs:min_prefill_rsquared:${PREFILL_MIN_RSQ} reconstruct:smooth_kwargs:max_prefill_years:${PREFILL_YEARS} reconstruct:smooth_kwargs:prefill_gaps:${PREFILL_GAPS} reconstruct:smooth_kwargs:t:${DTS_t} reindex_vi:vi:${REX_VI} classify:lc_vector:${LC_VECTOR} classify:train_samples:${TRAIN_SAMPLES} classify:model_file:${MODEL_FILE} classify:update_samples:${UPDATE_SAMPLES} classify:overwrite_samples:${OVERWRITE_SAMPLES} classify:overwrite_model:${OVERWRITE_MODEL} classify:overwrite_image:${OVERWRITE_IMAGE} classify:method:${CLSMETHOD} classify:input:${CINPUT} classify:image_bands:${CLS_BANDS} classify:image_bands_pred:${CLS_BANDS} classify:keep_features:${KEEP_FEATURES} classify:augment:n_iters:${CLS_NITERS} segment:method:${SEGMETHOD} segment:image_bands:${SEG_BANDS} segment:overwrite_model:${OVERWRITE_EDGE_MODEL} segment:overwrite_edges:${OVERWRITE_EDGE_IMAGE} segment:overwrite_seg:${OVERWRITE_SEG_IMAGE} segment:training_path:${SEG_TRAIN_PATH} segment:model_file:${SEG_MODEL_FILE} segment:augment:n_iters:${SEG_NITERS} clean:remove_items:${REMOVE_ITEMS}&quot;
+
+if [ &quot;$MASK_ONLY&quot; == &quot;yes&quot; ]; then
+  if [ &quot;$STEP&quot; == &quot;preprocess&quot; ]; then
+    tuyau $STEP --config-updates $CONFIG_UPDATES --mask-only
+  else
+    tuyau $STEP --config-updates $CONFIG_UPDATES
+  fi
+else
+  tuyau $STEP --config-updates $CONFIG_UPDATES
+fi
+
+deactivate
+</pre></div>
+</div>
+<p>Most lines should stay as they are.<br />
+<strong>the lines that you need to change are:</strong></p>
+<ul class="simple">
+<li><p><strong>Grid info:</strong> <code class="docutils literal notranslate"><span class="pre">#SBATCH</span> <span class="pre">--array=</span> </code> (line 10 here). This is where you enter the gridcells you are processing.<br />
+You can enter a range (e.g. 898-908), But be mindful that you are not hogging all the computer bandwidth.</p></li>
+</ul>
+<div class="section" id="run-the-process">
+<h2>Run the process<a class="headerlink" href="#run-the-process" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#if not already in bash directory, navigate there:</span>
+<span class="n">cd</span> <span class="o">~/</span><span class="n">code</span><span class="o">/</span><span class="n">bash</span><span class="o">/</span>
+<span class="c1">#submit the command:</span>
+<span class="n">sbatch</span> <span class="n">pipeline_eri</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Current run-time estimates for single grid cells:</p>
+<ul class="simple">
+<li><p>Preprocess</p>
+<ul>
+<li><p>preprocess</p></li>
+<li><p>Mask</p></li>
+<li><p>Fusion</p></li>
+<li><p>Topo</p></li>
+<li><p>Reconstruct</p></li>
+<li><p>Re-Index_vi</p></li>
+<li><p>Segment</p></li>
+<li><p>Classify</p></li>
+<li><p>Assess</p></li>
+<li><p>Clean</p></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="admonition-you-can-limit-the-number-of-cells-that-are-processed-at-one-time-by-adding-n admonition">
+<p class="admonition-title">You can limit the number of cells that are processed at one time by adding %n</p>
+<p>For example, 898-908%4 would process 4 cells at a time. When the first 4 finish, the next will start.</p>
+</div>
+<div class="section" id="get-grid-pipeline-status">
+<h2>Get grid pipeline status<a class="headerlink" href="#get-grid-pipeline-status" title="Permalink to this headline">¶</a></h2>
+<p>To generate the Pipeline Progress figure:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#Activate virtual environment:</span>
+<span class="n">source</span> <span class="o">.</span><span class="n">nasaenv</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
+<span class="c1">#Run status command:</span>
+<span class="n">tuyau</span> <span class="n">status</span> <span class="o">--</span><span class="n">config</span><span class="o">-</span><span class="n">updates</span> <span class="n">status</span><span class="p">:</span><span class="n">project_path</span><span class="p">:</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">cel</span><span class="o">/</span><span class="n">paraguay_lc</span><span class="o">/</span><span class="n">raster</span><span class="o">/</span><span class="n">grids</span> <span class="n">status</span><span class="p">:</span><span class="n">out_path</span><span class="p">:</span><span class="o">&lt;</span><span class="n">PNG</span> <span class="n">location</span><span class="o">&gt;</span> <span class="n">status</span><span class="p">:</span><span class="n">grid_file</span><span class="p">:</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">cel</span><span class="o">/</span><span class="n">paraguay_lc</span><span class="o">/</span><span class="n">vector</span><span class="o">/</span><span class="n">pry_grids</span><span class="o">.</span><span class="n">gpkg</span> <span class="n">status</span><span class="p">:</span><span class="n">zoom</span><span class="p">:</span><span class="kc">True</span>
+<span class="c1">#Deactivate virtual environment:</span>
+<span class="n">deactivate</span>
+</pre></div>
+</div>
+<p>To view the Download Progress figure:
+Download file to view on local computer:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rsync</span> <span class="o">-</span><span class="n">raz</span> <span class="o">--</span><span class="n">progress</span> <span class="o">&lt;</span><span class="n">username</span><span class="o">&gt;</span><span class="nd">@ssh</span><span class="o">.</span><span class="n">eri</span><span class="o">.</span><span class="n">ucsb</span><span class="o">.</span><span class="n">edu</span><span class="p">:</span><span class="o">&lt;</span><span class="n">ERI</span> <span class="n">path</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">local</span> <span class="n">path</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Alternatively, you can view the file though an FPT such as WinSCP.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="Pre_Pipeline.html" title="previous page">Post-download processing</a>
+    <a class='right-next' id="next-link" href="intro_to_git.html" title="next page">Intro to git</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Kendra Walker (editor)<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>
