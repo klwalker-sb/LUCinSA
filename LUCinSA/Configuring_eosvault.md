@@ -44,9 +44,12 @@ In [5] exit
 ## 4. Copy and edit the config.yaml file
 **Copy the config.yaml template to the project/config directory on your space**
 ```
+#Replace <yourUsername> in the line below with your username (remove brackets, keep quotes). 
+###MYUSERNAME is a variable and will update accordingly
+MYUSERNAME="<yourUsername>"
 #Create project/config directory if it doesn't already exist
-mkdir <username>/project/config
-cp /jad-cel/templates/eosvault_config_eri_pry.yaml <username>/project/config/config_eri.yaml
+mkdir ${MYUSERNAME}/project/config
+cp /jad-cel/sandbox-cel/templates/eosvault_config_eri_pry.yaml ${MYUSERNAME}/project/config/config_eri.yaml
 ```
 **Open the template in the vim editor** 
 ```
@@ -57,10 +60,13 @@ To edit a line, type `i`, edit as desired, then hit `Esc` key and type `:wq`. Hi
 * `Google secret key` (line 12 below): Edit path to match that of the secret key you uploaded in step #2 above
 * `angles` (lines 16-17 of the template below): Edit path to match your own. First you need to **extract the angle files** into the corresponding directory: 
   ```
+    #Replace <yourUsername> in the line below with your username (remove brackets, keep quotes)
+    ###MYUSERNAME is a variable and will update accordingly
+    MYUSERNAME="<yourUsername>"
     #make the directory if it doesn't alreay exist:
-    mkdir /home/<username>/code/bin/
+    mkdir /home/${MYUSERNAME}/code/bin/
     #move the ESPA.tar.gz file into the directory prior to extracting:
-    mv /home/<username>/tmp/eosvault/files/ESPA.tar.gz /home/<username>/code/bin/ESPA.tar.gz
+    mv /home/${MYUSERNAME}/tmp/eosvault/files/ESPA.tar.gz /home/${MYUSERNAME}/code/bin/ESPA.tar.gz
     #Navigate to the new directory 
     cd ~/code/bin/
     extract the angle files:
@@ -71,7 +77,7 @@ To edit a line, type `i`, edit as desired, then hit `Esc` key and type `:wq`. Hi
 config_eri.yaml template (with added line #s for reference):
 ```
 1-  # Root directory for the GCP index files
-2-  index_dir: '/jad-cel/paraguay_lc/raster'
+2-  index_dir: '/jad-cel/sandbox-cel/paraguay_lc/raster'
 3-  
 4-  # Directory to save text files of incomplete batch jobs
 5-  log_dir: '/home/<username>/code/bash'
@@ -142,7 +148,7 @@ config_eri.yaml template (with added line #s for reference):
 70- 
 71- srtm:
 72- 
-73-   srtm_path: '/jad-cel/paraguay_lc/raster/srtm'
+73-   srtm_path: '/jad-cel/sandbox-cel/paraguay_lc/raster/srtm'
 74- 
 75- masks:
 76- 
@@ -153,9 +159,12 @@ config_eri.yaml template (with added line #s for reference):
 ## 5. Copy processing scripts
 Copy the three primary processing scripts to the folder from which you will be submitting commands([username]/code/bash).
 ```
-cp /jad-cel/templates/eosvault_download_eri_pry.sh [username]/code/bash/download_eri.sh
-cp /jad-cel/templates/eosvault_post_eri_pry.sh [username]/code/bash/post_eri.sh
-cp /jad-cel/templates/pytuyau_pipeline_eri.sh [username]/code/bash/pipeline_eri.sh
+#Replace <yourUsername> in the line below with your username (remove brackets, keep quotes)
+##MYUSERNAME is a variable and will update accordingly
+MYUSERNAME="<yourUsername>"
+cp /jad-cel/sandbox-cel/templates/eosvault_download_eri_pry.sh ${MYUSERNAME}/code/bash/download_eri.sh
+cp /jad-cel/sandbox-cel/templates/eosvault_post_eri_pry.sh ${MYUSERNAME}/code/bash/post_eri.sh
+cp /jad-cel/snadbox-cel/templates/pytuyau_pipeline_eri.sh ${MYUSERNAME}/code/bash/pipeline_eri.sh
 ```
 Edit the `CONFIG_FILE` path in your "download_eri.sh" and "post_eri.sh" scripts to point to your directory 
 (For help editing in Vim, [see Vim Commands](VimCommands).)

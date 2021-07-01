@@ -326,9 +326,9 @@
 <p>To run the script:</p>
 <div class="section" id="get-gridcells-to-download">
 <span id="getcells"></span><h2>1. Get gridcells to download<a class="headerlink" href="#get-gridcells-to-download" title="Permalink to this headline">¶</a></h2>
-<p>Find a block of cells in need of processing in the <code class="docutils literal notranslate"><span class="pre">cell_blocks.txt</span></code> file in <code class="docutils literal notranslate"><span class="pre">cel/paraguay_lc</span></code> (anything without an X next to it is free)</p>
+<p>Find a block of cells in need of processing in the <code class="docutils literal notranslate"><span class="pre">cell_blocks.txt</span></code> file in <code class="docutils literal notranslate"><span class="pre">jad-cel/cel-sandbox/paraguay_lc</span></code> (anything without an X next to it is free)</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">~/../</span>
-<span class="n">cd</span> <span class="n">cel</span><span class="o">/</span><span class="n">paragual_lc</span>
+<span class="n">cd</span> <span class="n">jad</span><span class="o">-</span><span class="n">cel</span><span class="o">/</span><span class="n">cel</span><span class="o">-</span><span class="n">sandbox</span><span class="o">/</span><span class="n">paragual_lc</span>
 <span class="n">vim</span> <span class="n">cell_blocks</span><span class="o">.</span><span class="n">txt</span>
 <span class="c1">#&quot;check out&quot; a block of cells by putting an X and your initials next to it. Note your range(s) somewhere.</span>
 <span class="c1">#save the file:</span>
@@ -346,77 +346,100 @@
 <p>To edit a line, type <code class="docutils literal notranslate"><span class="pre">i</span></code>, edit as desired, then hit <code class="docutils literal notranslate"><span class="pre">Esc</span></code> key and type <code class="docutils literal notranslate"><span class="pre">:wq</span></code>. Hit <code class="docutils literal notranslate"><span class="pre">Enter</span></code> key
 Go here for <a class="reference internal" href="vim.html#vimcommands"><span class="std std-ref">more info on editing in vim</span></a></p>
 <p>This is the default script (with line numbering added for reference below):</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1-  #!/bin/bash -l
-2- 
-3-  #SBATCH -N 1 # number of nodes
-4-  #SBATCH -n 2 # number of cores
-5-  #SBATCH -t 0-04:00 # time (D-HH:MM)
-6-  #SBATCH -p basic
-7-  #SBATCH -o sldown.%N.%a.%j.out # STDOUT
-8-  #SBATCH -e sldown.%N.%a.%j.err # STDERR
-9-  #SBATCH --job-name=&quot;dwn-pry&quot;
-10- #SBATCH --array=894
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1-   #!/bin/bash -l
+2-   
+3-   #SBATCH -N 1 # number of nodes
+4-   #SBATCH -n 4 # number of cores
+5-   #SBATCH -t 0-04:00 # time (D-HH:MM)
+6-   #SBATCH -p basic
+7-   #SBATCH -o sldown.%N.%a.%j.out # STDOUT
+8-   #SBATCH -e sldown.%N.%a.%j.err # STDERR
+9-   #SBATCH --job-name=&quot;dwn-pry&quot;
+10-  #SBATCH --array=1
 11-
-12- sleep $((RANDOM%30+1))
-13- 
-14- # Change permissions on output files
-15- # user = 7 = rwx
-16- # group = 7 = rwx
-17- # others = 4 = r 
-18- #umask 774
-19- 
-20- #####################################################
-21- START_DATE=&quot;2010-03-01&quot;
-22- END_DATE=&quot;2020-11-01&quot;
-23- 
-24- # landsat | sentinel-2
-25- #SATELLITE=&quot;sentinel-2&quot;
-26- #ASSET_ID=&quot;COPERNICUS/S2&quot;
-27- #ASSET_ID=&quot;COPERNICUS/S2_CLOUD_PROBABILITY&quot;
-28- 
-29- # LT05 | LE07 | LC08
-30- LANDSAT_SENSOR=&quot;LC08&quot;
-31- ASSET_ID=&quot;LANDSAT/${LANDSAT_SENSOR}/C01/T1_SR&quot;
-32- SATELLITE=&quot;landsat&quot;
-33- 
-34- # yes | no
-35- IGNORE_INCOMPLETE=&quot;no&quot;
-36- 
-37- BATCH_SIZE=100000
-38- #####################################################
-39- 
-40- # As an array job
-41- GRID_ID=$SLURM_ARRAY_TASK_ID
-42- 
-43- OUT_DIR=&quot;/jad-cel/paraguay_lc/raster/grids&quot;
-44- GRID_FILE=&quot;/jad-cel/paraguay_lc/vector/pry_grids.gpkg&quot;
-45- CONFIG_FILE=&quot;/home/&lt;username&gt;/project/config/config_eri.yaml&quot;
-46- CRS_PROJ4=&quot;+proj=aea +lat_1=-5 +lat_2=-42 +lat_0=-32 +lon_0=-60 +x_0=0 +y_0=0 +ellps=aust_SA +units=m +no_defs &quot;
-47- 
-48- #############################################
-49- # Turn off NumPy parallelism and rely on dask
-50- #############################################
-51- export CLOUDSDK_PYTHON=python3
-52- export OPENBLAS_NUM_THREADS=1
-53- export MKL_NUM_THREADS=1
-54- # This should be sufficient for OpenBlas and MKL
-55- export OMP_NUM_THREADS=1
-56- ################################################
-57- 
-58- # activate the virtual environment
-59- source ~/.nasaenv/bin/activate
-60- 
-61- if [ &quot;$IGNORE_INCOMPLETE&quot; == &quot;yes&quot; ]; then
-62-
-63-   eosvault download --out-dir $OUT_DIR --grid-file $GRID_FILE --grid $GRID_ID --start-date $START_DATE --end-date $END_DATE 64-  --config-file $CONFIG_FILE --batch-size $BATCH_SIZE --max-workers $SLURM_CPUS_ON_NODE --satellite $SATELLITE --asset-id 65-  65-  $ASSET_ID --grid-crs &quot;${CRS_PROJ4}&quot; --ignore-incomplete #--reset-asset #--clear-all #--reset-db
-66- 
-67-  else
-68- 
-69-   eosvault download --out-dir $OUT_DIR --grid-file $GRID_FILE --grid $GRID_ID --start-date $START_DATE --end-date $END_DATE 70-  --config-file $CONFIG_FILE --batch-size $BATCH_SIZE --max-workers $SLURM_CPUS_ON_NODE --satellite $SATELLITE --asset-id 71-  $ASSET_ID --grid-crs &quot;${CRS_PROJ4}&quot; #--reset-asset #--clear-all #--reset-db
-72-
-73-  fi
-74-
-75-  deactivate
+12-  ##############################################
+13-  START_DATE=&quot;2010-03-01&quot;
+14-  END_DATE=&quot;2020-11-01&quot;
+15- 
+16-  # yes | no
+17-  IGNORE_INCOMPLETE=&quot;no&quot;
+18-  
+19-  # yes | no
+20-  RESET_ASSET=&quot;no&quot;
+21- 
+22-  ##############################################
+23-  
+24-  BATCH_SIZE=100000
+25-  
+26-  # As an array job
+27-  GRID_ID=$SLURM_ARRAY_TASK_ID
+28-  
+29-  PROJECT_HOME=&quot;/jad-cel/sandbox/sandbox-cel/paraguay_lc&quot;
+30-  OUT_DIR=&quot;${PROJECT_HOME}/raster/grids&quot;
+31-  
+32-  MY_USERNAME=&quot;&quot;
+33-  
+34-  GRID_FILE=&quot;${PROJECT_HOME}/vector/pry_grids.gpkg&quot;
+35-  CONFIG_FILE=&quot;/home/${MY_USERNAME}/project/config/config_eri.yaml&quot;
+36-  CRS_PROJ4=&quot;+proj=aea +lat_1=-5 +lat_2=-42 +lat_0=-32 +lon_0=-60 +x_0=0 +y_0=0 +ellps=aust_SA +units=m +no_defs &quot;
+37-  
+38-  #############################################
+39-  # Turn off NumPy parallelism and rely on dask
+40-  #############################################
+41-  export CLOUDSDK_PYTHON=python3
+42-  export OPENBLAS_NUM_THREADS=1
+43-  export MKL_NUM_THREADS=1
+44-  # This should be sufficient for OpenBlas and MKL
+45-  export OMP_NUM_THREADS=1
+46-  ################################################
+47-  
+48-  # activate the virtual environment
+49-  source ~/.nasaenv/bin/activate
+50- 
+51-  SAT_SENSORS=(&quot;S2&quot; &quot;S2cp&quot; &quot;LT05&quot; &quot;LE07&quot; &quot;LC08&quot;)
+52- 
+53-  # Iterate over each sensor
+54-  for SAT_SENSOR in &quot;${SAT_SENSORS[@]}&quot;
+55-  do
+56- 
+57-  if [ &quot;$SAT_SENSOR&quot; == &quot;S2&quot; ]; then
+58-    SATELLITE=&quot;sentinel-2&quot;
+59-    ASSET_ID=&quot;COPERNICUS/S2&quot;
+60-  elif [ &quot;$SAT_SENSOR&quot; == &quot;S2cp&quot; ]; then
+61-    SATELLITE=&quot;sentinel-2&quot;
+62-    ASSET_ID=&quot;COPERNICUS/S2_CLOUD_PROBABILITY&quot; 
+63-  else
+64-    SATELLITE=&quot;landsat&quot; 
+65-    ASSET_ID=&quot;LANDSAT/${SAT_SENSOR}/C01/T1_SR&quot;
+66-  fi
+67-  
+68-  if [ &quot;$IGNORE_INCOMPLETE&quot; == &quot;yes&quot; ]; then
+69- 
+70-    eosvault download --out-dir $OUT_DIR --grid-file $GRID_FILE --grid $GRID_ID --start-date $START_DATE --end-date
+71-  $END_DATE --config-file $CONFIG_FILE --batch-size $BATCH_SIZE --max-workers $SLURM_CPUS_ON_NODE --satellite $SATELLITE
+72-  --asset-id $ASSET_ID --grid-crs &quot;${CRS_PROJ4}&quot; --ignore-incomplete #--reset-asset #--clear-all #--reset-db
+73-  
+74-  else
+75- 
+76-   if [ &quot;$RESET_ASSET&quot; == &quot;yes&quot; ]; then
+77- 
+78-    eosvault download --out-dir $OUT_DIR --grid-file $GRID_FILE --grid $GRID_ID --start-date $START_DATE --end-date 
+79- $END_DATE --config-file $CONFIG_FILE --batch-size $BATCH_SIZE --max-workers $SLURM_CPUS_ON_NODE --satellite $SATELLITE 
+80-  --asset-id $ASSET_ID --grid-crs &quot;${CRS_PROJ4}&quot; --reset-asset #--clear-all #--reset-db
+81- 
+82-    else
+83- 
+84-     eosvault download --out-dir $OUT_DIR --grid-file $GRID_FILE --grid $GRID_ID --start-date $START_DATE --end-date 
+85-  $END_DATE --config-file $CONFIG_FILE --batch-size $BATCH_SIZE --max-workers $SLURM_CPUS_ON_NODE --satellite $SATELLITE 
+86-  --asset-id $ASSET_ID --grid-crs &quot;${CRS_PROJ4}&quot; #--clear-all #--reset-db
+87-
+88-    fi
+89-
+90-  fi
+91-
+92-  done
+93-
+94-  deactivate
 </pre></div>
 </div>
 <p>Most lines should stay as they are.<br />
@@ -432,10 +455,8 @@ You can enter a range (e.g. 898-908), But be mindful that you are not hogging al
 With Sentinel (which are heavy files), %2 is safest. With Landsat %4 is fine.</p>
 </div>
 </div>
-<p><strong>Product info:</strong> Lines following <code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">landsat</span> <span class="pre">|</span> <span class="pre">sentinel-2</span></code> (Lines 25-32 here). This is where you select the satellite product, by uncommenting the corresponding lines (remove the # at the beginning of the line) and commenting those that don’t correspond (replacing the # at the beginning of the line). (Only one product can be run at a time).</p>
-<p><strong><span style='color:purple'> For Sentinel: </span></strong> uncomment <code class="docutils literal notranslate"><span class="pre">SATELLITE=&quot;sentinel-2</span></code> (line 25 here) and <code class="docutils literal notranslate"><span class="pre">ASSET_ID=&quot;COPERNICUS/S2</span></code> (line 26 here) <strong>or</strong> <code class="docutils literal notranslate"><span class="pre">ASSET_ID=COPERNICUS/S2_CLOUD_PROBABILITY</span></code> (line 27 here). (You will do both, but they are sepparate processes).</p>
-<p><strong><span style='color:purple'> For Landsat: </span></strong> uncomment <code class="docutils literal notranslate"><span class="pre">LANDSAT_SENSOR=&quot;LC08&quot;</span></code> <code class="docutils literal notranslate"><span class="pre">ASSET_ID=&quot;LANDSAT/${LANDSAT_SENSOR}/C01/T1_SR&quot;</span></code>and <code class="docutils literal notranslate"><span class="pre">SATELLITE=&quot;landsat&quot;</span></code> (lines 30-32 here). Also change the Landsat sensor (line 30 here) to correspond to the sensor you want to download: “LT05” for Landsat 5, “LE07” for Landsat 7, or “LC08” for Landsat 8 (as noted in line 29). You will do all three, separately.</p>
-<p><strong>Incomplete tag</strong>: Check that <code class="docutils literal notranslate"><span class="pre">IGNORE_INCOMPLETE=</span></code>(line 35 here) is set to “No” for the first run. (You will change this in step 5 if all images don’t download properly the first time.)</p>
+<p><strong>Incomplete tag</strong>: Check that <code class="docutils literal notranslate"><span class="pre">IGNORE_INCOMPLETE=</span></code>(line 17 here) is set to “No” for the first run. (You will change this in step 5 if all images don’t download properly the first time.)
+<strong>MyUsername</strong> (line 32 here): Insert your username between the quotes</p>
 <p>After making these edits, save your script and exit:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#(If in insert mode), use [Esc] to exit insert mode </span>
 <span class="p">:</span><span class="n">wq</span>
@@ -454,60 +475,40 @@ With Sentinel (which are heavy files), %2 is safest. With Landsat %4 is fine.</p
 <li><p>(line 6): -p tells SLURM this job should be sent to the standard partition (there are also ‘short’, ‘gpu’, and ‘largemem’ &gt;available).</p></li>
 <li><p>(line 7&amp;8): -o and -e are output log files</p></li>
 <li><p>(line 9): -job-name is the name of the batch job</p></li>
-<li><p>(line 10): array is the list of gridcells for processing (1,2,3,etc or 1-3)</p></li>
-</ul>
-</li>
-<li><p>Line 12</p>
-<ul>
-<li><p>(line 12): Staggars initiation of downloading to avoid bottleneck that often occurs at very beginning of process</p></li>
-</ul>
-</li>
-<li><p>Lines 14-18</p>
-<ul>
-<li><p>Set file permissions so that everyone in group can manipulate files
-*Lines 21-22</p></li>
+<li><p>(line 10): array is the list of gridcells for processing (1,2,3,etc or 1-3)
+*Lines 13-14</p></li>
 <li><p>User variables for start and end dates to stream. (For this project, the dates are from 1-Mar-2010 to 1-Nov-2020)</p></li>
 </ul>
 </li>
-<li><p>Lines 25-27</p>
-<ul>
-<li><p>For downloading Sentinel-2. Uncomment Line 25 and 26 or 27. (and make sure 29-32 are commented)</p></li>
-</ul>
-</li>
-<li><p>Lines 29-32</p>
-<ul>
-<li><p>For downloading Landsat. (uncomment lines 30-32 and comment lines 25-27)</p></li>
-<li><p>(line 30): Change LANDSAT_SENSOR=”LT05” to download Landsat 5, e.g. (as per options on line 29)</p></li>
-</ul>
-</li>
-<li><p>Lines 34-35</p>
+<li><p>Lines 16-17</p>
 <ul>
 <li><p>if yes, flag as incomplete if all images did not download correctly. If no, consider complete even if some images are &gt;missing</p></li>
 </ul>
 </li>
-<li><p>Line 37</p>
+<li><p>Lines 19-20: flag to reset databased to allow redownload if previously downloaded fully but want to redo</p></li>
+<li><p>Line 24</p>
 <ul>
 <li><p>Do not modify</p></li>
 </ul>
 </li>
-<li><p>Lines 40-41</p>
+<li><p>Lines 26-27</p>
 <ul>
 <li><p>Names process/files based on grid cell number</p></li>
 </ul>
 </li>
-<li><p>Lines 43-47</p>
+<li><p>Lines 29-30</p>
 <ul>
 <li><p>File paths for:</p></li>
-<li><p>(lines 43-45) output files (leave as is)</p></li>
-<li><p>(line 46) input configuration file. Make sure [username] is replaced with your own username.</p></li>
+<li><p>(lines 34) output files (leave as is)</p></li>
+<li><p>(line 35) input configuration file. Make sure to fill in [username] in line 32.</p></li>
 </ul>
 </li>
-<li><p>Lines 48-56</p>
+<li><p>Lines 48-66</p>
 <ul>
 <li><p>Do not modify.</p></li>
 </ul>
 </li>
-<li><p>Lines 43-47</p>
+<li><p>Lines 68-94</p>
 <ul>
 <li><p>These are the actual command lines to run the process based on the settings above.</p></li>
 </ul>
@@ -543,7 +544,7 @@ With Sentinel (which are heavy files), %2 is safest. With Landsat %4 is fine.</p
 </pre></div>
 </div>
 <p>to see if there are a lot of jobs before you:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">top</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">squeue</span>
 </pre></div>
 </div>
 <p>see <a class="reference internal" href="slurm.html#slurmcommands"><span class="std std-ref">other slurm commands here</span></a></p>
@@ -561,12 +562,11 @@ With Sentinel (which are heavy files), %2 is safest. With Landsat %4 is fine.</p
 </div>
 <p>If all images downloaded, you should see:
 <img alt="" src="_images/cat_download.png" /></p>
-<p>If you run many cells in the same job, this will get tedious. Instead, you can generate a figure to see which cells downloaded fully.
-To generate the Download Progress figure:</p>
+<p>You can also generate a figure to see which cells downloaded fully:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#Activate virtual environment:</span>
 <span class="n">source</span> <span class="o">.</span><span class="n">nasaenv</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
 <span class="c1">#Run status command:</span>
-<span class="n">eosvault</span> <span class="n">status</span> <span class="o">--</span><span class="n">config</span><span class="o">-</span><span class="n">file</span> <span class="o">~/</span><span class="n">project</span><span class="o">/</span><span class="n">config</span><span class="o">/</span><span class="n">config_eri</span><span class="o">.</span><span class="n">yaml</span> <span class="o">--</span><span class="n">out</span><span class="o">-</span><span class="nb">dir</span> <span class="o">~/</span><span class="n">code</span><span class="o">/</span><span class="n">bash</span> <span class="o">--</span><span class="n">grid</span><span class="o">-</span><span class="n">file</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">cel</span><span class="o">/</span><span class="n">paraguay_lc</span><span class="o">/</span><span class="n">vector</span><span class="o">/</span><span class="n">pry_grids</span><span class="o">.</span><span class="n">gpkg</span> <span class="o">--</span><span class="n">zoom</span>
+<span class="n">eosvault</span> <span class="n">status</span> <span class="o">--</span><span class="n">config</span><span class="o">-</span><span class="n">file</span> <span class="o">~/</span><span class="n">project</span><span class="o">/</span><span class="n">config</span><span class="o">/</span><span class="n">config_eri</span><span class="o">.</span><span class="n">yaml</span> <span class="o">--</span><span class="n">out</span><span class="o">-</span><span class="nb">dir</span> <span class="o">~/</span><span class="n">code</span><span class="o">/</span><span class="n">bash</span> <span class="o">--</span><span class="n">grid</span><span class="o">-</span><span class="n">file</span> <span class="n">jad</span><span class="o">-</span><span class="n">cel</span><span class="o">/</span><span class="n">cel</span><span class="o">-</span><span class="n">sandbox</span><span class="o">/</span><span class="n">paraguay_lc</span><span class="o">/</span><span class="n">vector</span><span class="o">/</span><span class="n">pry_grids</span><span class="o">.</span><span class="n">gpkg</span> <span class="o">--</span><span class="n">zoom</span>
 <span class="c1">#Deactivate virtual environment:</span>
 <span class="n">deactivate</span>
 </pre></div>
@@ -608,8 +608,8 @@ The key indicates which cells loaded completely for each product. Those not list
 <div class="section" id="move-err-and-out-files-to-new-directory-to-facilitate-tracking-of-new-downloads">
 <h2>6. Move .err and .out files to new directory to facilitate tracking of new downloads<a class="headerlink" href="#move-err-and-out-files-to-new-directory-to-facilitate-tracking-of-new-downloads" title="Permalink to this headline">¶</a></h2>
 <p>All these files will soon make it difficult to find the new ones to monitor. Move them to an archive directory after checking to clean up the clutter.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#Make the directory (first ime only)</span>
-<span class="n">mkdir</span> <span class="n">home</span><span class="o">/&lt;</span><span class="n">username</span><span class="o">&gt;/</span><span class="n">code</span><span class="o">/</span><span class="n">bash</span><span class="o">/</span><span class="n">archive</span><span class="o">/</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#Make the directory (first time only)</span>
+<span class="n">mkdir</span> <span class="o">/</span><span class="n">home</span><span class="o">/&lt;</span><span class="n">username</span><span class="o">&gt;/</span><span class="n">code</span><span class="o">/</span><span class="n">bash</span><span class="o">/</span><span class="n">archive</span><span class="o">/</span>
 <span class="c1">#Move .err and .out files from /bash to /archive</span>
 <span class="n">cd</span> <span class="o">~/</span><span class="n">code</span><span class="o">/</span><span class="n">bash</span><span class="o">/</span>
 <span class="n">mv</span> <span class="o">/</span><span class="n">home</span><span class="o">/&lt;</span><span class="n">username</span><span class="o">&gt;/</span><span class="n">code</span><span class="o">/</span><span class="n">bash</span><span class="o">/*.</span><span class="p">{</span><span class="n">err</span><span class="p">,</span><span class="n">out</span><span class="p">}</span> <span class="o">/</span><span class="n">home</span><span class="o">/&lt;</span><span class="n">username</span><span class="o">&gt;/</span><span class="n">code</span><span class="o">/</span><span class="n">bash</span><span class="o">/</span><span class="n">archive</span><span class="o">/</span>

@@ -17,14 +17,22 @@ For information on publishing (for future), see [this guide](https://github.com/
 After any edits, the book needs to be rebuilt: 
 
 ```
-#First activate virtual environment:
+#Activate virtual environment:
 ####(If using Git Bash, need to activate conda first with "conda activate")
 ####(If Git Bash does not recognize conda yet, see link below)
 conda activate LUCenvWin
-#Then build book (from inside LUCinSA directory):
-jupyter-book build guide/
+#Then build book (from inside outer LUCinSA directory):
+jupyter-book build LUCinSA/
+#commit changes to GitHub:
+cd LUCinSA
+git add ./*
+git commit -m "edits"
+git push
+#push newly-built HTML to gh-pages branch:
+ ghp-import -n -p -f mylocalbook/_build/html
 ```
 [see this guide to use conda in Git Hub](https://discuss.codecademy.com/t/setting-up-conda-in-git-bash/534473)
+[see this guide for more on publishing a Jupyter Book online](https://jupyterbook.org/start/publish.html)
 
 :::{admonition}Note if using Windows:
 **Jupyter Book is not compatible with Python 3.8** in Windows. Set up environment using Python 3.7.
