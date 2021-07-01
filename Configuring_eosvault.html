@@ -372,9 +372,12 @@ Follow the five steps (and links) of <a class="reference external" href="https:/
 <div class="section" id="copy-and-edit-the-config-yaml-file">
 <h2>4. Copy and edit the config.yaml file<a class="headerlink" href="#copy-and-edit-the-config-yaml-file" title="Permalink to this headline">¶</a></h2>
 <p><strong>Copy the config.yaml template to the project/config directory on your space</strong></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#Create project/config directory if it doesn&#39;t already exist</span>
-<span class="n">mkdir</span> <span class="o">&lt;</span><span class="n">username</span><span class="o">&gt;/</span><span class="n">project</span><span class="o">/</span><span class="n">config</span>
-<span class="n">cp</span> <span class="o">/</span><span class="n">jad</span><span class="o">-</span><span class="n">cel</span><span class="o">/</span><span class="n">templates</span><span class="o">/</span><span class="n">eosvault_config_eri_pry</span><span class="o">.</span><span class="n">yaml</span> <span class="o">&lt;</span><span class="n">username</span><span class="o">&gt;/</span><span class="n">project</span><span class="o">/</span><span class="n">config</span><span class="o">/</span><span class="n">config_eri</span><span class="o">.</span><span class="n">yaml</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#Replace &lt;yourUsername&gt; in the line below with your username (remove brackets, keep quotes). 
+###MYUSERNAME is a variable and will update accordingly
+MYUSERNAME=&quot;&lt;yourUsername&gt;&quot;
+#Create project/config directory if it doesn&#39;t already exist
+mkdir ${MYUSERNAME}/project/config
+cp /jad-cel/sandbox-cel/templates/eosvault_config_eri_pry.yaml ${MYUSERNAME}/project/config/config_eri.yaml
 </pre></div>
 </div>
 <p><strong>Open the template in the vim editor</strong></p>
@@ -386,14 +389,17 @@ Follow the five steps (and links) of <a class="reference external" href="https:/
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">Google</span> <span class="pre">secret</span> <span class="pre">key</span></code> (line 12 below): Edit path to match that of the secret key you uploaded in step #2 above</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">angles</span></code> (lines 16-17 of the template below): Edit path to match your own. First you need to <strong>extract the angle files</strong> into the corresponding directory:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="c1">#make the directory if it doesn&#39;t alreay exist:</span>
-  <span class="n">mkdir</span> <span class="o">/</span><span class="n">home</span><span class="o">/&lt;</span><span class="n">username</span><span class="o">&gt;/</span><span class="n">code</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span>
-  <span class="c1">#move the ESPA.tar.gz file into the directory prior to extracting:</span>
-  <span class="n">mv</span> <span class="o">/</span><span class="n">home</span><span class="o">/&lt;</span><span class="n">username</span><span class="o">&gt;/</span><span class="n">tmp</span><span class="o">/</span><span class="n">eosvault</span><span class="o">/</span><span class="n">files</span><span class="o">/</span><span class="n">ESPA</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span> <span class="o">/</span><span class="n">home</span><span class="o">/&lt;</span><span class="n">username</span><span class="o">&gt;/</span><span class="n">code</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">ESPA</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
-  <span class="c1">#Navigate to the new directory </span>
-  <span class="n">cd</span> <span class="o">~/</span><span class="n">code</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span>
-  <span class="n">extract</span> <span class="n">the</span> <span class="n">angle</span> <span class="n">files</span><span class="p">:</span>
-  <span class="n">tar</span> <span class="o">-</span><span class="n">xzvf</span> <span class="n">ESPA</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  #Replace &lt;yourUsername&gt; in the line below with your username (remove brackets, keep quotes)
+  ###MYUSERNAME is a variable and will update accordingly
+  MYUSERNAME=&quot;&lt;yourUsername&gt;&quot;
+  #make the directory if it doesn&#39;t alreay exist:
+  mkdir /home/${MYUSERNAME}/code/bin/
+  #move the ESPA.tar.gz file into the directory prior to extracting:
+  mv /home/${MYUSERNAME}/tmp/eosvault/files/ESPA.tar.gz /home/${MYUSERNAME}/code/bin/ESPA.tar.gz
+  #Navigate to the new directory 
+  cd ~/code/bin/
+  extract the angle files:
+  tar -xzvf ESPA.tar.gz
 </pre></div>
 </div>
 </li>
@@ -401,7 +407,7 @@ Follow the five steps (and links) of <a class="reference external" href="https:/
 </ul>
 <p>config_eri.yaml template (with added line #s for reference):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="o">-</span>  <span class="c1"># Root directory for the GCP index files</span>
-<span class="mi">2</span><span class="o">-</span>  <span class="n">index_dir</span><span class="p">:</span> <span class="s1">&#39;/jad-cel/paraguay_lc/raster&#39;</span>
+<span class="mi">2</span><span class="o">-</span>  <span class="n">index_dir</span><span class="p">:</span> <span class="s1">&#39;/jad-cel/sandbox-cel/paraguay_lc/raster&#39;</span>
 <span class="mi">3</span><span class="o">-</span>  
 <span class="mi">4</span><span class="o">-</span>  <span class="c1"># Directory to save text files of incomplete batch jobs</span>
 <span class="mi">5</span><span class="o">-</span>  <span class="n">log_dir</span><span class="p">:</span> <span class="s1">&#39;/home/&lt;username&gt;/code/bash&#39;</span>
@@ -472,7 +478,7 @@ Follow the five steps (and links) of <a class="reference external" href="https:/
 <span class="mi">70</span><span class="o">-</span> 
 <span class="mi">71</span><span class="o">-</span> <span class="n">srtm</span><span class="p">:</span>
 <span class="mi">72</span><span class="o">-</span> 
-<span class="mi">73</span><span class="o">-</span>   <span class="n">srtm_path</span><span class="p">:</span> <span class="s1">&#39;/jad-cel/paraguay_lc/raster/srtm&#39;</span>
+<span class="mi">73</span><span class="o">-</span>   <span class="n">srtm_path</span><span class="p">:</span> <span class="s1">&#39;/jad-cel/sandbox-cel/paraguay_lc/raster/srtm&#39;</span>
 <span class="mi">74</span><span class="o">-</span> 
 <span class="mi">75</span><span class="o">-</span> <span class="n">masks</span><span class="p">:</span>
 <span class="mi">76</span><span class="o">-</span> 
@@ -484,9 +490,12 @@ Follow the five steps (and links) of <a class="reference external" href="https:/
 <div class="section" id="copy-processing-scripts">
 <h2>5. Copy processing scripts<a class="headerlink" href="#copy-processing-scripts" title="Permalink to this headline">¶</a></h2>
 <p>Copy the three primary processing scripts to the folder from which you will be submitting commands([username]/code/bash).</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cp</span> <span class="o">/</span><span class="n">jad</span><span class="o">-</span><span class="n">cel</span><span class="o">/</span><span class="n">templates</span><span class="o">/</span><span class="n">eosvault_download_eri_pry</span><span class="o">.</span><span class="n">sh</span> <span class="p">[</span><span class="n">username</span><span class="p">]</span><span class="o">/</span><span class="n">code</span><span class="o">/</span><span class="n">bash</span><span class="o">/</span><span class="n">download_eri</span><span class="o">.</span><span class="n">sh</span>
-<span class="n">cp</span> <span class="o">/</span><span class="n">jad</span><span class="o">-</span><span class="n">cel</span><span class="o">/</span><span class="n">templates</span><span class="o">/</span><span class="n">eosvault_post_eri_pry</span><span class="o">.</span><span class="n">sh</span> <span class="p">[</span><span class="n">username</span><span class="p">]</span><span class="o">/</span><span class="n">code</span><span class="o">/</span><span class="n">bash</span><span class="o">/</span><span class="n">post_eri</span><span class="o">.</span><span class="n">sh</span>
-<span class="n">cp</span> <span class="o">/</span><span class="n">jad</span><span class="o">-</span><span class="n">cel</span><span class="o">/</span><span class="n">templates</span><span class="o">/</span><span class="n">pytuyau_pipeline_eri</span><span class="o">.</span><span class="n">sh</span> <span class="p">[</span><span class="n">username</span><span class="p">]</span><span class="o">/</span><span class="n">code</span><span class="o">/</span><span class="n">bash</span><span class="o">/</span><span class="n">pipeline_eri</span><span class="o">.</span><span class="n">sh</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#Replace &lt;yourUsername&gt; in the line below with your username (remove brackets, keep quotes)
+##MYUSERNAME is a variable and will update accordingly
+MYUSERNAME=&quot;&lt;yourUsername&gt;&quot;
+cp /jad-cel/sandbox-cel/templates/eosvault_download_eri_pry.sh ${MYUSERNAME}/code/bash/download_eri.sh
+cp /jad-cel/sandbox-cel/templates/eosvault_post_eri_pry.sh ${MYUSERNAME}/code/bash/post_eri.sh
+cp /jad-cel/snadbox-cel/templates/pytuyau_pipeline_eri.sh ${MYUSERNAME}/code/bash/pipeline_eri.sh
 </pre></div>
 </div>
 <p>Edit the <code class="docutils literal notranslate"><span class="pre">CONFIG_FILE</span></code> path in your “download_eri.sh” and “post_eri.sh” scripts to point to your directory
