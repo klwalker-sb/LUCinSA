@@ -22,7 +22,7 @@ The CEL project space resides on the bellows server, which is first reached thro
 This means you will need to ssh twice into the system to reach our space:
 
 ```
-ssh [username]@eri.ucsb.edu
+ssh [username]@ssh.eri.ucsb.edu
 #enter password at prompt
 ssh [username]@bellows.eri.ucsb.edu
 #enter password at prompt
