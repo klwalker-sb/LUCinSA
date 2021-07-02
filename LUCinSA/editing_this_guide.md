@@ -29,7 +29,7 @@ git add ./*
 git commit -m "edits"
 git push
 #push newly-built HTML to gh-pages branch:
- ghp-import -n -p -f mylocalbook/_build/html
+ ghp-import -n -p -f LUCinSA/_build/html
 ```
 [see this guide to use conda in Git Hub](https://discuss.codecademy.com/t/setting-up-conda-in-git-bash/534473)
 [see this guide for more on publishing a Jupyter Book online](https://jupyterbook.org/start/publish.html)
