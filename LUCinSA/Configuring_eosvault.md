@@ -160,21 +160,26 @@ config_eri.yaml template (with added line #s for reference):
 Copy the three primary processing scripts to the folder from which you will be submitting commands([username]/code/bash).
 ```
 #Replace <yourUsername> in the line below with your username (remove brackets, keep quotes)
-##MYUSERNAME is a variable and will update accordingly
+##(MYUSERNAME is a variable and will update accordingly)
 MYUSERNAME="<yourUsername>"
 cp /jad-cel/sandbox-cel/templates/eosvault_download_eri_pry.sh ${MYUSERNAME}/code/bash/download_eri.sh
+cp /jad-cel/sandbox-cel/templates/eosvault_download_eri_pry_single.sh ${MYUSERNAME}/code/bash/download_eri_single.sh
 cp /jad-cel/sandbox-cel/templates/eosvault_post_eri_pry.sh ${MYUSERNAME}/code/bash/post_eri.sh
 cp /jad-cel/snadbox-cel/templates/pytuyau_pipeline_eri.sh ${MYUSERNAME}/code/bash/pipeline_eri.sh
 ```
-Edit the `CONFIG_FILE` path in your "download_eri.sh" and "post_eri.sh" scripts to point to your directory 
+Edit the "download_eri.sh" "download_eri_single.sh" and "post_eri.sh" scripts to point to enter your username between the quotes in the line: MY_USERNAME="" 
 (For help editing in Vim, [see Vim Commands](VimCommands).)
 ```
 vim <username>/code/bash/download_eri.sh
-# Replace <username> with your own username in the following line: CONFIG_FILE="/home/<username>/project/config/config_eri.yaml"
+# Find line: MY_USERNAME="" and enter your username between the quotes
+[Esc] #if in edit mode
+:wq
+vim <username>/code/bash/download_eri_single.sh
+# Find line: MY_USERNAME="" and enter your username between the quotes
 [Esc] #if in edit mode
 :wq
 vim <username>/code/bash/post_eri.sh
-# Replace <username> with your own username in the following line: CONFIG_FILE="/home/<username>/project/config/config_eri.yaml"
+# Find line: MY_USERNAME="" and enter your username between the quotes
 [Esc] #if in edit mode
 :wq
 ```

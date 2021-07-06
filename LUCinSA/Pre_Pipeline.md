@@ -49,28 +49,29 @@ Default script
 34- # As an array job
 35- GRID_ID=$SLURM_ARRAY_TASK_ID
 36- 
-37- IN_DIR="/jad-cel/sandbox-cel/paraguay_lc/raster/grids"
-38- CONFIG_FILE="/home/<username>/project/config/config_eri.yaml"
-39- 
-40- #############################################
-41- # Turn off NumPy parallelism and rely on dask
-42- #############################################
-43- export OPENBLAS_NUM_THREADS=1
-44- export MKL_NUM_THREADS=1
-45- # This should be sufficient for OpenBlas and MKL
-46- export OMP_NUM_THREADS=1
-47- ################################################
-48- 
-49- # activate the virtual environment
-50- source ~/.nasaenv/bin/activate
-51- 
-52- eosvault post --in-dir $IN_DIR --grid $GRID_ID --config-file $CONFIG_FILE --batch-size $BATCH_SIZE --max-workers 
-53- $NUM_WORKERS --satellite $SATELLITE --asset-id $ASSET_ID
-54- 
-55- deactivate
+37- MY_USERNAME=""
+38- IN_DIR="/jad-cel/sandbox-cel/paraguay_lc/raster/grids"
+39- CONFIG_FILE="/home/${MY_USERNAME}/project/config/config_eri.yaml"
+40- 
+41- #############################################
+42- # Turn off NumPy parallelism and rely on dask
+43- #############################################
+44- export OPENBLAS_NUM_THREADS=1
+45- export MKL_NUM_THREADS=1
+46- # This should be sufficient for OpenBlas and MKL
+47- export OMP_NUM_THREADS=1
+48- ################################################
+49- 
+50- # activate the virtual environment
+51- source ~/.nasaenv/bin/activate
+52- 
+53- eosvault post --in-dir $IN_DIR --grid $GRID_ID --config-file $CONFIG_FILE --batch-size $BATCH_SIZE --max-workers 
+54- $NUM_WORKERS --satellite $SATELLITE --asset-id $ASSET_ID
+55- 
+56- deactivate
 ```
 Most lines should stay as they are.
-**Do change the path for the CONFIG FILE (line 48)** to include your own username. 
+**Do ensure that your username is entered between the quotes in line 37.
 As with the downloading script, **you also need to change Grid info and Product info lines**:  
 **Grid info:** `#SBATCH --array= ` (line 10 here). This is where you enter the gridcells you are processing.  
      You can enter a range (e.g. 898-908), But be mindful that you are not hogging all the computer bandwidth.

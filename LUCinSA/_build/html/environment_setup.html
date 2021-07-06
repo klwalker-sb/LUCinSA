@@ -304,8 +304,8 @@
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#sourcing-the-profile">
-     Sourcing the profile
+    <a class="reference internal nav-link" href="#sourcing-the-profile-optional-only-do-if-you-created-a-profile-above">
+     Sourcing the profile (optional; only do if you created a .profile above)
     </a>
    </li>
   </ul>
@@ -383,7 +383,7 @@ source .nasaenv/bin/activate
 (.nasaenv) cd ~/tmp/
 (.nasaenv) git clone https://github.com/jgrss/rastercrf.git
 (.nasaenv) cd rastercrf/
-(.nasaenv) ppython setup.py build &amp;&amp; pip install .
+(.nasaenv) python setup.py build &amp;&amp; pip install .
 ​
 # Install satsmooth from github
 (.nasaenv) cd ~/tmp/
@@ -423,7 +423,7 @@ source .nasaenv/bin/activate
 <span class="c1">#(look up the name of the main branch in the GitHub repo). Here it is &#39;main&#39;, but it could be &#39;master&#39;/&#39;dev&#39;/etc. </span>
 <span class="p">(</span><span class="o">.</span><span class="n">nasaenv</span><span class="p">)</span> <span class="n">git</span> <span class="n">pull</span> <span class="n">origin</span> <span class="n">main</span>
 <span class="p">(</span><span class="o">.</span><span class="n">nasaenv</span><span class="p">)</span> <span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">build</span> <span class="o">&amp;&amp;</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">.</span>
-<span class="p">(</span><span class="o">.</span><span class="n">nasaenv</span><span class="p">)</span> <span class="n">deactivte</span>
+<span class="p">(</span><span class="o">.</span><span class="n">nasaenv</span><span class="p">)</span> <span class="n">deactivate</span>
 </pre></div>
 </div>
 </div>
@@ -496,8 +496,8 @@ export GDAL_DATA=/usr/share/gdal/2.2
 </pre></div>
 </div>
 </div>
-<div class="section" id="sourcing-the-profile">
-<span id="profileissue"></span><h3>Sourcing the profile<a class="headerlink" href="#sourcing-the-profile" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="sourcing-the-profile-optional-only-do-if-you-created-a-profile-above">
+<span id="profileissue"></span><h3>Sourcing the profile (optional; only do if you created a .profile above)<a class="headerlink" href="#sourcing-the-profile-optional-only-do-if-you-created-a-profile-above" title="Permalink to this headline">¶</a></h3>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>Your personalized profile may not function correctly due to an irregular issue in the bash_profile.</p>
@@ -506,7 +506,7 @@ export GDAL_DATA=/usr/share/gdal/2.2
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="o">.</span><span class="n">profile</span>
 </pre></div>
 </div>
-<p>But better to make the adjustment permanant by adding a<code class="docutils literal notranslate"><span class="pre">.bash_profile</span></code> to your home dirrectory (output -&gt;  ~/.bash_profile) with the following language (you can clone this from /jad-cel/cel-sandbox/templates/home_bash_profile.sh):</p>
+<p>But better to make the adjustment permanant by adding a<code class="docutils literal notranslate"><span class="pre">.bash_profile</span></code> to your home directory (output -&gt;  ~/.bash_profile) with the following language (you can clone this from /jad-cel/cel-sandbox/templates/home_bash_profile.sh):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span># .bash_profile
 # Get the aliases and functions
 if [ -f ~/.bashrc ]; then
