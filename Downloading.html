@@ -302,6 +302,13 @@
   <a class="reference internal nav-link" href="#rerun-cells-that-did-not-load-completely">
    5. Rerun cells that did not load completely
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#to-rerun-only-a-specific-sensor">
+     To rerun only a specific sensor
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#move-err-and-out-files-to-new-directory-to-facilitate-tracking-of-new-downloads">
@@ -443,9 +450,12 @@ Go here for <a class="reference internal" href="vim.html#vimcommands"><span clas
 </pre></div>
 </div>
 <p>Most lines should stay as they are.<br />
-<strong>the lines that you need to change are:</strong><br />
-<strong>Grid info:</strong> <code class="docutils literal notranslate"><span class="pre">#SBATCH</span> <span class="pre">--array=</span> </code> (line 10 here). This is where you enter the gridcells you are processing.<br />
-You can enter a range (e.g. 898-908), But be mindful that you are not hogging all the computer bandwidth.</p>
+<strong>the lines that you need to change are:</strong></p>
+<ul class="simple">
+<li><p><strong>MyUsername</strong> (line 32 here): Insert your username between the quotes if it isn’t already present.</p></li>
+<li><p><strong>Grid info:</strong> <code class="docutils literal notranslate"><span class="pre">#SBATCH</span> <span class="pre">--array=</span> </code> (line 10 here). This is where you enter the gridcells you are processing.<br />
+You can enter a range (e.g. 898-908), But be mindful that you are not hogging all the computer bandwidth.</p></li>
+</ul>
 <div class="admonition-you-can-limit-the-number-of-cells-that-are-processed-at-one-time-by-adding-n admonition">
 <p class="admonition-title">You can limit the number of cells that are processed at one time by adding %n</p>
 <p>For example, 898-908%4 would process 4 cells at a time. When the first 4 finish, the next will start.</p>
@@ -455,8 +465,10 @@ You can enter a range (e.g. 898-908), But be mindful that you are not hogging al
 With Sentinel (which are heavy files), %2 is safest. With Landsat %4 is fine.</p>
 </div>
 </div>
-<p><strong>Incomplete tag</strong>: Check that <code class="docutils literal notranslate"><span class="pre">IGNORE_INCOMPLETE=</span></code>(line 17 here) is set to “No” for the first run. (You will change this in step 5 if all images don’t download properly the first time.)
-<strong>MyUsername</strong> (line 32 here): Insert your username between the quotes</p>
+<ul class="simple">
+<li><p><strong>Incomplete tag</strong>: Check that <code class="docutils literal notranslate"><span class="pre">IGNORE_INCOMPLETE=</span></code>(line 17 here) is set to “No” for the first run. (You will change this in<br />
+step 5 if all images don’t download properly the first time.)</p></li>
+</ul>
 <p>After making these edits, save your script and exit:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#(If in insert mode), use [Esc] to exit insert mode </span>
 <span class="p">:</span><span class="n">wq</span>
@@ -590,7 +602,7 @@ The key indicates which cells loaded completely for each product. Those not list
 </pre></div>
 </div>
 <p>If the .out file does not indicate any big problems and the slider at the bottom of the .err file is near 100% with only a few files missing in the fraction next to it (e.g. 124/127), you probably do not need to worry about larger issues. These cells do need to be rerun, however, to register correctly in the database for further processing.
-<strong>Repeat steps 2 and 3 above</strong>. In adition to editing the grid cells and sensor to correspond to those that you are rerunning, in the <code class="docutils literal notranslate"><span class="pre">download_eri.sh</span></code> file, you will also change the following line:</p>
+<strong>Repeat steps 2 and 3 above</strong>. In adition to editing the grid cells to correspond to those that you are rerunning, in the <code class="docutils literal notranslate"><span class="pre">download_eri.sh</span></code> file, you will also change the following line:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yes</span> <span class="o">|</span> <span class="n">no</span>
 <span class="n">IGNORE_INCOMPLETE</span><span class="o">=</span><span class="s2">&quot;no&quot;</span>
 
@@ -603,6 +615,112 @@ The key indicates which cells loaded completely for each product. Those not list
 <div class="admonition attention">
 <p class="admonition-title">Attention</p>
 <p>Remember to reset “IGNORE_INCOMPLETE=”no”  before beginning new downloads</p>
+</div>
+<div class="section" id="to-rerun-only-a-specific-sensor">
+<h3>To rerun only a specific sensor<a class="headerlink" href="#to-rerun-only-a-specific-sensor" title="Permalink to this headline">¶</a></h3>
+<p>Use the script: <code class="docutils literal notranslate"><span class="pre">download_eri_single.sh</span></code>
+The script is copied below with line numbers added for reference.</p>
+<ul class="simple">
+<li><p>Edit the array in line 10 to contain the grid cells you want to download.</p></li>
+<li><p>Change IGNORE_INCOMPLETE in line 35 to “yes”</p></li>
+<li><p>Enter your username in line 43 if it isn’t already present.</p></li>
+<li><p>Select the sensor product by uncommenting the corresponding lines (remove the # at the beginning of the line) and commenting those that don’t correspond (replacing the # at the beginning of the line). (Only one product can be run at a time).</p>
+<ul>
+<li><p><strong><span style='color:purple'> For Sentinel: </span></strong> uncomment <code class="docutils literal notranslate"><span class="pre">SATELLITE=&quot;sentinel-2</span></code> (line 25 here) and<br />
+<code class="docutils literal notranslate"><span class="pre">ASSET_ID=&quot;COPERNICUS/S2&quot;</span></code> (line 26 here) for images or <code class="docutils literal notranslate"><span class="pre">ASSET_ID=&quot;COPERNICUS/S2_CLOUD_PROBABILITY&quot;</span></code> (line 27 here) for
+cloud masks</p></li>
+<li><p><strong><span style='color:purple'> For Landsat: </span></strong> uncomment <code class="docutils literal notranslate"><span class="pre">LANDSAT_SENSOR=&quot;LC08&quot;</span></code>
+<code class="docutils literal notranslate"><span class="pre">ASSET_ID=&quot;LANDSAT/${LANDSAT_SENSOR}/C01/T1_SR&quot;</span></code>and <code class="docutils literal notranslate"><span class="pre">SATELLITE=&quot;landsat&quot;</span></code> (lines 25-27 here). Also change the Landsat
+sensor (line 30 here) to correspond to the sensor you want to process: “LT05” for Landsat 5, “LE07” for Landsat 7, or
+“LC08” for Landsat 8 (as noted in line 24).</p></li>
+</ul>
+</li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#Download_eri_single.sh script, copied from jad-cel/sandbox-cel/paraguay_lc/templates/eosvault_download_eri_pry_single.sh
+1-  #!/bin/bash -l
+2-  
+3-  #SBATCH -N 1 # number of nodes
+4-  #SBATCH -n 2 # number of cores
+5-  #SBATCH -t 0-04:00 # time (D-HH:MM)
+6-  #SBATCH -p basic
+7-  #SBATCH -o sldown.%N.%a.%j.out # STDOUT
+8-  #SBATCH -e sldown.%N.%a.%j.err # STDERR
+9-  #SBATCH --job-name=&quot;dwn-pry&quot;
+10- #SBATCH --array=894
+11-
+12- sleep $((RANDOM%30+1))
+13- 
+14- # Change permissions on output files
+15- # user = 7 = rwx
+16- # group = 7 = rwx
+17- # others = 4 = r 
+18- #umask 774
+19- 
+20- #####################################################
+21- START_DATE=&quot;2010-03-01&quot;
+22- END_DATE=&quot;2020-11-01&quot;
+23- 
+24- # landsat | sentinel-2
+25- #SATELLITE=&quot;sentinel-2&quot;
+26- #ASSET_ID=&quot;COPERNICUS/S2&quot;
+27- #ASSET_ID=&quot;COPERNICUS/S2_CLOUD_PROBABILITY&quot;
+28- 
+29- # LT05 | LE07 | LC08
+30- LANDSAT_SENSOR=&quot;LC08&quot;
+31- ASSET_ID=&quot;LANDSAT/${LANDSAT_SENSOR}/C01/T1_SR&quot;
+32- SATELLITE=&quot;landsat&quot;
+33- 
+34- # yes | no
+35- IGNORE_INCOMPLETE=&quot;no&quot;
+36- 
+37- BATCH_SIZE=100000
+38- #####################################################
+39- 
+40- # As an array job
+41- GRID_ID=$SLURM_ARRAY_TASK_ID
+42- 
+43- MY_USERNAME=&quot;&quot;
+44- OUT_DIR=&quot;/jad-cel/sandbox-cel/paraguay_lc/raster/grids&quot;
+45- GRID_FILE=&quot;/jad-cel/sandbox-cel/paraguay_lc/vector/pry_grids.gpkg&quot;
+46- CONFIG_FILE=&quot;/home/${MY_USERNAME}/project/config/config_eri.yaml&quot;
+47- CRS_PROJ4=&quot;+proj=aea +lat_1=-5 +lat_2=-42 +lat_0=-32 +lon_0=-60 +x_0=0 +y_0=0 +ellps=aust_SA +units=m +no_defs &quot;
+48- 
+49- #############################################
+50- # Turn off NumPy parallelism and rely on dask
+51- #############################################
+52- export CLOUDSDK_PYTHON=python3
+53- export OPENBLAS_NUM_THREADS=1
+54- export MKL_NUM_THREADS=1
+55- # This should be sufficient for OpenBlas and MKL
+56- export OMP_NUM_THREADS=1
+57- ################################################
+58- 
+59- # activate the virtual environment
+60- source ~/.nasaenv/bin/activate
+61-
+62- if [ &quot;$IGNORE_INCOMPLETE&quot; == &quot;yes&quot; ]; then
+63-
+64-   eosvault download --out-dir $OUT_DIR --grid-file $GRID_FILE --grid $GRID_ID --start-date $START_DATE --end-date $END_DATE 65- --config-file $CONFIG_FILE --batch-size $BATCH_SIZE --max-workers $SLURM_CPUS_ON_NODE --satellite $SATELLITE --asset-id 
+66- $ASSET_ID --grid-crs &quot;${CRS_PROJ4}&quot; --ignore-incomplete #--reset-asset #--clear-all #--reset-db
+67- 
+68- else
+69-  
+70-  eosvault download --out-dir $OUT_DIR --grid-file $GRID_FILE --grid $GRID_ID --start-date $START_DATE --end-date $END_DATE 71- --config-file $CONFIG_FILE --batch-size $BATCH_SIZE --max-workers $SLURM_CPUS_ON_NODE --satellite $SATELLITE --asset-id 
+72- $ASSET_ID --grid-crs &quot;${CRS_PROJ4}&quot; #--reset-asset #--clear-all #--reset-db
+73-
+74- fi
+75-
+76- deactivate
+</pre></div>
+</div>
+<p>To run the process:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#if not already in bash directory, navigate there:</span>
+<span class="n">cd</span> <span class="o">~/</span><span class="n">code</span><span class="o">/</span><span class="n">bash</span><span class="o">/</span>
+<span class="c1">#submit the command:</span>
+<span class="n">sbatch</span> <span class="n">download_eri_single</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<p>Check .err and .out files as before.</p>
 </div>
 </div>
 <div class="section" id="move-err-and-out-files-to-new-directory-to-facilitate-tracking-of-new-downloads">

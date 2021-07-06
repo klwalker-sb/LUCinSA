@@ -491,21 +491,26 @@ cp /jad-cel/sandbox-cel/templates/eosvault_config_eri_pry.yaml ${MYUSERNAME}/pro
 <h2>5. Copy processing scripts<a class="headerlink" href="#copy-processing-scripts" title="Permalink to this headline">¶</a></h2>
 <p>Copy the three primary processing scripts to the folder from which you will be submitting commands([username]/code/bash).</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#Replace &lt;yourUsername&gt; in the line below with your username (remove brackets, keep quotes)
-##MYUSERNAME is a variable and will update accordingly
+##(MYUSERNAME is a variable and will update accordingly)
 MYUSERNAME=&quot;&lt;yourUsername&gt;&quot;
 cp /jad-cel/sandbox-cel/templates/eosvault_download_eri_pry.sh ${MYUSERNAME}/code/bash/download_eri.sh
+cp /jad-cel/sandbox-cel/templates/eosvault_download_eri_pry_single.sh ${MYUSERNAME}/code/bash/download_eri_single.sh
 cp /jad-cel/sandbox-cel/templates/eosvault_post_eri_pry.sh ${MYUSERNAME}/code/bash/post_eri.sh
 cp /jad-cel/snadbox-cel/templates/pytuyau_pipeline_eri.sh ${MYUSERNAME}/code/bash/pipeline_eri.sh
 </pre></div>
 </div>
-<p>Edit the <code class="docutils literal notranslate"><span class="pre">CONFIG_FILE</span></code> path in your “download_eri.sh” and “post_eri.sh” scripts to point to your directory
+<p>Edit the “download_eri.sh” “download_eri_single.sh” and “post_eri.sh” scripts to point to enter your username between the quotes in the line: MY_USERNAME=””
 (For help editing in Vim, <a class="reference internal" href="vim.html#vimcommands"><span class="std std-ref">see Vim Commands</span></a>.)</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vim</span> <span class="o">&lt;</span><span class="n">username</span><span class="o">&gt;/</span><span class="n">code</span><span class="o">/</span><span class="n">bash</span><span class="o">/</span><span class="n">download_eri</span><span class="o">.</span><span class="n">sh</span>
-<span class="c1"># Replace &lt;username&gt; with your own username in the following line: CONFIG_FILE=&quot;/home/&lt;username&gt;/project/config/config_eri.yaml&quot;</span>
+<span class="c1"># Find line: MY_USERNAME=&quot;&quot; and enter your username between the quotes</span>
+<span class="p">[</span><span class="n">Esc</span><span class="p">]</span> <span class="c1">#if in edit mode</span>
+<span class="p">:</span><span class="n">wq</span>
+<span class="n">vim</span> <span class="o">&lt;</span><span class="n">username</span><span class="o">&gt;/</span><span class="n">code</span><span class="o">/</span><span class="n">bash</span><span class="o">/</span><span class="n">download_eri_single</span><span class="o">.</span><span class="n">sh</span>
+<span class="c1"># Find line: MY_USERNAME=&quot;&quot; and enter your username between the quotes</span>
 <span class="p">[</span><span class="n">Esc</span><span class="p">]</span> <span class="c1">#if in edit mode</span>
 <span class="p">:</span><span class="n">wq</span>
 <span class="n">vim</span> <span class="o">&lt;</span><span class="n">username</span><span class="o">&gt;/</span><span class="n">code</span><span class="o">/</span><span class="n">bash</span><span class="o">/</span><span class="n">post_eri</span><span class="o">.</span><span class="n">sh</span>
-<span class="c1"># Replace &lt;username&gt; with your own username in the following line: CONFIG_FILE=&quot;/home/&lt;username&gt;/project/config/config_eri.yaml&quot;</span>
+<span class="c1"># Find line: MY_USERNAME=&quot;&quot; and enter your username between the quotes</span>
 <span class="p">[</span><span class="n">Esc</span><span class="p">]</span> <span class="c1">#if in edit mode</span>
 <span class="p">:</span><span class="n">wq</span>
 </pre></div>

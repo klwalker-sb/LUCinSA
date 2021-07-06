@@ -61,7 +61,7 @@ source .nasaenv/bin/activate
 (.nasaenv) cd ~/tmp/
 (.nasaenv) git clone https://github.com/jgrss/rastercrf.git
 (.nasaenv) cd rastercrf/
-(.nasaenv) ppython setup.py build && pip install .
+(.nasaenv) python setup.py build && pip install .
 ​
 # Install satsmooth from github
 (.nasaenv) cd ~/tmp/
@@ -101,7 +101,7 @@ source .nasaenv/bin/activate
 #(look up the name of the main branch in the GitHub repo). Here it is 'main', but it could be 'master'/'dev'/etc. 
 (.nasaenv) git pull origin main
 (.nasaenv) python setup.py build && pip install .
-(.nasaenv) deactivte
+(.nasaenv) deactivate
 ```
 
 (configVim)=
@@ -175,14 +175,14 @@ export GDAL_DATA=/usr/share/gdal/2.2
 ```
 
 (profileIssue)=
-### Sourcing the profile
+### Sourcing the profile (optional; only do if you created a .profile above)
 :::{warning}Your personalized profile may not function correctly due to an irregular issue in the bash_profile.
 :::
 You could fix this everytime you log in by sourcing the profile:
 ```
 source .profile
 ```
-But better to make the adjustment permanant by adding a`.bash_profile` to your home dirrectory (output ->  ~/.bash_profile) with the following language (you can clone this from /jad-cel/cel-sandbox/templates/home_bash_profile.sh):
+But better to make the adjustment permanant by adding a`.bash_profile` to your home directory (output ->  ~/.bash_profile) with the following language (you can clone this from /jad-cel/cel-sandbox/templates/home_bash_profile.sh):
 ```
 # .bash_profile
 # Get the aliases and functions
