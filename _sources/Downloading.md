@@ -6,10 +6,10 @@ Jordan Graesser's `eosvault` script drives the download process, [see here](http
 To run the script:
 (GetCells)=
 ## 1. Get gridcells to download
-Find a block of cells in need of processing in the `cell_blocks.txt` file in `jad-cel/cel-sandbox/paraguay_lc` (anything without an X next to it is free)
+Find a block of cells in need of processing in the `cell_blocks.txt` file in `jad-cel/sandbox-cel/paraguay_lc` (anything without an X next to it is free)
 ```
 cd ~/../
-cd jad-cel/cel-sandbox/paragual_lc
+cd jad-cel/sandbox-cel/paragual_lc
 vim cell_blocks.txt
 #"check out" a block of cells by putting an X and your initials next to it. Note your range(s) somewhere.
 #save the file:
@@ -213,7 +213,7 @@ ls ~/code/bash/
 cat [filename]
 ```
 If all images downloaded, you should see:
-![](/Images/cat_download.png)
+![](/Images/cat_download_multi.png)
 
 You can also generate a figure to see which cells downloaded fully: 
 ```
