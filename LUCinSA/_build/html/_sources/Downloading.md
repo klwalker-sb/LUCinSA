@@ -220,14 +220,14 @@ You can also generate a figure to see which cells downloaded fully:
 #Activate virtual environment:
 source .nasaenv/bin/activate
 #Run status command:
-eosvault status --config-file ~/project/config/config_eri.yaml --out-dir ~/code/bash --grid-file jad-cel/cel-sandbox/paraguay_lc/vector/pry_grids.gpkg --zoom
+eosvault status --config-file ~/project/config/config_eri.yaml --out-dir ~/code/bash --grid-file /jad-cel/sandbox-cel/paraguay_lc/vector/pry_grids.gpkg --zoom
 #Deactivate virtual environment:
 deactivate
 ```
 To view the Download Progress figure:
-Download file to view on local computer:
+Download file to view on local desktop by opening a separate terminal and typing:
 ```
-rsync -raz --progress <username>@ssh.eri.ucsb.edu:<ERI path> <local path>
+rsync -raz --progress <username>@ssh.eri.ucsb.edu:~/code/bash/grid_status.png Desktop/gridstat.png
 ```
 Alternatively, you can view the file though an FPT such as WinSCP.
 
