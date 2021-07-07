@@ -304,7 +304,11 @@
 <p>================================================================================================================================</p>
 <div class="section" id="via-command-line">
 <h2>via command line<a class="headerlink" href="#via-command-line" title="Permalink to this headline">¶</a></h2>
-<p>To transfer small files via the command line, use <span style='color:Red'> rsync </span> . You can <a class="reference external" href="https://www.digitalocean.com/community/tutorials/how-to-use-rsync-to-sync-local-and-remote-directories">learn more about rsync here</a></p>
+<p><strong>On a Mac</strong>, you can transfer small files via the command line using <code class="docutils literal notranslate"><span class="pre">rsync</span></code>. You can <a class="reference external" href="https://www.digitalocean.com/community/tutorials/how-to-use-rsync-to-sync-local-and-remote-directories">learn more about rsync here</a>, or <a class="reference external" href="https://linux.die.net/man/1/rsync">here to see all command options</a></p>
+<div class="admonition-these-rsync-commands-are-run-from-a-separate-terminal admonition">
+<p class="admonition-title">These rsync commands are run from a separate terminal</p>
+<p>(you do not need to close your open terminal, but open a second one from your computer to run these)</p>
+</div>
 <p>#To Download a file from ERI to local:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rsync</span> <span class="o">-</span><span class="n">raz</span> <span class="o">--</span><span class="n">progress</span> <span class="o">&lt;</span><span class="n">username</span><span class="o">&gt;</span><span class="nd">@ssh</span><span class="o">.</span><span class="n">eri</span><span class="o">.</span><span class="n">ucsb</span><span class="o">.</span><span class="n">edu</span><span class="p">:</span><span class="o">&lt;</span><span class="n">ERI</span> <span class="n">path</span><span class="o">/</span><span class="n">fileName</span><span class="o">.</span><span class="n">ext</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">local</span> <span class="n">path</span><span class="o">/</span><span class="n">fileName</span><span class="o">.</span><span class="n">ext</span><span class="o">&gt;</span>
 </pre></div>
@@ -313,15 +317,16 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rsync</span> <span class="o">&lt;</span><span class="n">local</span> <span class="n">path</span><span class="o">/</span><span class="n">fileName</span><span class="o">.</span><span class="n">ext</span><span class="o">&gt;</span> <span class="o">-</span><span class="n">raz</span> <span class="o">--</span><span class="n">progress</span> <span class="o">&lt;</span><span class="n">username</span><span class="o">&gt;</span><span class="nd">@ssh</span><span class="o">.</span><span class="n">eri</span><span class="o">.</span><span class="n">ucsb</span><span class="o">.</span><span class="n">edu</span><span class="p">:</span><span class="o">&lt;</span><span class="n">ERI</span> <span class="n">path</span><span class="o">/</span><span class="n">fileName</span><span class="o">.</span><span class="n">ext</span><span class="o">&gt;</span>
 </pre></div>
 </div>
+<p><strong>On Windows</strong>, rsync or a similar file sync tool can be set up on a bash command interface such as git bash or cygwin, but the setup is a bit dodgy and unstable. A more robust option for Windows is to use an all-in-one SSH/FTP client like MobaXterm, or to add an FTP client to the mix.</p>
 </div>
 <div class="section" id="via-ftp-client">
 <h2>via FTP client<a class="headerlink" href="#via-ftp-client" title="Permalink to this headline">¶</a></h2>
-<p>You can also transfer files using a File Transfer Protocol (FTP). If you are already using MobaXterm, you have an FTP included. Just double-click files from the file tree on the left to open them, or drag them onto your computer to copy them. You can also use a dedicated FTP such as WinSCP. (<a class="reference external" href="https://winscp.net/eng/index.php">Get WinSCP here</a>).
-As with SSH, you must be logged into a UCSB VPN client first.</p>
+<p>You can also transfer files using a File Transfer Protocol (FTP). If you are already using MobaXterm, you have an FTP included. Just double-click files from the file tree on the left to open them, or drag them onto your computer to copy them. You can also use a dedicated FTP such as WinSCP. (<a class="reference external" href="https://winscp.net/eng/index.php">Get WinSCP here</a>). There are also FTP options for Macs, such as [FileZilla(]<a class="reference external" href="https://filezilla-project.org/">https://filezilla-project.org/</a>).</p>
+<p>As with SSH, you must be logged into a UCSB VPN client first.</p>
 <table class="colwidths-auto table">
 <thead>
-<tr class="row-odd"><th class="text-align:center head"><p>Step 1:</p></th>
-<th class="text-align:center head"><p>Step 2:</p></th>
+<tr class="row-odd"><th class="text-align:center head"><p>Example with WinSCP2:</p></th>
+<th class="text-align:center head"><p></p></th>
 </tr>
 </thead>
 <tbody>

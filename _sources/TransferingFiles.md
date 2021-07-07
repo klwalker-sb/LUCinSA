@@ -3,9 +3,10 @@
 ================================================================================================================================
 
 ## via command line
-
-To transfer small files via the command line, use <span style='color:Red'> rsync </span> . You can [learn more about rsync here](https://www.digitalocean.com/community/tutorials/how-to-use-rsync-to-sync-local-and-remote-directories)
-
+**On a Mac**, you can transfer small files via the command line using `rsync`. You can [learn more about rsync here](https://www.digitalocean.com/community/tutorials/how-to-use-rsync-to-sync-local-and-remote-directories), or [here to see all command options](https://linux.die.net/man/1/rsync)
+:::{admonition}These rsync commands are run from a separate terminal 
+(you do not need to close your open terminal, but open a second one from your computer to run these)
+:::
 #To Download a file from ERI to local:
 ```
 rsync -raz --progress <username>@ssh.eri.ucsb.edu:<ERI path/fileName.ext> <local path/fileName.ext>
@@ -14,11 +15,13 @@ rsync -raz --progress <username>@ssh.eri.ucsb.edu:<ERI path/fileName.ext> <local
 ```
 rsync <local path/fileName.ext> -raz --progress <username>@ssh.eri.ucsb.edu:<ERI path/fileName.ext>
 ```
+**On Windows**, rsync or a similar file sync tool can be set up on a bash command interface such as git bash or cygwin, but the setup is a bit dodgy and unstable. A more robust option for Windows is to use an all-in-one SSH/FTP client like MobaXterm, or to add an FTP client to the mix.
 
 ## via FTP client
-You can also transfer files using a File Transfer Protocol (FTP). If you are already using MobaXterm, you have an FTP included. Just double-click files from the file tree on the left to open them, or drag them onto your computer to copy them. You can also use a dedicated FTP such as WinSCP. ([Get WinSCP here](https://winscp.net/eng/index.php)).
+You can also transfer files using a File Transfer Protocol (FTP). If you are already using MobaXterm, you have an FTP included. Just double-click files from the file tree on the left to open them, or drag them onto your computer to copy them. You can also use a dedicated FTP such as WinSCP. ([Get WinSCP here](https://winscp.net/eng/index.php)). There are also FTP options for Macs, such as [FileZilla(]https://filezilla-project.org/).
+
 As with SSH, you must be logged into a UCSB VPN client first.
-| Step 1:                                | Step 2:                                |
+| Example with WinSCP2:                               |                               |
 | :------------------------------------: | :------------------------------------: |
 |   ![](/Images/WinSCP2.png)             |  ![](/Images/WinSCP3.png)              |
 | 1 - In "New Site", enter username and address for bellows. Then click "Advanced" | 2 - In "Tunnel", enter unsername and address for ERI. Click "OK" and save config. |
