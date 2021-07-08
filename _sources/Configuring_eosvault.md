@@ -161,15 +161,15 @@ cp /jad-cel/snadbox-cel/paraguay_lc/templates/pytuyau_pipeline_eri.sh ~/code/bas
 Edit the "download_eri.sh" "download_eri_single.sh" and "post_eri.sh" scripts to point to enter your username between the quotes in the line: MY_USERNAME="" 
 (For help editing in Vim, [see Vim Commands](VimCommands).)
 ```
-vim <username>/code/bash/download_eri.sh
+vim ~/code/bash/download_eri.sh
 # Find line: MY_USERNAME="" and enter your username between the quotes
 [Esc] #if in edit mode
 :wq
-vim <username>/code/bash/download_eri_single.sh
+vim ~/code/bash/download_eri_single.sh
 # Find line: MY_USERNAME="" and enter your username between the quotes
 [Esc] #if in edit mode
 :wq
-vim <username>/code/bash/post_eri.sh
+vim ~/code/bash/post_eri.sh
 # Find line: MY_USERNAME="" and enter your username between the quotes
 [Esc] #if in edit mode
 :wq
