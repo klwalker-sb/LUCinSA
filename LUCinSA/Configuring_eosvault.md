@@ -151,7 +151,7 @@ config_eri.yaml template (with added line #s for reference):
 ``` 
 
 ## 5. Copy processing scripts
-Copy the three primary processing scripts to the folder from which you will be submitting commands([username]/code/bash).
+Copy the three primary processing scripts to the folder from which you will be submitting commands(home/<username>/code/bash).
 ```
 #Make code/bash directory:
 mkdir ~/code/bash
@@ -159,7 +159,7 @@ mkdir ~/code/bash
 cp /jad-cel/sandbox-cel/paraguay_lc/templates/eosvault_download_eri_pry.sh ~/code/bash/download_eri.sh
 cp /jad-cel/sandbox-cel/paraguay_lc/templates/eosvault_download_eri_pry_single.sh ~/code/bash/download_eri_single.sh
 cp /jad-cel/sandbox-cel/paraguay_lc/templates/eosvault_post_eri_pry.sh ~/code/bash/post_eri.sh
-cp /jad-cel/snadbox-cel/paraguay_lc/templates/pytuyau_pipeline_eri.sh ~/code/bash/pipeline_eri.sh
+cp /jad-cel/sandbox-cel/paraguay_lc/templates/pytuyau_pipeline_eri.sh ~/code/bash/pipeline_eri.sh
 ```
 Edit the "download_eri.sh" "download_eri_single.sh" and "post_eri.sh" scripts to point to enter your username between the quotes in the line: MY_USERNAME="" 
 (For help editing in Vim, [see Vim Commands](VimCommands).)
