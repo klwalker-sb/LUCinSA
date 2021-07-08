@@ -45,7 +45,7 @@ In [5] exit
 **Copy the config.yaml template to the project/config directory on your space**
 ```
 #Create project/config directory if it doesn't already exist
-mkdir ~/project/config
+mkdir -p ~/project/config
 cp /jad-cel/sandbox-cel/paraguay_lc/templates/eosvault_config_eri_pry.yaml ~/project/config/config_eri.yaml
 ```
 **Open the template in the vim editor** 
@@ -58,7 +58,7 @@ To edit a line, type `i`, edit as desired, then hit `Esc` key and type `:wq`. Hi
 * `angles` (lines 16-17 of the template below): Edit path to match your own. First you need to **extract the angle files** into the corresponding directory: 
   ```
     #make the directory if it doesn't alreay exist:
-    mkdir vim ~/code/bin/
+    mkdir -p ~/code/bin/
     #move the ESPA.tar.gz file into the directory prior to extracting:
     mv ~/tmp/eosvault/files/ESPA.tar.gz ~/code/bin/ESPA.tar.gz
     #Navigate to the new directory 
