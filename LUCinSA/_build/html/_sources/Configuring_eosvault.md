@@ -44,29 +44,23 @@ In [5] exit
 ## 4. Copy and edit the config.yaml file
 **Copy the config.yaml template to the project/config directory on your space**
 ```
-#Replace <yourUsername> in the line below with your username (remove brackets, keep quotes). 
-###MYUSERNAME is a variable and will update accordingly
-MYUSERNAME="<yourUsername>"
 #Create project/config directory if it doesn't already exist
-mkdir ${MYUSERNAME}/project/config
-cp /jad-cel/sandbox-cel/templates/eosvault_config_eri_pry.yaml ${MYUSERNAME}/project/config/config_eri.yaml
+mkdir ~/project/config
+cp /jad-cel/sandbox-cel/paraguay_lc/templates/eosvault_config_eri_pry.yaml ~/project/config/config_eri.yaml
 ```
 **Open the template in the vim editor** 
 ```
-vim <username>/project/config/eosvault_config_eri.yaml
+vim ~/project/config/config_eri.yaml
 ```
 To edit a line, type `i`, edit as desired, then hit `Esc` key and type `:wq`. Hit `Enter` key. For help editing in Vim, [see Vim Commands](VimCommands).
 **Edit the following lines to match your paths:** 
 * `Google secret key` (line 12 below): Edit path to match that of the secret key you uploaded in step #2 above
 * `angles` (lines 16-17 of the template below): Edit path to match your own. First you need to **extract the angle files** into the corresponding directory: 
   ```
-    #Replace <yourUsername> in the line below with your username (remove brackets, keep quotes)
-    ###MYUSERNAME is a variable and will update accordingly
-    MYUSERNAME="<yourUsername>"
     #make the directory if it doesn't alreay exist:
-    mkdir /home/${MYUSERNAME}/code/bin/
+    mkdir vim ~/code/bin/
     #move the ESPA.tar.gz file into the directory prior to extracting:
-    mv /home/${MYUSERNAME}/tmp/eosvault/files/ESPA.tar.gz /home/${MYUSERNAME}/code/bin/ESPA.tar.gz
+    mv ~/tmp/eosvault/files/ESPA.tar.gz ~/code/bin/ESPA.tar.gz
     #Navigate to the new directory 
     cd ~/code/bin/
     extract the angle files:
@@ -159,13 +153,10 @@ config_eri.yaml template (with added line #s for reference):
 ## 5. Copy processing scripts
 Copy the three primary processing scripts to the folder from which you will be submitting commands([username]/code/bash).
 ```
-#Replace <yourUsername> in the line below with your username (remove brackets, keep quotes)
-##(MYUSERNAME is a variable and will update accordingly)
-MYUSERNAME="<yourUsername>"
-cp /jad-cel/sandbox-cel/templates/eosvault_download_eri_pry.sh ${MYUSERNAME}/code/bash/download_eri.sh
-cp /jad-cel/sandbox-cel/templates/eosvault_download_eri_pry_single.sh ${MYUSERNAME}/code/bash/download_eri_single.sh
-cp /jad-cel/sandbox-cel/templates/eosvault_post_eri_pry.sh ${MYUSERNAME}/code/bash/post_eri.sh
-cp /jad-cel/snadbox-cel/templates/pytuyau_pipeline_eri.sh ${MYUSERNAME}/code/bash/pipeline_eri.sh
+cp /jad-cel/sandbox-cel/paraguay_lc/templates/eosvault_download_eri_pry.sh ~/code/bash/download_eri.sh
+cp /jad-cel/sandbox-cel/paraguay_lc/templates/templates/eosvault_download_eri_pry_single.sh ~/code/bash/download_eri_single.sh
+cp /jad-cel/sandbox-cel/paraguay_lc/templates/templates/eosvault_post_eri_pry.sh ~/code/bash/post_eri.sh
+cp /jad-cel/snadbox-cel/paraguay_lc/templates/templates/pytuyau_pipeline_eri.sh ~/code/bash/pipeline_eri.sh
 ```
 Edit the "download_eri.sh" "download_eri_single.sh" and "post_eri.sh" scripts to point to enter your username between the quotes in the line: MY_USERNAME="" 
 (For help editing in Vim, [see Vim Commands](VimCommands).)
