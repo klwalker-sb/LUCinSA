@@ -373,7 +373,7 @@ Follow the five steps (and links) of <a class="reference external" href="https:/
 <h2>4. Copy and edit the config.yaml file<a class="headerlink" href="#copy-and-edit-the-config-yaml-file" title="Permalink to this headline">¶</a></h2>
 <p><strong>Copy the config.yaml template to the project/config directory on your space</strong></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#Create project/config directory if it doesn&#39;t already exist</span>
-<span class="n">mkdir</span> <span class="o">~/</span><span class="n">project</span><span class="o">/</span><span class="n">config</span>
+<span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="o">~/</span><span class="n">project</span><span class="o">/</span><span class="n">config</span>
 <span class="n">cp</span> <span class="o">/</span><span class="n">jad</span><span class="o">-</span><span class="n">cel</span><span class="o">/</span><span class="n">sandbox</span><span class="o">-</span><span class="n">cel</span><span class="o">/</span><span class="n">paraguay_lc</span><span class="o">/</span><span class="n">templates</span><span class="o">/</span><span class="n">eosvault_config_eri_pry</span><span class="o">.</span><span class="n">yaml</span> <span class="o">~/</span><span class="n">project</span><span class="o">/</span><span class="n">config</span><span class="o">/</span><span class="n">config_eri</span><span class="o">.</span><span class="n">yaml</span>
 </pre></div>
 </div>
@@ -387,7 +387,7 @@ Follow the five steps (and links) of <a class="reference external" href="https:/
 <li><p><code class="docutils literal notranslate"><span class="pre">Google</span> <span class="pre">secret</span> <span class="pre">key</span></code> (line 12 below): Edit path to match that of the secret key you uploaded in step #2 above</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">angles</span></code> (lines 16-17 of the template below): Edit path to match your own. First you need to <strong>extract the angle files</strong> into the corresponding directory:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="c1">#make the directory if it doesn&#39;t alreay exist:</span>
-  <span class="n">mkdir</span> <span class="n">vim</span> <span class="o">~/</span><span class="n">code</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span>
+  <span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="o">~/</span><span class="n">code</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span>
   <span class="c1">#move the ESPA.tar.gz file into the directory prior to extracting:</span>
   <span class="n">mv</span> <span class="o">~/</span><span class="n">tmp</span><span class="o">/</span><span class="n">eosvault</span><span class="o">/</span><span class="n">files</span><span class="o">/</span><span class="n">ESPA</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span> <span class="o">~/</span><span class="n">code</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">ESPA</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
   <span class="c1">#Navigate to the new directory </span>
