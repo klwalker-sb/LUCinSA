@@ -153,6 +153,9 @@ config_eri.yaml template (with added line #s for reference):
 ## 5. Copy processing scripts
 Copy the three primary processing scripts to the folder from which you will be submitting commands([username]/code/bash).
 ```
+#Make code/bash directory:
+mkdir ~/code/bash
+#Copy scripts over:
 cp /jad-cel/sandbox-cel/paraguay_lc/templates/eosvault_download_eri_pry.sh ~/code/bash/download_eri.sh
 cp /jad-cel/sandbox-cel/paraguay_lc/templates/eosvault_download_eri_pry_single.sh ~/code/bash/download_eri_single.sh
 cp /jad-cel/sandbox-cel/paraguay_lc/templates/eosvault_post_eri_pry.sh ~/code/bash/post_eri.sh
