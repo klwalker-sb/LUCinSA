@@ -32,3 +32,6 @@ Now you have a visual directory map from which you can transfer files between yo
 :scale: 20%
 :name: WinSCP4.png
 ```
+
+## via Globus online
+For large file transfers, globus-online is recommended, as it will pick up where it left off if your connection gets interrupted. CSC has a good description of globus-online and getting set up [on their website here](http://csc.cnsi.ucsb.edu/docs/globus-online)

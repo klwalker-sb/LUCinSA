@@ -28,7 +28,7 @@ ssh [username]@bellows.eri.ucsb.edu
 #enter password at prompt
 ```
 
-**If using windows,** it is easiest to connect to the cluster via an ssh (Secure SHell) client such as [Putty](http://www.chiark.greenend.org.uk/~sgtatham/putty/), [Xming](http://sourceforge.net/projects/xming/), or [MobaXterm](https://mobaxterm.mobatek.net/). A Putty conneciton simulates the remote terminal view, and thus requires fully command-line based interfacing. MobaXterm, on the hand, offers ssh/ftp hybrid that allows for both command-line and graphical interfacing; this may be preferable to those who are more confortable manipulating files visually.
+**If using windows,** it is easiest to connect to the cluster via an ssh (Secure SHell) client such as [Putty](http://www.chiark.greenend.org.uk/~sgtatham/putty/), [Xming](http://sourceforge.net/projects/xming/), or [MobaXterm](https://mobaxterm.mobatek.net/). A Putty conneciton simulates the remote terminal view, and thus requires fully command-line based interfacing. MobaXterm, on the hand, offers ssh/ftp hybrid that allows for both command-line and graphical interfacing; this may be preferable to those who are more confortable manipulating files visually. Note, [X2go](https://wiki.x2go.org/doku.php/download:start) is also an option that provides a graphics viewer. See the CSC instructions [here](http://csc.cnsi.ucsb.edu/docs/using-x2go-gui-login-knot-or-pod) (you will need to modify these for the ERI login).
 
 | **To configure Putty:**  |                       |                                          |
 | :------------------------------------: | :------------------------------------: | :-------------------------------------: |
