@@ -8,8 +8,8 @@ To run the script:
 ## 1. Get gridcells to download
 Find a block of cells in need of processing in the `cell_blocks.txt` file in `jad-cel/sandbox-cel/paraguay_lc` (anything without an X next to it is free)
 ```
-cd ~/../
-cd jad-cel/sandbox-cel/paragual_lc
+cd ~/../../
+cd jad-cel/sandbox-cel/paraguay_lc/
 vim cell_blocks.txt
 #"check out" a block of cells by putting an X and your initials next to it. Note your range(s) somewhere.
 #save the file:
