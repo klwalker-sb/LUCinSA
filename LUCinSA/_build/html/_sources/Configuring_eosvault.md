@@ -20,6 +20,32 @@ You need this file to proceed. (If you miss the opportunity, you can create a ne
 ## 2. upload your Google SDK key file to your cluster space
 Transfer the .json key file into a chosen directory on your cluster space (i.e. ~/.eosvault), via one of these [file transfer options](Transfering).
 
+### To check that your GEE configuration is working:
+This can be done in iPython (which you already installed), which is a Python interpreter that allows small Python codes to be run without having to go through SLURM (the cluster's computing manager)
+```
+#Activate virtual environment first, then ipython:
+source .nasaenv/bin/activate
+ipython
+In [1]: from google.auth.transport.requests import AuthorizedSession
+In [2]: from google.oauth2 import service_account
+# make sure to **edit your key path** in the command below:
+In [3]: credentials = service_account.Credentials.from_service_account_file('/home/<username>/.eosvault/<yourkey>.json')
+In [4]: scoped_credentials = credentials.with_scopes(['https://www.googleapis.com/auth/cloud-platform'])
+In [5]: session = AuthorizedSession(scoped_credentials)
+In [6]: url = 'https://earthengine.googleapis.com/v1alpha/projects/earthengine-public/assets/LANDSAT'
+In [7]: response = session.get(url)
+In [8]: from pprint import pprint
+In [9]: import json
+In [10]: pprint(json.loads(response.content))
+# to Exit ipython:
+In [x]: exit
+```
+If everything is configured correctly, the response before exiting should look something like this:
+```
+{'id': 'LANDSAT',
+ 'name': 'projects/earthengine-public/assets/LANDSAT',
+ 'type': 'FOLDER'}
+```
 ## 3. Create a NASA Earthdata key
 A NASA Earthdata secret key/code file pair is needed to download data from the Nasa Earthdata repository. These can be generated  through Geowombat (which you already installed in your Python environment) through IPython (the Python interpreter that you also already installed in your Python environment):
 ```
@@ -54,8 +80,8 @@ vim ~/project/config/config_eri.yaml
 ```
 To edit a line, type `i`, edit as desired, then hit `Esc` key and type `:wq`. Hit `Enter` key. For help editing in Vim, [see Vim Commands](VimCommands).
 **Edit the following lines to match your paths:** 
-* `Google secret key` (line 12 below): Edit path to match that of the secret key you uploaded in step #2 above
-* `angles` (lines 16-17 of the template below): Edit path to match your own. First you need to **extract the angle files** into the corresponding directory: 
+* `Google secret key` (line 13 below): Edit path to match that of the secret key you uploaded in step #2 above
+* `angles` (lines 17-18 of the template below): Edit path to match your own. First you need to **extract the angle files** into the corresponding directory: 
   ```
     #make the directory if it doesn't alreay exist:
     mkdir -p ~/code/bin/
@@ -66,88 +92,89 @@ To edit a line, type `i`, edit as desired, then hit `Esc` key and type `:wq`. Hi
     extract the angle files:
     tar -xzvf ESPA.tar.gz
     ```
-* `Nasa Earth data`: In line 66, modify your username. In lines 67 and 68, modify the path to where you put your Nasa Earth key and code in step 3.
+* `Nasa Earth data`: In line 67, modify your username. In lines 68 and 69, modify the path to where you put your Nasa Earth key and code in step 3.
 
 config_eri.yaml template (with added line #s for reference):
 ```
-1-  # Root directory for the GCP index files
-2-  index_dir: '/jad-cel/sandbox-cel/paraguay_lc/raster'
-3-  
-4-  # Directory to save text files of incomplete batch jobs
-5-  log_dir: '/home/<username>/code/bash'
-6-  
-7-  # Length (in meters) on each side of grid
-8-  grid_size: 20000
-9-  
-10- google:
-11- 
-12-  secret_key: '/home/<username>/.eosvault/<key>.json'
-13- 
-14- angles:
-15- 
-16-   l57_angles_path: '/home/<username>/code/bin/ESPA/landsat_angles'
-17-   l8_angles_path: '/home/<username>/code/bin/ESPA/l8_angles'
-18-   subsample: 10
-19-   resampling: 'bilinear'
-20- 
-21- sixs:
-22- 
-23-   coarse_res: 100.0
-24- 
-25- io:
-26- 
-27-   # netcdf | geotiff
-28-   file_format: 'netcdf'
-29-   chunks: 512
-30-   resampling: 'cubic'
-31-   num_threads: 2
-32-   nodataval: 65535
-33- 
-34-   to_netcdf_kwargs:
-35-     zlib: True
-36-     complevel: 5
-37- 
-38-   to_raster_kwargs:
-39-     overwrite: True
-40-     compress: 'lzw'
-41-     tiled: True
-42-     n_workers: 1
-43-     n_threads: 2
-44- 
-45-   post:
-46- 
-47-     # Chunk read size
-48-     chunks: 1024
-49- 
-50- storage:
-51- 
-52-   crs: 'utm'
-53-   res: 10.0
-54-   bands:
-55-     - 'blue'
-56-     - 'green'
-57-     - 'red'
-58-     - 'nir'
-59-     - 'swir1'
-60-     - 'swir2'
-61- 
-62- nasaearth:
-63- 
-64-   # The NASA Earthdata username to download HGT SRTM files
-65-   # https://urs.earthdata.nasa.gov/
-66-   username: '<username>'
-67- 
-68-   key_file: '/home/<username>/.eosvault/nasaearth.key'
-69-   code_file: '/home/<username>/.eosvault/nasaearth.code'
-70- 
-71- srtm:
-72- 
-73-   srtm_path: '/jad-cel/sandbox-cel/paraguay_lc/raster/srtm'
-74- 
-75- masks:
-76- 
-77-   # 0-100 range
-78-   s2cloudless_thresh: 60
+1-  project_path: '/jad-cel/sandbox-cel/paraguay_lc/raster/grids'
+2-    # Root directory for the GCP index files
+3-  index_dir: '/jad-cel/sandbox-cel/paraguay_lc/raster'
+4-  
+5-  # Directory to save text files of incomplete batch jobs
+6-  log_dir: '/home/<username>/code/bash'
+7-  
+8-  # Length (in meters) on each side of grid
+9-  grid_size: 20000
+10-  
+11- google:
+12- 
+13-  secret_key: '/home/<username>/.eosvault/<key>.json'
+14- 
+15- angles:
+16- 
+17-   l57_angles_path: '/home/<username>/code/bin/ESPA/landsat_angles'
+18-   l8_angles_path: '/home/<username>/code/bin/ESPA/l8_angles'
+19-   subsample: 10
+20-   resampling: 'bilinear'
+21- 
+22- sixs:
+23- 
+24-   coarse_res: 100.0
+25- 
+26- io:
+27- 
+28-   # netcdf | geotiff
+29-   file_format: 'netcdf'
+30-   chunks: 512
+31-   resampling: 'cubic'
+32-   num_threads: 2
+33-   nodataval: 65535
+34- 
+35-   to_netcdf_kwargs:
+36-     zlib: True
+37-     complevel: 5
+38- 
+39-   to_raster_kwargs:
+40-     overwrite: True
+41-     compress: 'lzw'
+42-     tiled: True
+43-     n_workers: 1
+44-     n_threads: 2
+45- 
+46-   post:
+47- 
+48-     # Chunk read size
+49-     chunks: 1024
+50- 
+51- storage:
+52- 
+53-   crs: 'utm'
+54-   res: 10.0
+55-   bands:
+56-     - 'blue'
+57-     - 'green'
+58-     - 'red'
+59-     - 'nir'
+60-     - 'swir1'
+61-     - 'swir2'
+62- 
+63- nasaearth:
+64- 
+65-   # The NASA Earthdata username to download HGT SRTM files
+66-   # https://urs.earthdata.nasa.gov/
+67-   username: '<username>'
+68- 
+69-   key_file: '/home/<username>/.eosvault/nasaearth.key'
+70-   code_file: '/home/<username>/.eosvault/nasaearth.code'
+71- 
+72- srtm:
+73- 
+74-   srtm_path: '/jad-cel/sandbox-cel/paraguay_lc/raster/srtm'
+75- 
+76- masks:
+77- 
+78-   # 0-100 range
+79-   s2cloudless_thresh: 60
 ``` 
 
 ## 5. Copy processing scripts

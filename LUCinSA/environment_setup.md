@@ -28,6 +28,11 @@ source .nasaenv/bin/activate
 ```
 
 ### Install Python tools/packages and dependencies from project github scripts:
+:::{note}
+To **interact with github on your virtual computer**, you first need to feed the remote computer the password. You can do this with [an osxcechain credential](https://docs.github.com/en/get-started/getting-started-with-git/updating-credentials-from-the-macos-keychain) or by simply caching it by entering the following into your local git bash or mac terminal:
+`git config --global credential.helper cache`
+Or in git for Windows enter: `git config --global credential.helper wincred`
+:::
 
 **While in your home directory,** enter the following commands to setup your Python environment:
 ```
