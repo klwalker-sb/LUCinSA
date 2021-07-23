@@ -364,95 +364,97 @@ Go here for <a class="reference internal" href="vim.html#vimcommands"><span clas
 9-   #SBATCH --job-name=&quot;dwn-pry&quot;
 10-  #SBATCH --array=1
 11-
-12-  ##############################################
-13-  START_DATE=&quot;2010-03-01&quot;
-14-  END_DATE=&quot;2020-11-01&quot;
-15- 
-16-  # yes | no
-17-  IGNORE_INCOMPLETE=&quot;no&quot;
-18-  
-19-  # yes | no
-20-  RESET_ASSET=&quot;no&quot;
-21- 
-22-  ##############################################
-23-  
-24-  BATCH_SIZE=100000
+12-  umask 002
+13
+14-  ##############################################
+15-  START_DATE=&quot;2010-03-01&quot;
+16-  END_DATE=&quot;2020-11-01&quot;
+17- 
+18-  # yes | no
+19-  IGNORE_INCOMPLETE=&quot;no&quot;
+20-  
+21-  # yes | no
+22-  RESET_ASSET=&quot;no&quot;
+23- 
+24-  ##############################################
 25-  
-26-  # As an array job
-27-  GRID_ID=$SLURM_ARRAY_TASK_ID
-28-  
-29-  PROJECT_HOME=&quot;/jad-cel/sandbox/sandbox-cel/paraguay_lc&quot;
-30-  OUT_DIR=&quot;${PROJECT_HOME}/raster/grids&quot;
-31-  
-32-  MY_USERNAME=&quot;&quot;
+26-  BATCH_SIZE=100000
+27-  
+28-  # As an array job
+29-  GRID_ID=$SLURM_ARRAY_TASK_ID
+30-  
+31-  PROJECT_HOME=&quot;/jad-cel/sandbox/sandbox-cel/paraguay_lc&quot;
+32-  OUT_DIR=&quot;${PROJECT_HOME}/raster/grids&quot;
 33-  
-34-  GRID_FILE=&quot;${PROJECT_HOME}/vector/pry_grids.gpkg&quot;
-35-  CONFIG_FILE=&quot;/home/${MY_USERNAME}/project/config/config_eri.yaml&quot;
-36-  CRS_PROJ4=&quot;+proj=aea +lat_1=-5 +lat_2=-42 +lat_0=-32 +lon_0=-60 +x_0=0 +y_0=0 +ellps=aust_SA +units=m +no_defs &quot;
-37-  
-38-  #############################################
-39-  # Turn off NumPy parallelism and rely on dask
+34-  MY_USERNAME=&quot;&quot;
+35-  
+36-  GRID_FILE=&quot;${PROJECT_HOME}/vector/pry_grids.gpkg&quot;
+37-  CONFIG_FILE=&quot;/home/${MY_USERNAME}/project/config/config_eri.yaml&quot;
+38-  CRS_PROJ4=&quot;+proj=aea +lat_1=-5 +lat_2=-42 +lat_0=-32 +lon_0=-60 +x_0=0 +y_0=0 +ellps=aust_SA +units=m +no_defs &quot;
+39-  
 40-  #############################################
-41-  export CLOUDSDK_PYTHON=python3
-42-  export OPENBLAS_NUM_THREADS=1
-43-  export MKL_NUM_THREADS=1
-44-  # This should be sufficient for OpenBlas and MKL
-45-  export OMP_NUM_THREADS=1
-46-  ################################################
-47-  
-48-  # activate the virtual environment
-49-  source ~/.nasaenv/bin/activate
-50- 
-51-  SAT_SENSORS=(&quot;S2&quot; &quot;S2cp&quot; &quot;LT05&quot; &quot;LE07&quot; &quot;LC08&quot;)
+41-  # Turn off NumPy parallelism and rely on dask
+42-  #############################################
+43-  export CLOUDSDK_PYTHON=python3
+44-  export OPENBLAS_NUM_THREADS=1
+45-  export MKL_NUM_THREADS=1
+46-  # This should be sufficient for OpenBlas and MKL
+47-  export OMP_NUM_THREADS=1
+48-  ################################################
+49-  
+50-  # activate the virtual environment
+51-  source ~/.nasaenv/bin/activate
 52- 
-53-  # Iterate over each sensor
-54-  for SAT_SENSOR in &quot;${SAT_SENSORS[@]}&quot;
-55-  do
-56- 
-57-  if [ &quot;$SAT_SENSOR&quot; == &quot;S2&quot; ]; then
-58-    SATELLITE=&quot;sentinel-2&quot;
-59-    ASSET_ID=&quot;COPERNICUS/S2&quot;
-60-  elif [ &quot;$SAT_SENSOR&quot; == &quot;S2cp&quot; ]; then
-61-    SATELLITE=&quot;sentinel-2&quot;
-62-    ASSET_ID=&quot;COPERNICUS/S2_CLOUD_PROBABILITY&quot; 
-63-  else
-64-    SATELLITE=&quot;landsat&quot; 
-65-    ASSET_ID=&quot;LANDSAT/${SAT_SENSOR}/C01/T1_SR&quot;
-66-  fi
-67-  
-68-  if [ &quot;$IGNORE_INCOMPLETE&quot; == &quot;yes&quot; ]; then
-69- 
-70-    eosvault download --out-dir $OUT_DIR --grid-file $GRID_FILE --grid $GRID_ID --start-date $START_DATE --end-date
-71-  $END_DATE --config-file $CONFIG_FILE --batch-size $BATCH_SIZE --max-workers $SLURM_CPUS_ON_NODE --satellite $SATELLITE
-72-  --asset-id $ASSET_ID --grid-crs &quot;${CRS_PROJ4}&quot; --ignore-incomplete #--reset-asset #--clear-all #--reset-db
-73-  
-74-  else
-75- 
-76-   if [ &quot;$RESET_ASSET&quot; == &quot;yes&quot; ]; then
+53-  SAT_SENSORS=(&quot;S2&quot; &quot;S2cp&quot; &quot;LT05&quot; &quot;LE07&quot; &quot;LC08&quot;)
+54- 
+55-  # Iterate over each sensor
+56-  for SAT_SENSOR in &quot;${SAT_SENSORS[@]}&quot;
+57-  do
+58- 
+59-  if [ &quot;$SAT_SENSOR&quot; == &quot;S2&quot; ]; then
+60-    SATELLITE=&quot;sentinel-2&quot;
+61-    ASSET_ID=&quot;COPERNICUS/S2&quot;
+62-  elif [ &quot;$SAT_SENSOR&quot; == &quot;S2cp&quot; ]; then
+63-    SATELLITE=&quot;sentinel-2&quot;
+64-    ASSET_ID=&quot;COPERNICUS/S2_CLOUD_PROBABILITY&quot; 
+65-  else
+66-    SATELLITE=&quot;landsat&quot; 
+67-    ASSET_ID=&quot;LANDSAT/${SAT_SENSOR}/C01/T1_SR&quot;
+68-  fi
+69-  
+70-  if [ &quot;$IGNORE_INCOMPLETE&quot; == &quot;yes&quot; ]; then
+71- 
+72-    eosvault download --out-dir $OUT_DIR --grid-file $GRID_FILE --grid $GRID_ID --start-date $START_DATE --end-date
+73-  $END_DATE --config-file $CONFIG_FILE --batch-size $BATCH_SIZE --max-workers $SLURM_CPUS_ON_NODE --satellite $SATELLITE
+74-  --asset-id $ASSET_ID --grid-crs &quot;${CRS_PROJ4}&quot; --ignore-incomplete #--reset-asset #--clear-all #--reset-db
+75-  
+76-  else
 77- 
-78-    eosvault download --out-dir $OUT_DIR --grid-file $GRID_FILE --grid $GRID_ID --start-date $START_DATE --end-date 
-79- $END_DATE --config-file $CONFIG_FILE --batch-size $BATCH_SIZE --max-workers $SLURM_CPUS_ON_NODE --satellite $SATELLITE 
-80-  --asset-id $ASSET_ID --grid-crs &quot;${CRS_PROJ4}&quot; --reset-asset #--clear-all #--reset-db
-81- 
-82-    else
+78-   if [ &quot;$RESET_ASSET&quot; == &quot;yes&quot; ]; then
+79- 
+80-    eosvault download --out-dir $OUT_DIR --grid-file $GRID_FILE --grid $GRID_ID --start-date $START_DATE --end-date 
+81- $END_DATE --config-file $CONFIG_FILE --batch-size $BATCH_SIZE --max-workers $SLURM_CPUS_ON_NODE --satellite $SATELLITE 
+82-  --asset-id $ASSET_ID --grid-crs &quot;${CRS_PROJ4}&quot; --reset-asset #--clear-all #--reset-db
 83- 
-84-     eosvault download --out-dir $OUT_DIR --grid-file $GRID_FILE --grid $GRID_ID --start-date $START_DATE --end-date 
-85-  $END_DATE --config-file $CONFIG_FILE --batch-size $BATCH_SIZE --max-workers $SLURM_CPUS_ON_NODE --satellite $SATELLITE 
-86-  --asset-id $ASSET_ID --grid-crs &quot;${CRS_PROJ4}&quot; #--clear-all #--reset-db
-87-
-88-    fi
+84-    else
+85- 
+86-     eosvault download --out-dir $OUT_DIR --grid-file $GRID_FILE --grid $GRID_ID --start-date $START_DATE --end-date 
+87-  $END_DATE --config-file $CONFIG_FILE --batch-size $BATCH_SIZE --max-workers $SLURM_CPUS_ON_NODE --satellite $SATELLITE 
+88-  --asset-id $ASSET_ID --grid-crs &quot;${CRS_PROJ4}&quot; #--clear-all #--reset-db
 89-
-90-  fi
+90-    fi
 91-
-92-  done
+92-  fi
 93-
-94-  deactivate
+94-  done
+95-
+96-  deactivate
 </pre></div>
 </div>
 <p>Most lines should stay as they are.<br />
 <strong>the lines that you need to change are:</strong></p>
 <ul class="simple">
-<li><p><strong>MyUsername</strong> (line 32 here): Insert your username between the quotes if it isn’t already present.</p></li>
+<li><p><strong>MyUsername</strong> (line 34 here): Insert your username between the quotes if it isn’t already present.</p></li>
 <li><p><strong>Grid info:</strong> <code class="docutils literal notranslate"><span class="pre">#SBATCH</span> <span class="pre">--array=</span> </code> (line 10 here). This is where you enter the gridcells you are processing.<br />
 You can enter a range (e.g. 898-908), But be mindful that you are not hogging all the computer bandwidth.</p></li>
 </ul>
@@ -466,7 +468,7 @@ With Sentinel (which are heavy files), %2 is safest. With Landsat %4 is fine.</p
 </div>
 </div>
 <ul class="simple">
-<li><p><strong>Incomplete tag</strong>: Check that <code class="docutils literal notranslate"><span class="pre">IGNORE_INCOMPLETE=</span></code>(line 17 here) is set to “No” for the first run. (You will change this in<br />
+<li><p><strong>Incomplete tag</strong>: Check that <code class="docutils literal notranslate"><span class="pre">IGNORE_INCOMPLETE=</span></code>(line 19 here) is set to “No” for the first run. (You will change this in<br />
 step 5 if all images don’t download properly the first time.)</p></li>
 </ul>
 <p>After making these edits, save your script and exit:</p>
@@ -477,7 +479,12 @@ step 5 if all images don’t download properly the first time.)</p></li>
 <p>For further information on the rest of the script (parts you will NOT likely edit):</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>Lines 1-10</p>
+<li><p>Line 1</p>
+<ul>
+<li><p>This is the “shebang” line, used in all Unix scripts, that tells the interpreter to execute the script.</p></li>
+</ul>
+</li>
+<li><p>Lines 3-10</p>
 <ul>
 <li><p>These are all configuration flags for SLURM.</p></li>
 <li><p>#SBATCH tells SLURM these are not user comments</p></li>
@@ -487,40 +494,57 @@ step 5 if all images don’t download properly the first time.)</p></li>
 <li><p>(line 6): -p tells SLURM this job should be sent to the standard partition (there are also ‘short’, ‘gpu’, and ‘largemem’ &gt;available).</p></li>
 <li><p>(line 7&amp;8): -o and -e are output log files</p></li>
 <li><p>(line 9): -job-name is the name of the batch job</p></li>
-<li><p>(line 10): array is the list of gridcells for processing (1,2,3,etc or 1-3)
-*Lines 13-14</p></li>
+<li><p>(line 10): array is the list of gridcells for processing (1,2,3,etc or 1-3)</p></li>
+</ul>
+</li>
+<li><p>Line 12</p>
+<ul>
+<li><p>umask sets the permission for files that are creates. left digit is for user, middle digit is for group and right digit is for others. 0= no permissions denied (read/write/execute allowed), 2= write permission denied, 7= all permissions denied</p></li>
+</ul>
+</li>
+<li><p>Lines 15-16</p>
+<ul>
 <li><p>User variables for start and end dates to stream. (For this project, the dates are from 1-Mar-2010 to 1-Nov-2020)</p></li>
 </ul>
 </li>
-<li><p>Lines 16-17</p>
+<li><p>Lines 18-20</p>
 <ul>
 <li><p>if yes, flag as incomplete if all images did not download correctly. If no, consider complete even if some images are &gt;missing</p></li>
 </ul>
 </li>
-<li><p>Lines 19-20: flag to reset databased to allow redownload if previously downloaded fully but want to redo</p></li>
-<li><p>Line 24</p>
+<li><p>Lines 21-22</p>
+<ul>
+<li><p>Flag to reset databased to allow redownload if previously downloaded fully but want to redo</p></li>
+</ul>
+</li>
+<li><p>Line 26</p>
 <ul>
 <li><p>Do not modify</p></li>
 </ul>
 </li>
-<li><p>Lines 26-27</p>
+<li><p>Lines 28-29</p>
 <ul>
 <li><p>Names process/files based on grid cell number</p></li>
 </ul>
 </li>
-<li><p>Lines 29-30</p>
+<li><p>Lines 31-32</p>
 <ul>
-<li><p>File paths for:</p></li>
-<li><p>(lines 34) output files (leave as is)</p></li>
-<li><p>(line 35) input configuration file. Make sure to fill in [username] in line 32.</p></li>
+<li><p>File paths (do not modify for this project) for:</p></li>
+<li><p>(lines 36) output files (leave as is)</p></li>
+<li><p>(line 37) input configuration file. Make sure to fill in [username] in line 34.</p></li>
 </ul>
 </li>
-<li><p>Lines 48-66</p>
+<li><p>Line 38</p>
+<ul>
+<li><p>Geographic projection (do not modify for this project)</p></li>
+</ul>
+</li>
+<li><p>Lines 40-48</p>
 <ul>
 <li><p>Do not modify.</p></li>
 </ul>
 </li>
-<li><p>Lines 68-94</p>
+<li><p>Lines 50-96</p>
 <ul>
 <li><p>These are the actual command lines to run the process based on the settings above.</p></li>
 </ul>
@@ -551,11 +575,11 @@ step 5 if all images don’t download properly the first time.)</p></li>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cat</span> <span class="n">sldown</span><span class="o">.</span><span class="n">bellows</span><span class="mf">.909.78</span><span class="o">.</span><span class="n">err</span> <span class="p">(</span><span class="k">with</span> <span class="mi">909</span> <span class="o">=</span> <span class="n">grid</span> <span class="n">running</span> <span class="ow">and</span> <span class="mi">78</span> <span class="o">=</span> <span class="n">job</span> <span class="n">number</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>To check your position in line:</p>
+<p>To check your position in line (note: this only shows people in our own group, so not a great estimate):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">squeue</span> <span class="o">-</span><span class="n">u</span> <span class="p">[</span><span class="n">username</span><span class="p">]</span>
 </pre></div>
 </div>
-<p>to see if there are a lot of jobs before you:</p>
+<p>to see if there are a lot of jobs before you (but again, only shows people in our own group, not full queue):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">squeue</span>
 </pre></div>
 </div>
@@ -572,20 +596,21 @@ step 5 if all images don’t download properly the first time.)</p></li>
 <span class="n">cat</span> <span class="p">[</span><span class="n">filename</span><span class="p">]</span>
 </pre></div>
 </div>
-<p>If all images downloaded, you should see:
+<p>If all images downloaded, you should see something like this (precentage bars to 100% for downloading and no errors):
 <img alt="" src="_images/cat_download_multi.png" /></p>
 <p>You can also generate a figure to see which cells downloaded fully:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#Activate virtual environment:</span>
 <span class="n">source</span> <span class="o">.</span><span class="n">nasaenv</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
-<span class="c1">#Run status command:</span>
-<span class="n">eosvault</span> <span class="n">status</span> <span class="o">--</span><span class="n">config</span><span class="o">-</span><span class="n">file</span> <span class="o">~/</span><span class="n">project</span><span class="o">/</span><span class="n">config</span><span class="o">/</span><span class="n">config_eri</span><span class="o">.</span><span class="n">yaml</span> <span class="o">--</span><span class="n">out</span><span class="o">-</span><span class="nb">dir</span> <span class="o">~/</span><span class="n">code</span><span class="o">/</span><span class="n">bash</span> <span class="o">--</span><span class="n">grid</span><span class="o">-</span><span class="n">file</span> <span class="o">/</span><span class="n">jad</span><span class="o">-</span><span class="n">cel</span><span class="o">/</span><span class="n">sandbox</span><span class="o">-</span><span class="n">cel</span><span class="o">/</span><span class="n">paraguay_lc</span><span class="o">/</span><span class="n">vector</span><span class="o">/</span><span class="n">pry_grids</span><span class="o">.</span><span class="n">gpkg</span> <span class="o">--</span><span class="n">zoom</span>
+<span class="c1">#Run status command (choose a cell number to zoom around for zoom-grid, usually in the middle of your line):</span>
+<span class="n">eosvault</span> <span class="n">status</span> <span class="o">--</span><span class="n">config</span><span class="o">-</span><span class="n">file</span> <span class="o">~/</span><span class="n">project</span><span class="o">/</span><span class="n">config</span><span class="o">/</span><span class="n">config_eri</span><span class="o">.</span><span class="n">yaml</span> <span class="o">--</span><span class="n">out</span><span class="o">-</span><span class="nb">dir</span> <span class="o">~/</span><span class="n">code</span><span class="o">/</span><span class="n">bash</span> <span class="o">--</span><span class="n">grid</span><span class="o">-</span><span class="n">file</span> <span class="o">/</span><span class="n">jad</span><span class="o">-</span><span class="n">cel</span><span class="o">/</span><span class="n">sandbox</span><span class="o">-</span><span class="n">cel</span><span class="o">/</span><span class="n">paraguay_lc</span><span class="o">/</span><span class="n">vector</span><span class="o">/</span><span class="n">pry_grids</span><span class="o">.</span><span class="n">gpkg</span> <span class="o">--</span><span class="n">zoom</span><span class="o">-</span><span class="n">grid</span> <span class="o">&lt;</span><span class="nb">id</span> <span class="c1"># of cell to zoom to&gt; --zoom-offset 200000</span>
 <span class="c1">#Deactivate virtual environment:</span>
 <span class="n">deactivate</span>
+<span class="c1">#Note you can zoom to the full figure (without cell numbers) by dropping the last two cell flags.</span>
 </pre></div>
 </div>
 <p>To view the Download Progress figure:
 Download file to view on local desktop by opening a separate terminal and typing:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rsync</span> <span class="o">-</span><span class="n">raz</span> <span class="o">--</span><span class="n">progress</span> <span class="o">&lt;</span><span class="n">username</span><span class="o">&gt;</span><span class="nd">@ssh</span><span class="o">.</span><span class="n">eri</span><span class="o">.</span><span class="n">ucsb</span><span class="o">.</span><span class="n">edu</span><span class="p">:</span><span class="o">~/</span><span class="n">code</span><span class="o">/</span><span class="n">bash</span><span class="o">/</span><span class="n">grid_status</span><span class="o">.</span><span class="n">png</span> <span class="n">Desktop</span><span class="o">/</span><span class="n">gridstat</span><span class="o">.</span><span class="n">png</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rsync</span> <span class="o">-</span><span class="n">raz</span> <span class="o">--</span><span class="n">progress</span> <span class="o">&lt;</span><span class="n">username</span><span class="o">&gt;</span><span class="nd">@ssh</span><span class="o">.</span><span class="n">eri</span><span class="o">.</span><span class="n">ucsb</span><span class="o">.</span><span class="n">edu</span><span class="p">:</span><span class="o">~/</span><span class="n">code</span><span class="o">/</span><span class="n">bash</span><span class="o">/</span><span class="n">grid_status_eosvault</span><span class="o">.</span><span class="n">png</span> <span class="n">Desktop</span><span class="o">/</span><span class="n">gridstat</span><span class="o">.</span><span class="n">png</span>
 </pre></div>
 </div>
 <p>Alternatively, you can view the file though an FPT such as WinSCP.</p>
@@ -622,17 +647,17 @@ The key indicates which cells loaded completely for each product. Those not list
 The script is copied below with line numbers added for reference.</p>
 <ul class="simple">
 <li><p>Edit the array in line 10 to contain the grid cells you want to download.</p></li>
-<li><p>Change IGNORE_INCOMPLETE in line 35 to “yes”</p></li>
-<li><p>Enter your username in line 43 if it isn’t already present.</p></li>
+<li><p>Change IGNORE_INCOMPLETE in line 31to “yes”</p></li>
+<li><p>Enter your username in line 39f it isn’t already present.</p></li>
 <li><p>Select the sensor product by uncommenting the corresponding lines (remove the # at the beginning of the line) and commenting those that don’t correspond (replacing the # at the beginning of the line). (Only one product can be run at a time).</p>
 <ul>
-<li><p><strong><span style='color:purple'> For Sentinel: </span></strong> uncomment <code class="docutils literal notranslate"><span class="pre">SATELLITE=&quot;sentinel-2</span></code> (line 25 here) and<br />
-<code class="docutils literal notranslate"><span class="pre">ASSET_ID=&quot;COPERNICUS/S2&quot;</span></code> (line 26 here) for images or <code class="docutils literal notranslate"><span class="pre">ASSET_ID=&quot;COPERNICUS/S2_CLOUD_PROBABILITY&quot;</span></code> (line 27 here) for
+<li><p><strong><span style='color:purple'> For Sentinel: </span></strong> uncomment <code class="docutils literal notranslate"><span class="pre">SATELLITE=&quot;sentinel-2</span></code> (line 21here) and<br />
+<code class="docutils literal notranslate"><span class="pre">ASSET_ID=&quot;COPERNICUS/S2&quot;</span></code> (line 22here) for images or <code class="docutils literal notranslate"><span class="pre">ASSET_ID=&quot;COPERNICUS/S2_CLOUD_PROBABILITY&quot;</span></code> (line 23here) for
 cloud masks</p></li>
 <li><p><strong><span style='color:purple'> For Landsat: </span></strong> uncomment <code class="docutils literal notranslate"><span class="pre">LANDSAT_SENSOR=&quot;LC08&quot;</span></code>
-<code class="docutils literal notranslate"><span class="pre">ASSET_ID=&quot;LANDSAT/${LANDSAT_SENSOR}/C01/T1_SR&quot;</span></code>and <code class="docutils literal notranslate"><span class="pre">SATELLITE=&quot;landsat&quot;</span></code> (lines 25-27 here). Also change the Landsat
-sensor (line 30 here) to correspond to the sensor you want to process: “LT05” for Landsat 5, “LE07” for Landsat 7, or
-“LC08” for Landsat 8 (as noted in line 24).</p></li>
+<code class="docutils literal notranslate"><span class="pre">ASSET_ID=&quot;LANDSAT/${LANDSAT_SENSOR}/C01/T1_SR&quot;</span></code>and <code class="docutils literal notranslate"><span class="pre">SATELLITE=&quot;landsat&quot;</span></code> (lines 25-28here). Also change the Landsat
+sensor (line 26 ere) to correspond to the sensor you want to process: “LT05” for Landsat 5, “LE07” for Landsat 7, or
+“LC08” for Landsat 8 (as noted in line 25.</p></li>
 </ul>
 </li>
 </ul>
@@ -650,67 +675,63 @@ sensor (line 30 here) to correspond to the sensor you want to process: “LT05�
 11-
 12- sleep $((RANDOM%30+1))
 13- 
-14- # Change permissions on output files
-15- # user = 7 = rwx
-16- # group = 7 = rwx
-17- # others = 4 = r 
-18- #umask 774
+14- umask 002
+15- 
+16- #####################################################
+17- START_DATE=&quot;2010-03-01&quot;
+18- END_DATE=&quot;2020-11-01&quot;
 19- 
-20- #####################################################
-21- START_DATE=&quot;2010-03-01&quot;
-22- END_DATE=&quot;2020-11-01&quot;
-23- 
-24- # landsat | sentinel-2
-25- #SATELLITE=&quot;sentinel-2&quot;
-26- #ASSET_ID=&quot;COPERNICUS/S2&quot;
-27- #ASSET_ID=&quot;COPERNICUS/S2_CLOUD_PROBABILITY&quot;
-28- 
-29- # LT05 | LE07 | LC08
-30- LANDSAT_SENSOR=&quot;LC08&quot;
-31- ASSET_ID=&quot;LANDSAT/${LANDSAT_SENSOR}/C01/T1_SR&quot;
-32- SATELLITE=&quot;landsat&quot;
-33- 
-34- # yes | no
-35- IGNORE_INCOMPLETE=&quot;no&quot;
-36- 
-37- BATCH_SIZE=100000
-38- #####################################################
-39- 
-40- # As an array job
-41- GRID_ID=$SLURM_ARRAY_TASK_ID
-42- 
-43- MY_USERNAME=&quot;&quot;
-44- OUT_DIR=&quot;/jad-cel/sandbox-cel/paraguay_lc/raster/grids&quot;
-45- GRID_FILE=&quot;/jad-cel/sandbox-cel/paraguay_lc/vector/pry_grids.gpkg&quot;
-46- CONFIG_FILE=&quot;/home/${MY_USERNAME}/project/config/config_eri.yaml&quot;
-47- CRS_PROJ4=&quot;+proj=aea +lat_1=-5 +lat_2=-42 +lat_0=-32 +lon_0=-60 +x_0=0 +y_0=0 +ellps=aust_SA +units=m +no_defs &quot;
-48- 
-49- #############################################
-50- # Turn off NumPy parallelism and rely on dask
-51- #############################################
-52- export CLOUDSDK_PYTHON=python3
-53- export OPENBLAS_NUM_THREADS=1
-54- export MKL_NUM_THREADS=1
-55- # This should be sufficient for OpenBlas and MKL
-56- export OMP_NUM_THREADS=1
-57- ################################################
-58- 
-59- # activate the virtual environment
-60- source ~/.nasaenv/bin/activate
-61-
-62- if [ &quot;$IGNORE_INCOMPLETE&quot; == &quot;yes&quot; ]; then
-63-
-64-   eosvault download --out-dir $OUT_DIR --grid-file $GRID_FILE --grid $GRID_ID --start-date $START_DATE --end-date $END_DATE 65- --config-file $CONFIG_FILE --batch-size $BATCH_SIZE --max-workers $SLURM_CPUS_ON_NODE --satellite $SATELLITE --asset-id 
-66- $ASSET_ID --grid-crs &quot;${CRS_PROJ4}&quot; --ignore-incomplete #--reset-asset #--clear-all #--reset-db
-67- 
-68- else
-69-  
-70-  eosvault download --out-dir $OUT_DIR --grid-file $GRID_FILE --grid $GRID_ID --start-date $START_DATE --end-date $END_DATE 71- --config-file $CONFIG_FILE --batch-size $BATCH_SIZE --max-workers $SLURM_CPUS_ON_NODE --satellite $SATELLITE --asset-id 
-72- $ASSET_ID --grid-crs &quot;${CRS_PROJ4}&quot; #--reset-asset #--clear-all #--reset-db
-73-
-74- fi
-75-
-76- deactivate
+20- # landsat | sentinel-2
+21- #SATELLITE=&quot;sentinel-2&quot;
+22- #ASSET_ID=&quot;COPERNICUS/S2&quot;
+23- #ASSET_ID=&quot;COPERNICUS/S2_CLOUD_PROBABILITY&quot;
+24- 
+25- # LT05 | LE07 | LC08
+26- LANDSAT_SENSOR=&quot;LC08&quot;
+27- ASSET_ID=&quot;LANDSAT/${LANDSAT_SENSOR}/C01/T1_SR&quot;
+28- SATELLITE=&quot;landsat&quot;
+29- 
+30- # yes | no
+31- IGNORE_INCOMPLETE=&quot;no&quot;
+32- 
+33- BATCH_SIZE=100000
+34- #####################################################
+35- 
+36- # As an array job
+37- GRID_ID=$SLURM_ARRAY_TASK_ID
+38- 
+39- MY_USERNAME=&quot;&quot;
+40- OUT_DIR=&quot;/jad-cel/sandbox-cel/paraguay_lc/raster/grids&quot;
+41- GRID_FILE=&quot;/jad-cel/sandbox-cel/paraguay_lc/vector/pry_grids.gpkg&quot;
+42- CONFIG_FILE=&quot;/home/${MY_USERNAME}/project/config/config_eri.yaml&quot;
+43- CRS_PROJ4=&quot;+proj=aea +lat_1=-5 +lat_2=-42 +lat_0=-32 +lon_0=-60 +x_0=0 +y_0=0 +ellps=aust_SA +units=m +no_defs &quot;
+44- 
+44- #############################################
+46- # Turn off NumPy parallelism and rely on dask
+47- #############################################
+48- export CLOUDSDK_PYTHON=python3
+49- export OPENBLAS_NUM_THREADS=1
+50- export MKL_NUM_THREADS=1
+51- # This should be sufficient for OpenBlas and MKL
+52- export OMP_NUM_THREADS=1
+53- ################################################
+54- 
+55- # activate the virtual environment
+56- source ~/.nasaenv/bin/activate
+57-
+58- if [ &quot;$IGNORE_INCOMPLETE&quot; == &quot;yes&quot; ]; then
+59-
+60-   eosvault download --out-dir $OUT_DIR --grid-file $GRID_FILE --grid $GRID_ID --start-date $START_DATE --end-date $END_DATE 61- --config-file $CONFIG_FILE --batch-size $BATCH_SIZE --max-workers $SLURM_CPUS_ON_NODE --satellite $SATELLITE --asset-id 
+62- $ASSET_ID --grid-crs &quot;${CRS_PROJ4}&quot; --ignore-incomplete #--reset-asset #--clear-all #--reset-db
+63- 
+64- else
+65-  
+66 eosvault download --out-dir $OUT_DIR --grid-file $GRID_FILE --grid $GRID_ID --start-date $START_DATE --end-date $END_DATE 67--config-file $CONFIG_FILE --batch-size $BATCH_SIZE --max-workers $SLURM_CPUS_ON_NODE --satellite $SATELLITE --asset-id 
+68$ASSET_ID --grid-crs &quot;${CRS_PROJ4}&quot; #--reset-asset #--clear-all #--reset-db
+69
+70 fi
+71
+72 deactivate
 </pre></div>
 </div>
 <p>To run the process:</p>

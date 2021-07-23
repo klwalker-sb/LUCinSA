@@ -287,6 +287,13 @@
   <a class="reference internal nav-link" href="#upload-your-google-sdk-key-file-to-your-cluster-space">
    2. upload your Google SDK key file to your cluster space
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#to-check-that-your-gee-configuration-is-working">
+     To check that your GEE configuration is working:
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#create-a-nasa-earthdata-key">
@@ -346,6 +353,34 @@ Follow the five steps (and links) of <a class="reference external" href="https:/
 <div class="section" id="upload-your-google-sdk-key-file-to-your-cluster-space">
 <h2>2. upload your Google SDK key file to your cluster space<a class="headerlink" href="#upload-your-google-sdk-key-file-to-your-cluster-space" title="Permalink to this headline">¶</a></h2>
 <p>Transfer the .json key file into a chosen directory on your cluster space (i.e. ~/.eosvault), via one of these <a class="reference internal" href="TransferingFiles.html#transfering"><span class="std std-ref">file transfer options</span></a>.</p>
+<div class="section" id="to-check-that-your-gee-configuration-is-working">
+<h3>To check that your GEE configuration is working:<a class="headerlink" href="#to-check-that-your-gee-configuration-is-working" title="Permalink to this headline">¶</a></h3>
+<p>This can be done in iPython (which you already installed), which is a Python interpreter that allows small Python codes to be run without having to go through SLURM (the cluster’s computing manager)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#Activate virtual environment first, then ipython:</span>
+<span class="n">source</span> <span class="o">.</span><span class="n">nasaenv</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
+<span class="n">ipython</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="kn">from</span> <span class="nn">google.auth.transport.requests</span> <span class="kn">import</span> <span class="n">AuthorizedSession</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="kn">from</span> <span class="nn">google.oauth2</span> <span class="kn">import</span> <span class="n">service_account</span>
+<span class="c1"># make sure to **edit your key path** in the command below:</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">3</span><span class="p">]:</span> <span class="n">credentials</span> <span class="o">=</span> <span class="n">service_account</span><span class="o">.</span><span class="n">Credentials</span><span class="o">.</span><span class="n">from_service_account_file</span><span class="p">(</span><span class="s1">&#39;/home/&lt;username&gt;/.eosvault/&lt;yourkey&gt;.json&#39;</span><span class="p">)</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">4</span><span class="p">]:</span> <span class="n">scoped_credentials</span> <span class="o">=</span> <span class="n">credentials</span><span class="o">.</span><span class="n">with_scopes</span><span class="p">([</span><span class="s1">&#39;https://www.googleapis.com/auth/cloud-platform&#39;</span><span class="p">])</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">5</span><span class="p">]:</span> <span class="n">session</span> <span class="o">=</span> <span class="n">AuthorizedSession</span><span class="p">(</span><span class="n">scoped_credentials</span><span class="p">)</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">6</span><span class="p">]:</span> <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://earthengine.googleapis.com/v1alpha/projects/earthengine-public/assets/LANDSAT&#39;</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">7</span><span class="p">]:</span> <span class="n">response</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">8</span><span class="p">]:</span> <span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">9</span><span class="p">]:</span> <span class="kn">import</span> <span class="nn">json</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">10</span><span class="p">]:</span> <span class="n">pprint</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">))</span>
+<span class="c1"># to Exit ipython:</span>
+<span class="n">In</span> <span class="p">[</span><span class="n">x</span><span class="p">]:</span> <span class="n">exit</span>
+</pre></div>
+</div>
+<p>If everything is configured correctly, the response before exiting should look something like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;LANDSAT&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;projects/earthengine-public/assets/LANDSAT&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;FOLDER&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
 </div>
 <div class="section" id="create-a-nasa-earthdata-key">
 <h2>3. Create a NASA Earthdata key<a class="headerlink" href="#create-a-nasa-earthdata-key" title="Permalink to this headline">¶</a></h2>
@@ -384,8 +419,8 @@ Follow the five steps (and links) of <a class="reference external" href="https:/
 <p>To edit a line, type <code class="docutils literal notranslate"><span class="pre">i</span></code>, edit as desired, then hit <code class="docutils literal notranslate"><span class="pre">Esc</span></code> key and type <code class="docutils literal notranslate"><span class="pre">:wq</span></code>. Hit <code class="docutils literal notranslate"><span class="pre">Enter</span></code> key. For help editing in Vim, <a class="reference internal" href="vim.html#vimcommands"><span class="std std-ref">see Vim Commands</span></a>.
 <strong>Edit the following lines to match your paths:</strong></p>
 <ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">Google</span> <span class="pre">secret</span> <span class="pre">key</span></code> (line 12 below): Edit path to match that of the secret key you uploaded in step #2 above</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">angles</span></code> (lines 16-17 of the template below): Edit path to match your own. First you need to <strong>extract the angle files</strong> into the corresponding directory:</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">Google</span> <span class="pre">secret</span> <span class="pre">key</span></code> (line 13 below): Edit path to match that of the secret key you uploaded in step #2 above</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">angles</span></code> (lines 17-18 of the template below): Edit path to match your own. First you need to <strong>extract the angle files</strong> into the corresponding directory:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="c1">#make the directory if it doesn&#39;t alreay exist:</span>
   <span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="o">~/</span><span class="n">code</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span>
   <span class="c1">#move the ESPA.tar.gz file into the directory prior to extracting:</span>
@@ -397,87 +432,88 @@ Follow the five steps (and links) of <a class="reference external" href="https:/
 </pre></div>
 </div>
 </li>
-<li><p><code class="docutils literal notranslate"><span class="pre">Nasa</span> <span class="pre">Earth</span> <span class="pre">data</span></code>: In line 66, modify your username. In lines 67 and 68, modify the path to where you put your Nasa Earth key and code in step 3.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Nasa</span> <span class="pre">Earth</span> <span class="pre">data</span></code>: In line 67, modify your username. In lines 68 and 69, modify the path to where you put your Nasa Earth key and code in step 3.</p></li>
 </ul>
 <p>config_eri.yaml template (with added line #s for reference):</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="o">-</span>  <span class="c1"># Root directory for the GCP index files</span>
-<span class="mi">2</span><span class="o">-</span>  <span class="n">index_dir</span><span class="p">:</span> <span class="s1">&#39;/jad-cel/sandbox-cel/paraguay_lc/raster&#39;</span>
-<span class="mi">3</span><span class="o">-</span>  
-<span class="mi">4</span><span class="o">-</span>  <span class="c1"># Directory to save text files of incomplete batch jobs</span>
-<span class="mi">5</span><span class="o">-</span>  <span class="n">log_dir</span><span class="p">:</span> <span class="s1">&#39;/home/&lt;username&gt;/code/bash&#39;</span>
-<span class="mi">6</span><span class="o">-</span>  
-<span class="mi">7</span><span class="o">-</span>  <span class="c1"># Length (in meters) on each side of grid</span>
-<span class="mi">8</span><span class="o">-</span>  <span class="n">grid_size</span><span class="p">:</span> <span class="mi">20000</span>
-<span class="mi">9</span><span class="o">-</span>  
-<span class="mi">10</span><span class="o">-</span> <span class="n">google</span><span class="p">:</span>
-<span class="mi">11</span><span class="o">-</span> 
-<span class="mi">12</span><span class="o">-</span>  <span class="n">secret_key</span><span class="p">:</span> <span class="s1">&#39;/home/&lt;username&gt;/.eosvault/&lt;key&gt;.json&#39;</span>
-<span class="mi">13</span><span class="o">-</span> 
-<span class="mi">14</span><span class="o">-</span> <span class="n">angles</span><span class="p">:</span>
-<span class="mi">15</span><span class="o">-</span> 
-<span class="mi">16</span><span class="o">-</span>   <span class="n">l57_angles_path</span><span class="p">:</span> <span class="s1">&#39;/home/&lt;username&gt;/code/bin/ESPA/landsat_angles&#39;</span>
-<span class="mi">17</span><span class="o">-</span>   <span class="n">l8_angles_path</span><span class="p">:</span> <span class="s1">&#39;/home/&lt;username&gt;/code/bin/ESPA/l8_angles&#39;</span>
-<span class="mi">18</span><span class="o">-</span>   <span class="n">subsample</span><span class="p">:</span> <span class="mi">10</span>
-<span class="mi">19</span><span class="o">-</span>   <span class="n">resampling</span><span class="p">:</span> <span class="s1">&#39;bilinear&#39;</span>
-<span class="mi">20</span><span class="o">-</span> 
-<span class="mi">21</span><span class="o">-</span> <span class="n">sixs</span><span class="p">:</span>
-<span class="mi">22</span><span class="o">-</span> 
-<span class="mi">23</span><span class="o">-</span>   <span class="n">coarse_res</span><span class="p">:</span> <span class="mf">100.0</span>
-<span class="mi">24</span><span class="o">-</span> 
-<span class="mi">25</span><span class="o">-</span> <span class="n">io</span><span class="p">:</span>
-<span class="mi">26</span><span class="o">-</span> 
-<span class="mi">27</span><span class="o">-</span>   <span class="c1"># netcdf | geotiff</span>
-<span class="mi">28</span><span class="o">-</span>   <span class="n">file_format</span><span class="p">:</span> <span class="s1">&#39;netcdf&#39;</span>
-<span class="mi">29</span><span class="o">-</span>   <span class="n">chunks</span><span class="p">:</span> <span class="mi">512</span>
-<span class="mi">30</span><span class="o">-</span>   <span class="n">resampling</span><span class="p">:</span> <span class="s1">&#39;cubic&#39;</span>
-<span class="mi">31</span><span class="o">-</span>   <span class="n">num_threads</span><span class="p">:</span> <span class="mi">2</span>
-<span class="mi">32</span><span class="o">-</span>   <span class="n">nodataval</span><span class="p">:</span> <span class="mi">65535</span>
-<span class="mi">33</span><span class="o">-</span> 
-<span class="mi">34</span><span class="o">-</span>   <span class="n">to_netcdf_kwargs</span><span class="p">:</span>
-<span class="mi">35</span><span class="o">-</span>     <span class="n">zlib</span><span class="p">:</span> <span class="kc">True</span>
-<span class="mi">36</span><span class="o">-</span>     <span class="n">complevel</span><span class="p">:</span> <span class="mi">5</span>
-<span class="mi">37</span><span class="o">-</span> 
-<span class="mi">38</span><span class="o">-</span>   <span class="n">to_raster_kwargs</span><span class="p">:</span>
-<span class="mi">39</span><span class="o">-</span>     <span class="n">overwrite</span><span class="p">:</span> <span class="kc">True</span>
-<span class="mi">40</span><span class="o">-</span>     <span class="n">compress</span><span class="p">:</span> <span class="s1">&#39;lzw&#39;</span>
-<span class="mi">41</span><span class="o">-</span>     <span class="n">tiled</span><span class="p">:</span> <span class="kc">True</span>
-<span class="mi">42</span><span class="o">-</span>     <span class="n">n_workers</span><span class="p">:</span> <span class="mi">1</span>
-<span class="mi">43</span><span class="o">-</span>     <span class="n">n_threads</span><span class="p">:</span> <span class="mi">2</span>
-<span class="mi">44</span><span class="o">-</span> 
-<span class="mi">45</span><span class="o">-</span>   <span class="n">post</span><span class="p">:</span>
-<span class="mi">46</span><span class="o">-</span> 
-<span class="mi">47</span><span class="o">-</span>     <span class="c1"># Chunk read size</span>
-<span class="mi">48</span><span class="o">-</span>     <span class="n">chunks</span><span class="p">:</span> <span class="mi">1024</span>
-<span class="mi">49</span><span class="o">-</span> 
-<span class="mi">50</span><span class="o">-</span> <span class="n">storage</span><span class="p">:</span>
-<span class="mi">51</span><span class="o">-</span> 
-<span class="mi">52</span><span class="o">-</span>   <span class="n">crs</span><span class="p">:</span> <span class="s1">&#39;utm&#39;</span>
-<span class="mi">53</span><span class="o">-</span>   <span class="n">res</span><span class="p">:</span> <span class="mf">10.0</span>
-<span class="mi">54</span><span class="o">-</span>   <span class="n">bands</span><span class="p">:</span>
-<span class="mi">55</span><span class="o">-</span>     <span class="o">-</span> <span class="s1">&#39;blue&#39;</span>
-<span class="mi">56</span><span class="o">-</span>     <span class="o">-</span> <span class="s1">&#39;green&#39;</span>
-<span class="mi">57</span><span class="o">-</span>     <span class="o">-</span> <span class="s1">&#39;red&#39;</span>
-<span class="mi">58</span><span class="o">-</span>     <span class="o">-</span> <span class="s1">&#39;nir&#39;</span>
-<span class="mi">59</span><span class="o">-</span>     <span class="o">-</span> <span class="s1">&#39;swir1&#39;</span>
-<span class="mi">60</span><span class="o">-</span>     <span class="o">-</span> <span class="s1">&#39;swir2&#39;</span>
-<span class="mi">61</span><span class="o">-</span> 
-<span class="mi">62</span><span class="o">-</span> <span class="n">nasaearth</span><span class="p">:</span>
-<span class="mi">63</span><span class="o">-</span> 
-<span class="mi">64</span><span class="o">-</span>   <span class="c1"># The NASA Earthdata username to download HGT SRTM files</span>
-<span class="mi">65</span><span class="o">-</span>   <span class="c1"># https://urs.earthdata.nasa.gov/</span>
-<span class="mi">66</span><span class="o">-</span>   <span class="n">username</span><span class="p">:</span> <span class="s1">&#39;&lt;username&gt;&#39;</span>
-<span class="mi">67</span><span class="o">-</span> 
-<span class="mi">68</span><span class="o">-</span>   <span class="n">key_file</span><span class="p">:</span> <span class="s1">&#39;/home/&lt;username&gt;/.eosvault/nasaearth.key&#39;</span>
-<span class="mi">69</span><span class="o">-</span>   <span class="n">code_file</span><span class="p">:</span> <span class="s1">&#39;/home/&lt;username&gt;/.eosvault/nasaearth.code&#39;</span>
-<span class="mi">70</span><span class="o">-</span> 
-<span class="mi">71</span><span class="o">-</span> <span class="n">srtm</span><span class="p">:</span>
-<span class="mi">72</span><span class="o">-</span> 
-<span class="mi">73</span><span class="o">-</span>   <span class="n">srtm_path</span><span class="p">:</span> <span class="s1">&#39;/jad-cel/sandbox-cel/paraguay_lc/raster/srtm&#39;</span>
-<span class="mi">74</span><span class="o">-</span> 
-<span class="mi">75</span><span class="o">-</span> <span class="n">masks</span><span class="p">:</span>
-<span class="mi">76</span><span class="o">-</span> 
-<span class="mi">77</span><span class="o">-</span>   <span class="c1"># 0-100 range</span>
-<span class="mi">78</span><span class="o">-</span>   <span class="n">s2cloudless_thresh</span><span class="p">:</span> <span class="mi">60</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="o">-</span>  <span class="n">project_path</span><span class="p">:</span> <span class="s1">&#39;/jad-cel/sandbox-cel/paraguay_lc/raster/grids&#39;</span>
+<span class="mi">2</span><span class="o">-</span>    <span class="c1"># Root directory for the GCP index files</span>
+<span class="mi">3</span><span class="o">-</span>  <span class="n">index_dir</span><span class="p">:</span> <span class="s1">&#39;/jad-cel/sandbox-cel/paraguay_lc/raster&#39;</span>
+<span class="mi">4</span><span class="o">-</span>  
+<span class="mi">5</span><span class="o">-</span>  <span class="c1"># Directory to save text files of incomplete batch jobs</span>
+<span class="mi">6</span><span class="o">-</span>  <span class="n">log_dir</span><span class="p">:</span> <span class="s1">&#39;/home/&lt;username&gt;/code/bash&#39;</span>
+<span class="mi">7</span><span class="o">-</span>  
+<span class="mi">8</span><span class="o">-</span>  <span class="c1"># Length (in meters) on each side of grid</span>
+<span class="mi">9</span><span class="o">-</span>  <span class="n">grid_size</span><span class="p">:</span> <span class="mi">20000</span>
+<span class="mi">10</span><span class="o">-</span>  
+<span class="mi">11</span><span class="o">-</span> <span class="n">google</span><span class="p">:</span>
+<span class="mi">12</span><span class="o">-</span> 
+<span class="mi">13</span><span class="o">-</span>  <span class="n">secret_key</span><span class="p">:</span> <span class="s1">&#39;/home/&lt;username&gt;/.eosvault/&lt;key&gt;.json&#39;</span>
+<span class="mi">14</span><span class="o">-</span> 
+<span class="mi">15</span><span class="o">-</span> <span class="n">angles</span><span class="p">:</span>
+<span class="mi">16</span><span class="o">-</span> 
+<span class="mi">17</span><span class="o">-</span>   <span class="n">l57_angles_path</span><span class="p">:</span> <span class="s1">&#39;/home/&lt;username&gt;/code/bin/ESPA/landsat_angles&#39;</span>
+<span class="mi">18</span><span class="o">-</span>   <span class="n">l8_angles_path</span><span class="p">:</span> <span class="s1">&#39;/home/&lt;username&gt;/code/bin/ESPA/l8_angles&#39;</span>
+<span class="mi">19</span><span class="o">-</span>   <span class="n">subsample</span><span class="p">:</span> <span class="mi">10</span>
+<span class="mi">20</span><span class="o">-</span>   <span class="n">resampling</span><span class="p">:</span> <span class="s1">&#39;bilinear&#39;</span>
+<span class="mi">21</span><span class="o">-</span> 
+<span class="mi">22</span><span class="o">-</span> <span class="n">sixs</span><span class="p">:</span>
+<span class="mi">23</span><span class="o">-</span> 
+<span class="mi">24</span><span class="o">-</span>   <span class="n">coarse_res</span><span class="p">:</span> <span class="mf">100.0</span>
+<span class="mi">25</span><span class="o">-</span> 
+<span class="mi">26</span><span class="o">-</span> <span class="n">io</span><span class="p">:</span>
+<span class="mi">27</span><span class="o">-</span> 
+<span class="mi">28</span><span class="o">-</span>   <span class="c1"># netcdf | geotiff</span>
+<span class="mi">29</span><span class="o">-</span>   <span class="n">file_format</span><span class="p">:</span> <span class="s1">&#39;netcdf&#39;</span>
+<span class="mi">30</span><span class="o">-</span>   <span class="n">chunks</span><span class="p">:</span> <span class="mi">512</span>
+<span class="mi">31</span><span class="o">-</span>   <span class="n">resampling</span><span class="p">:</span> <span class="s1">&#39;cubic&#39;</span>
+<span class="mi">32</span><span class="o">-</span>   <span class="n">num_threads</span><span class="p">:</span> <span class="mi">2</span>
+<span class="mi">33</span><span class="o">-</span>   <span class="n">nodataval</span><span class="p">:</span> <span class="mi">65535</span>
+<span class="mi">34</span><span class="o">-</span> 
+<span class="mi">35</span><span class="o">-</span>   <span class="n">to_netcdf_kwargs</span><span class="p">:</span>
+<span class="mi">36</span><span class="o">-</span>     <span class="n">zlib</span><span class="p">:</span> <span class="kc">True</span>
+<span class="mi">37</span><span class="o">-</span>     <span class="n">complevel</span><span class="p">:</span> <span class="mi">5</span>
+<span class="mi">38</span><span class="o">-</span> 
+<span class="mi">39</span><span class="o">-</span>   <span class="n">to_raster_kwargs</span><span class="p">:</span>
+<span class="mi">40</span><span class="o">-</span>     <span class="n">overwrite</span><span class="p">:</span> <span class="kc">True</span>
+<span class="mi">41</span><span class="o">-</span>     <span class="n">compress</span><span class="p">:</span> <span class="s1">&#39;lzw&#39;</span>
+<span class="mi">42</span><span class="o">-</span>     <span class="n">tiled</span><span class="p">:</span> <span class="kc">True</span>
+<span class="mi">43</span><span class="o">-</span>     <span class="n">n_workers</span><span class="p">:</span> <span class="mi">1</span>
+<span class="mi">44</span><span class="o">-</span>     <span class="n">n_threads</span><span class="p">:</span> <span class="mi">2</span>
+<span class="mi">45</span><span class="o">-</span> 
+<span class="mi">46</span><span class="o">-</span>   <span class="n">post</span><span class="p">:</span>
+<span class="mi">47</span><span class="o">-</span> 
+<span class="mi">48</span><span class="o">-</span>     <span class="c1"># Chunk read size</span>
+<span class="mi">49</span><span class="o">-</span>     <span class="n">chunks</span><span class="p">:</span> <span class="mi">1024</span>
+<span class="mi">50</span><span class="o">-</span> 
+<span class="mi">51</span><span class="o">-</span> <span class="n">storage</span><span class="p">:</span>
+<span class="mi">52</span><span class="o">-</span> 
+<span class="mi">53</span><span class="o">-</span>   <span class="n">crs</span><span class="p">:</span> <span class="s1">&#39;utm&#39;</span>
+<span class="mi">54</span><span class="o">-</span>   <span class="n">res</span><span class="p">:</span> <span class="mf">10.0</span>
+<span class="mi">55</span><span class="o">-</span>   <span class="n">bands</span><span class="p">:</span>
+<span class="mi">56</span><span class="o">-</span>     <span class="o">-</span> <span class="s1">&#39;blue&#39;</span>
+<span class="mi">57</span><span class="o">-</span>     <span class="o">-</span> <span class="s1">&#39;green&#39;</span>
+<span class="mi">58</span><span class="o">-</span>     <span class="o">-</span> <span class="s1">&#39;red&#39;</span>
+<span class="mi">59</span><span class="o">-</span>     <span class="o">-</span> <span class="s1">&#39;nir&#39;</span>
+<span class="mi">60</span><span class="o">-</span>     <span class="o">-</span> <span class="s1">&#39;swir1&#39;</span>
+<span class="mi">61</span><span class="o">-</span>     <span class="o">-</span> <span class="s1">&#39;swir2&#39;</span>
+<span class="mi">62</span><span class="o">-</span> 
+<span class="mi">63</span><span class="o">-</span> <span class="n">nasaearth</span><span class="p">:</span>
+<span class="mi">64</span><span class="o">-</span> 
+<span class="mi">65</span><span class="o">-</span>   <span class="c1"># The NASA Earthdata username to download HGT SRTM files</span>
+<span class="mi">66</span><span class="o">-</span>   <span class="c1"># https://urs.earthdata.nasa.gov/</span>
+<span class="mi">67</span><span class="o">-</span>   <span class="n">username</span><span class="p">:</span> <span class="s1">&#39;&lt;username&gt;&#39;</span>
+<span class="mi">68</span><span class="o">-</span> 
+<span class="mi">69</span><span class="o">-</span>   <span class="n">key_file</span><span class="p">:</span> <span class="s1">&#39;/home/&lt;username&gt;/.eosvault/nasaearth.key&#39;</span>
+<span class="mi">70</span><span class="o">-</span>   <span class="n">code_file</span><span class="p">:</span> <span class="s1">&#39;/home/&lt;username&gt;/.eosvault/nasaearth.code&#39;</span>
+<span class="mi">71</span><span class="o">-</span> 
+<span class="mi">72</span><span class="o">-</span> <span class="n">srtm</span><span class="p">:</span>
+<span class="mi">73</span><span class="o">-</span> 
+<span class="mi">74</span><span class="o">-</span>   <span class="n">srtm_path</span><span class="p">:</span> <span class="s1">&#39;/jad-cel/sandbox-cel/paraguay_lc/raster/srtm&#39;</span>
+<span class="mi">75</span><span class="o">-</span> 
+<span class="mi">76</span><span class="o">-</span> <span class="n">masks</span><span class="p">:</span>
+<span class="mi">77</span><span class="o">-</span> 
+<span class="mi">78</span><span class="o">-</span>   <span class="c1"># 0-100 range</span>
+<span class="mi">79</span><span class="o">-</span>   <span class="n">s2cloudless_thresh</span><span class="p">:</span> <span class="mi">60</span>
 </pre></div>
 </div>
 </div>
