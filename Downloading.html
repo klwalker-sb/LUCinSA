@@ -119,7 +119,7 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="environment_setup.html">
-   Setting up your remote environment
+   Install Python tools/packages and dependencies from project github scripts:
   </a>
  </li>
  <li class="toctree-l1">
@@ -157,6 +157,18 @@
  <li class="toctree-l1">
   <a class="reference internal" href="Pipeline.html">
    Pipeline process
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  New project configuration
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Setting_up_new_project.html">
+   Setting up a new project
   </a>
  </li>
 </ul>
@@ -551,6 +563,10 @@ step 5 if all images don’t download properly the first time.)</p></li>
 </li>
 </ul>
 </div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>For GRID IDs &gt;1000</strong>: SLURM processors usually do not allow array numbers &gt;1000. To get around this, modify the GRID_ID on line 29 to: <code class="docutils literal notranslate"><span class="pre">GRID_ID=$(($SLURM_ARRAY_TASK_ID</span> <span class="pre">+</span> <span class="pre">1000))</span></code> Then subtract 1000 from the array number on line 10.</p>
+</div>
 </div>
 <div class="section" id="run-the-process">
 <h2>3. Run the process<a class="headerlink" href="#run-the-process" title="Permalink to this headline">¶</a></h2>

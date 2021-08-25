@@ -179,6 +179,10 @@ For further information on the rest of the script (parts you will NOT likely edi
 >* Lines 50-96
 >    * These are the actual command lines to run the process based on the settings above.
  
+:::{note}
+**For GRID IDs >1000**: SLURM processors usually do not allow array numbers >1000. To get around this, modify the GRID_ID on line 29 to: `GRID_ID=$(($SLURM_ARRAY_TASK_ID + 1000))` Then subtract 1000 from the array number on line 10.
+:::
+
 
 ## 3. Run the process
 ```

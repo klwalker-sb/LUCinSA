@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Setting up your remote environment &#8212; LUCinSA</title>
+    <title>Install Python tools/packages and dependencies from project github scripts: &#8212; LUCinSA</title>
     
   <link href="_static/css/theme.css" rel="stylesheet" />
   <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -119,7 +119,7 @@
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Setting up your remote environment
+   Install Python tools/packages and dependencies from project github scripts:
   </a>
  </li>
  <li class="toctree-l1">
@@ -157,6 +157,18 @@
  <li class="toctree-l1">
   <a class="reference internal" href="Pipeline.html">
    Pipeline process
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  New project configuration
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Setting_up_new_project.html">
+   Setting up a new project
   </a>
  </li>
 </ul>
@@ -278,37 +290,15 @@
             </div>
             <nav id="bd-toc-nav">
                 <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#the-general-cluster-environment">
-   The general cluster environment
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Install Python tools/packages and dependencies from project github scripts:
   </a>
  </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#setting-up-a-virtual-environment">
-   Setting up a virtual environment
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#add-a-personalized-profile-file-optional-add-a-personalized-profile-file-optional">
+   Add a personalized .profile file (optional) {#add-a-personalized-profile-file-optional}
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#install-python-tools-packages-and-dependencies-from-project-github-scripts">
-     Install Python tools/packages and dependencies from project github scripts:
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#configure-vim-optional">
-     Configure vim (optional)
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#add-a-personalized-profile-file-optional">
-     Add a personalized .profile file (optional)
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#sourcing-the-profile-optional-only-do-if-you-created-a-profile-above">
-     Sourcing the profile (optional; only do if you created a .profile above)
-    </a>
-   </li>
-  </ul>
  </li>
 </ul>
 
@@ -321,45 +311,42 @@
         
               <div>
                 
-  <div class="section" id="setting-up-your-remote-environment">
-<h1>Setting up your remote environment<a class="headerlink" href="#setting-up-your-remote-environment" title="Permalink to this headline">¶</a></h1>
-<p>===============================================================================================================================</p>
-<div class="section" id="the-general-cluster-environment">
-<h2>The general cluster environment<a class="headerlink" href="#the-general-cluster-environment" title="Permalink to this headline">¶</a></h2>
-<p>As with most cluster computers, the ERI system uses a UNIX-based shell called “BASH”. This is a very simplified system that interprets code via command-line interface. To interact with the system, you need to use Shell scripting, which is based on UNIX/Linux command language. For a quick review of basic UNIX commands, <a class="reference internal" href="commandLine_bash.html#unix"><span class="std std-ref">see here</span></a>. For a more comprehensive coverage of working with BASH scripting, see these hpc-carpentry lessons on <a class="reference external" href="http://www.hpc-carpentry.org/hpc-shell/02-navigation/index.html">navigating in bash</a> and <a class="reference external" href="http://www.hpc-carpentry.org/hpc-shell/03-files/index.html">file manipulation in bash</a>.</p>
-<p>The point of high-performance computing is to manage and process large work loads. This is acheived through a work load manager, SLURM (Simple Linux Utility for Resource Management). Ultimate processing commands are sent to SLURM from .sh scripts in the bash directory via the command <code class="docutils literal notranslate"><span class="pre">sbatch</span></code>. Any other non-UNIX-based commands are processed within a virtual environment (e.g. via a Python interpreter).</p>
-</div>
-<div class="section" id="setting-up-a-virtual-environment">
-<h2>Setting up a virtual environment<a class="headerlink" href="#setting-up-a-virtual-environment" title="Permalink to this headline">¶</a></h2>
-<p>Virtual environments allow us to customize our coding toolkit and preferences for each project within its own container so that it does not risk interfering with those of other projects or users. Within a virtual environment, you can define the version of Python that will be used, install packages specific to the project, and customize settings to facilitate your interactions, including aliases, which are shortcuts to replace frequently used or cumbersome commands. After connecting to bellows via ssh for the first time, you will need to set up your environment.</p>
-<div class="admonition-make-sure-you-are-in-your-home-directory-when-creating-changing-environment-settings admonition">
-<p class="admonition-title">Make sure you are in your home directory when creating/changing environment settings!</p>
-<p>You should see your username &#64;bellows in the command prompt.
-(there may be numbers in front; this is fine for now and can be taken care of later <a class="reference internal" href="#profileissue"><span class="std std-ref">here</span></a>).<br />
-If you are unsure whether you are in your home directory, type cd ~/</p>
+  <div class="highlight-{.cell notranslate"><div class="highlight"><pre><span></span># \# Setting up your remote environment {#-setting-up-your-remote-environment}
+
+## The general cluster environment
+
+As with most cluster computers, the ERI system uses a UNIX-based shell called &quot;BASH&quot;. This is a very simplified system that interprets code via command-line interface. To interact with the system, you need to use Shell scripting, which is based on UNIX/Linux command language. For a quick review of basic UNIX commands, [see here](Unix). For a more comprehensive coverage of working with BASH scripting, see these hpc-carpentry lessons on [navigating in bash](http://www.hpc-carpentry.org/hpc-shell/02-navigation/index.html) and [file manipulation in bash](http://www.hpc-carpentry.org/hpc-shell/03-files/index.html).
+
+The point of high-performance computing is to manage and process large work loads. This is acheived through a work load manager, SLURM (Simple Linux Utility for Resource Management). Ultimate processing commands are sent to SLURM from .sh scripts in the bash directory via the command `sbatch`. Any other non-UNIX-based commands are processed within a virtual environment (e.g. via a Python interpreter).
+
+## Setting up a virtual environment
+
+Virtual environments allow us to customize our coding toolkit and preferences for each project within its own container so that it does not risk interfering with those of other projects or users. Within a virtual environment, you can define the version of Python that will be used, install packages specific to the project, and customize settings to facilitate your interactions, including aliases, which are shortcuts to replace frequently used or cumbersome commands. After connecting to bellows via ssh for the first time, you will need to set up your environment.
+:::{admonition}Make sure you are in your home directory when creating/changing environment settings!
+You should see your username \@bellows in the command prompt.
+(there may be numbers in front; this is fine for now and can be taken care of later [here](profileIssue)).\
+If you are unsure whether you are in your home directory, type cd \~/
+</pre></div>
 </div>
 <p>For this project, we will create a virtual environment in Python 3 called .nasaenv (output -&gt; ~/.nasaenv):</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="o">-</span><span class="n">m</span> <span class="n">venv</span> <span class="o">.</span><span class="n">nasaenv</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>python3 -m venv .nasaenv
 </pre></div>
 </div>
 <p><em><strong>Activate your virtual environment:</strong></em> every time you run code that isn’t BASH/SLURM from within the cluster:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="o">.</span><span class="n">nasaenv</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>source .nasaenv/bin/activate
 </pre></div>
 </div>
 <p><em><strong>Deactivate the virtual environment:</strong></em> when you are done:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="o">.</span><span class="n">nasaenv</span><span class="p">)</span> <span class="n">deactivate</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>(.nasaenv) deactivate
 </pre></div>
 </div>
 <div class="section" id="install-python-tools-packages-and-dependencies-from-project-github-scripts">
-<h3>Install Python tools/packages and dependencies from project github scripts:<a class="headerlink" href="#install-python-tools-packages-and-dependencies-from-project-github-scripts" title="Permalink to this headline">¶</a></h3>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
+<h1>Install Python tools/packages and dependencies from project github scripts:<a class="headerlink" href="#install-python-tools-packages-and-dependencies-from-project-github-scripts" title="Permalink to this headline">¶</a></h1>
 <p>To <strong>interact with github on your virtual computer</strong>, you first need to feed the remote computer the password. You can do this with <a class="reference external" href="https://docs.github.com/en/get-started/getting-started-with-git/updating-credentials-from-the-macos-keychain">an osxcechain credential</a> or by simply caching it by entering the following into your local git bash or mac terminal:
 <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">config</span> <span class="pre">--global</span> <span class="pre">credential.helper</span> <span class="pre">cache</span></code>
 Or in git for Windows enter: <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">config</span> <span class="pre">--global</span> <span class="pre">credential.helper</span> <span class="pre">wincred</span></code></p>
-</div>
 <p><strong>While in your home directory,</strong> enter the following commands to setup your Python environment:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>​
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>​
 # Activate the virtual environment
 source .nasaenv/bin/activate
 ​
@@ -422,23 +409,21 @@ source .nasaenv/bin/activate
 (.nasaenv) deactivate
 </pre></div>
 </div>
-<p><strong>to uninstall and reinstall a package from a github repo:</strong> (i.e. if changes are made to the package that need to be incorporated)</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="o">.</span><span class="n">nasaenv</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
-<span class="p">(</span><span class="o">.</span><span class="n">nasaenv</span><span class="p">)</span> <span class="n">pip</span> <span class="n">uninstall</span> <span class="o">&lt;</span><span class="n">package</span><span class="o">&gt;</span> <span class="o">-</span><span class="n">y</span>
-<span class="p">(</span><span class="o">.</span><span class="n">nasaenv</span><span class="p">)</span> <span class="n">cd</span> <span class="o">~/</span><span class="n">tmp</span><span class="o">/&lt;</span><span class="n">package</span> <span class="n">directory</span><span class="o">&gt;</span>
-<span class="c1">#(look up the name of the main branch in the GitHub repo). Here it is &#39;main&#39;, but it could be &#39;master&#39;/&#39;dev&#39;/etc. </span>
-<span class="p">(</span><span class="o">.</span><span class="n">nasaenv</span><span class="p">)</span> <span class="n">git</span> <span class="n">pull</span> <span class="n">origin</span> <span class="n">main</span>
-<span class="p">(</span><span class="o">.</span><span class="n">nasaenv</span><span class="p">)</span> <span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">build</span> <span class="o">&amp;&amp;</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">.</span>
-<span class="p">(</span><span class="o">.</span><span class="n">nasaenv</span><span class="p">)</span> <span class="n">deactivate</span>
+<p><strong>to uninstall and reinstall a package from a github repo:</strong> (i.e. if changes are made to the package that need to be incorporated)</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>source .nasaenv/bin/activate
+(.nasaenv) pip uninstall &lt;package&gt; -y
+(.nasaenv) cd ~/tmp/&lt;package directory&gt;
+#(look up the name of the main branch in the GitHub repo). Here it is &#39;main&#39;, but it could be &#39;master&#39;/&#39;dev&#39;/etc. 
+(.nasaenv) git pull origin main
+(.nasaenv) python setup.py build &amp;&amp; pip install .
+(.nasaenv) deactivate
 </pre></div>
 </div>
-</div>
-<div class="section" id="configure-vim-optional">
-<span id="configvim"></span><h3>Configure vim (optional)<a class="headerlink" href="#configure-vim-optional" title="Permalink to this headline">¶</a></h3>
-<p>Text documents are edited in vim, which is not the most intuitive tool to those unfamiliar with it. Here you can find commands and tips for <a class="reference internal" href="vim.html#vimcommands"><span class="std std-ref">working with vim</span></a>. You can improve your experience with vim by creating a personalized
-<code class="docutils literal notranslate"><span class="pre">.vimrc</span></code> file in your HOME directory ((output -&gt;  ~/.vimrc) to configure vim.</p>
+<p id="configvim">### Configure vim (optional)
+Text documents are edited in vim, which is not the most intuitive tool to those unfamiliar with it. Here you can find commands and tips for <a class="reference internal" href="vim.html#vimcommands"><span class="std std-ref">working with vim</span></a>. You can improve your experience with vim by creating a personalized
+<code class="docutils literal notranslate"><span class="pre">.vimrc</span></code> file in your HOME directory ((output -&gt; ~/.vimrc) to configure vim.</p>
 <p>Here is an example of a <code class="docutils literal notranslate"><span class="pre">.vimrc</span></code> doc (you can clone this from /jad-cel/cel-sandbox/templates/home_vimrc.sh):</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># Add line numbers
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Add line numbers
 set number
 ​
 au BufNewFile,BufRead *.py
@@ -467,12 +452,12 @@ set ic
 </pre></div>
 </div>
 </div>
-<div class="section" id="add-a-personalized-profile-file-optional">
-<h3>Add a personalized .profile file (optional)<a class="headerlink" href="#add-a-personalized-profile-file-optional" title="Permalink to this headline">¶</a></h3>
-<p>You can add a personalized <code class="docutils literal notranslate"><span class="pre">.profile</span></code> file in your HOME directory (output -&gt;  ~/.profile).
+<div class="section" id="add-a-personalized-profile-file-optional-add-a-personalized-profile-file-optional">
+<h1>Add a personalized .profile file (optional) {#add-a-personalized-profile-file-optional}<a class="headerlink" href="#add-a-personalized-profile-file-optional-add-a-personalized-profile-file-optional" title="Permalink to this headline">¶</a></h1>
+<p>You can add a personalized <code class="docutils literal notranslate"><span class="pre">.profile</span></code> file in your HOME directory (output -&gt; ~/.profile).
 This is useful if you want to create keyboard shortcuts (alias) or ensure global variables are properly set.</p>
 <p>Here is an example of things you might want in a <code class="docutils literal notranslate"><span class="pre">.profile</span></code> doc (you can clone this from /jad-cel/cel-sandbox/templates/home_profile.sh):</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># color enhancement for the terminal window
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># color enhancement for the terminal window
 export PS1=&quot;\[\033[36m\]\u\[\033[m\]@\[\033[32m\]\h:\[\033[33;1m\]\w\[\033[m\]\$ &quot;
 export CLICOLOR=1
 export LSCOLORS=ExFxBxDxCxegedabagacad
@@ -501,19 +486,17 @@ export C_INCLUDE_PATH=/usr/include/gdal
 export GDAL_DATA=/usr/share/gdal/2.2
 </pre></div>
 </div>
-</div>
-<div class="section" id="sourcing-the-profile-optional-only-do-if-you-created-a-profile-above">
-<span id="profileissue"></span><h3>Sourcing the profile (optional; only do if you created a .profile above)<a class="headerlink" href="#sourcing-the-profile-optional-only-do-if-you-created-a-profile-above" title="Permalink to this headline">¶</a></h3>
+<p id="profileissue">### Sourcing the profile (optional; only do if you created a .profile above)</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>Your personalized profile may not function correctly due to an irregular issue in the bash_profile.</p>
 </div>
 <p>You could fix this everytime you log in by sourcing the profile:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="o">.</span><span class="n">profile</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>source .profile
 </pre></div>
 </div>
-<p>But better to make the adjustment permanant by adding a<code class="docutils literal notranslate"><span class="pre">.bash_profile</span></code> to your home directory (output -&gt;  ~/.bash_profile) with the following language (you can clone this from /jad-cel/cel-sandbox/templates/home_bash_profile.sh):</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># .bash_profile
+<p>But better to make the adjustment permanant by adding a<code class="docutils literal notranslate"><span class="pre">.bash_profile</span></code> to your home directory (output -&gt; ~/.bash_profile) with the following language (you can clone this from /jad-cel/cel-sandbox/templates/home_bash_profile.sh):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># .bash_profile
 # Get the aliases and functions
 if [ -f ~/.bashrc ]; then
   . ~/.bashrc
@@ -532,7 +515,8 @@ BASH_ENV=$HOME/.bashrc
 export TMOUT=0
 </pre></div>
 </div>
-</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
 </div>
 </div>
 
