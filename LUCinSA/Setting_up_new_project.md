@@ -1,5 +1,5 @@
 # Setting up a new project
-========================================================================================================================================
+======================================================================================================================================
 The following skeleton, containing the grid file and two index files is necessary for a new project:
 ```
 jad-cel/sandbox-cel/<country>_lc
@@ -16,7 +16,7 @@ jad-cel/sandbox-cel/<country>_lc
 
 ## Getting the indices:
 The `index.csv.gz` files are complete catalogues of available imagery with basic parameters such as date and extent. You can use index files from other projects, but to get the most up-to-date indices, copy them from Google cloud:
-[here for Landsat](gs://gcp-public-data-landsat/index.csv.gz) and [here for Sentinel](gs://gcp-public-data-sentinel-2/index.csv.gz)
+for Landsat: gs://gcp-public-data-landsat/index.csv.gz and for Sentinel: gs://gcp-public-data-sentinel-2/index.csv.gz
 
 ## Creating the grid file:
 Script to create gridfile (from Jordan Graesser's [EOSvault Github page](https://github.com/jgrss/eosvault))

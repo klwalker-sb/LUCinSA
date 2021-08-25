@@ -25,50 +25,46 @@ Default script
 10- #SBATCH --array=911
 11- 
 12- # Change permissions on output files
-13- # user = 7 = rwx
-14- # group = 7 = rwx
-15- # others = 4 = r 
-16- #umask 774
-17- 
-18- #####################################################
+13- umask 002 
+14- #####################################################
+15- 
+16- # landsat | sentinel-2
+17- SATELLITE="sentinel-2"
+18- ASSET_ID="COPERNICUS/S2"
 19- 
-20- # landsat | sentinel-2
-21- SATELLITE="sentinel-2"
-22- ASSET_ID="COPERNICUS/S2"
-23- 
-24- # LT05 | LE07 | LC08
-25- #LANDSAT_SENSOR="LC08"
-26- #ASSET_ID="LANDSAT/${LANDSAT_SENSOR}/C01/T1_SR"
-27- #SATELLITE="landsat"
-28- 
-29- # There are 2 threads per worker from the config file
-30- NUM_WORKERS=4
-31- BATCH_SIZE=100
-32- #####################################################
-33- 
-34- # As an array job
-35- GRID_ID=$SLURM_ARRAY_TASK_ID
+20- # LT05 | LE07 | LC08
+21- #LANDSAT_SENSOR="LC08"
+22- #ASSET_ID="LANDSAT/${LANDSAT_SENSOR}/C01/T1_SR"
+23- #SATELLITE="landsat"
+24- 
+25- # There are 2 threads per worker from the config file
+26- NUM_WORKERS=4
+27- BATCH_SIZE=100
+28- #####################################################
+29- 
+30- # As an array job
+31- GRID_ID=$SLURM_ARRAY_TASK_ID
+32- 
+33- MY_USERNAME=""
+34- IN_DIR="/jad-cel/sandbox-cel/paraguay_lc/raster/grids"
+35- CONFIG_FILE="/home/${MY_USERNAME}/project/config/config_eri.yaml"
 36- 
-37- MY_USERNAME=""
-38- IN_DIR="/jad-cel/sandbox-cel/paraguay_lc/raster/grids"
-39- CONFIG_FILE="/home/${MY_USERNAME}/project/config/config_eri.yaml"
-40- 
-41- #############################################
-42- # Turn off NumPy parallelism and rely on dask
-43- #############################################
-44- export OPENBLAS_NUM_THREADS=1
-45- export MKL_NUM_THREADS=1
-46- # This should be sufficient for OpenBlas and MKL
-47- export OMP_NUM_THREADS=1
-48- ################################################
-49- 
-50- # activate the virtual environment
-51- source ~/.nasaenv/bin/activate
-52- 
-53- eosvault post --in-dir $IN_DIR --grid $GRID_ID --config-file $CONFIG_FILE --batch-size $BATCH_SIZE --max-workers 
-54- $NUM_WORKERS --satellite $SATELLITE --asset-id $ASSET_ID
-55- 
-56- deactivate
+37- #############################################
+38- # Turn off NumPy parallelism and rely on dask
+39- #############################################
+40- export OPENBLAS_NUM_THREADS=1
+41- export MKL_NUM_THREADS=1
+42- # This should be sufficient for OpenBlas and MKL
+43- export OMP_NUM_THREADS=1
+44- ################################################
+45- 
+46- # activate the virtual environment
+47- source ~/.nasaenv/bin/activate
+48- 
+49- eosvault post --in-dir $IN_DIR --grid $GRID_ID --config-file $CONFIG_FILE --batch-size $BATCH_SIZE --max-workers 
+50- $NUM_WORKERS --satellite $SATELLITE --asset-id $ASSET_ID
+51- 
+52- deactivate
 ```
 Most lines should stay as they are.
 **Do ensure that your username is entered between the quotes in line 37.
@@ -78,11 +74,11 @@ As with the downloading script, **you also need to change Grid info and Product 
 :::{admonition}You can limit the number of cells that are processed at one time by adding %n
 For example, 898-908%4 would process 4 cells at a time. When the first 4 finish, the next will start.
 :::
-**Product info:** Lines following `# landsat | sentinel-2` (Lines 20-27 here). This is where you select the satellite product, by uncommenting the corresponding lines (remove the # at the beginning of the line) and commenting those that don't correspond (replacing the # at the beginning of the line). (Only one product can be run at a time).   
+**Product info:** Lines following `# landsat | sentinel-2` (Lines 16-23 here). This is where you select the satellite product, by uncommenting the corresponding lines (remove the # at the beginning of the line) and commenting those that don't correspond (replacing the # at the beginning of the line). (Only one product can be run at a time).   
 
-**<span style='color:purple'> For Sentinel: </span>** uncomment `SATELLITE="sentinel-2` (line 21 here) and `ASSET_ID="COPERNICUS/S2` (line 22 here).
+**<span style='color:purple'> For Sentinel: </span>** uncomment `SATELLITE="sentinel-2` (line 17 here) and `ASSET_ID="COPERNICUS/S2` (line 18 here).
 
-**<span style='color:purple'> For Landsat: </span>** uncomment `LANDSAT_SENSOR="LC08"` `ASSET_ID="LANDSAT/${LANDSAT_SENSOR}/C01/T1_SR"`and `SATELLITE="landsat"` (lines 25-27 here). Also change the Landsat sensor (line 30 here) to correspond to the sensor you want to process: "LT05" for Landsat 5, "LE07" for Landsat 7, or "LC08" for Landsat 8 (as noted in line 24). You will do all three, separately.   
+**<span style='color:purple'> For Landsat: </span>** uncomment `LANDSAT_SENSOR="LC08"` `ASSET_ID="LANDSAT/${LANDSAT_SENSOR}/C01/T1_SR"`and `SATELLITE="landsat"` (lines 21-23 here). Also change the Landsat sensor (line 21 here) to correspond to the sensor you want to process: "LT05" for Landsat 5, "LE07" for Landsat 7, or "LC08" for Landsat 8 (as noted in line 20). You will do all three, separately.   
 
 ## 2. Run the process
 ```
