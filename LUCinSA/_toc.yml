@@ -20,6 +20,9 @@ parts:
     - file: Downloading
     - file: Pre_Pipeline
     - file: Pipeline
+  - caption: New project configuration
+    chapters:
+    - file: Setting_up_new_project
   - caption: Computing resources
     chapters:
     - file: intro_to_git
