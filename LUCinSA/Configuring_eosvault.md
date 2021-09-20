@@ -73,16 +73,16 @@ In [5] exit
 
 ## 4. Copy and edit the config.yaml file
 **Copy the config.yaml template to the project/config directory on your space**
+If working on Paraguay, <cntry> = pry. if working on Chile, <cntry> = chile.
 ```
 #Create project/config directory if it doesn't already exist
 mkdir -p ~/project/config
-cp /jad-cel/sandbox-cel/templates/eosvault_config_eri_pry.yaml ~/project/config/config_eri.yaml
+cp /jad-cel/sandbox-cel/templates/eosvault_config_eri.yaml ~/project/config/config_eri_<cntry>.yaml
 ```
-:::{note}if you are working with more than one country, you will want to give your copy of the config file a more descriptive name (i.e. config_eri_pry.yaml or config_eri_chl.yaml):::
 
 **Open the template in the vim editor** 
 ```
-vim ~/project/config/config_eri.yaml
+vim ~/project/config/config_eri_<cntry>.yaml
 ```
 To edit a line, type `i`, edit as desired, then hit `Esc` key and type `:wq`. Hit `Enter` key. For help editing in Vim, [see Vim Commands](VimCommands).
 **Edit the following lines to match your paths:** 
@@ -196,30 +196,31 @@ Copy the three primary processing scripts to the folder from which you will be s
 #Make code/bash directory:
 mkdir ~/code/bash
 #Copy scripts over:
-cp /jad-cel/sandbox-cel/templates/eosvault_download_eri.sh ~/code/bash/download_eri.sh
-cp /jad-cel/sandbox-cel/templates/eosvault_download_eri_single.sh ~/code/bash/download_eri_single.sh
-cp /jad-cel/sandbox-cel/templates/eosvault_post_eri.sh ~/code/bash/post_eri.sh
 #If working on Paraguay:
-cp /jad-cel/sandbox-cel/templates/paraguay_lc/pytuyau_pipeline_eri.sh ~/code/bash/pipeline_pty.sh
-```
-:::{note}if you are working with more than one country, you will want to give your copies a more descriptive name (i.e. download_eri_pry.sh or download_eri_chl.sh, etc.  and change the generic names throughout this guide to your own names):::    
+cp /jad-cel/sandbox-cel/paraguay_lc/templates/eosvault_download_eri_pry.sh ~/code/bash/download_eri_pry.sh
+cp /jad-cel/sandbox-cel/paraguay_lc/templates/eosvault_download_eri_single_pry.sh ~/code/bash/download_eri_single_pry.sh
+cp /jad-cel/sandbox-cel/paraguay_lc/templates/eosvault_post_eri_pry.sh ~/code/bash/post_eri_pry.sh
+cp /jad-cel/sandbox-cel/paraguay_lc/templates/paraguay_lc/pytuyau_pipeline_eri.sh ~/code/bash/pipeline_pty.sh
+#If working on Chile:
+cp /jad-cel/sandbox-cel/chile_lc/templates/eosvault_download_eri_chile.sh ~/code/bash/download_eri_chile.sh
+cp /jad-cel/sandbox-cel/chile_lc/templates/eosvault_download_eri_single_chile.sh ~/code/bash/download_eri_single_chile.sh
+cp /jad-cel/sandbox-cel/chile_lc/templates/eosvault_post_eri_chile.sh ~/code/bash/post_eri_chile.sh    
+```   
     
-Edit the "download_eri.sh" "download_eri_single.sh" and "post_eri.sh" scripts to point to enter your username between the quotes in the line: MY_USERNAME="" and country (no caps) between the quotes in the line: MY_COUNTRY""
+Edit the "download_eri.sh" "download_eri_single.sh" and "post_eri.sh" scripts to point to enter your username between the quotes in the line: MY_USERNAME=""
 (For help editing in Vim, [see Vim Commands](VimCommands).)
+(if working on Chile, replace pry with chile below:)
 ```
-vim ~/code/bash/download_eri.sh
+vim ~/code/bash/download_eri_pry.sh
 # Find line: MY_USERNAME="" and enter your username between the quotes
-# Find line: MY_COUNTRY="" and enter your country between the quotes (no caps)  
 [Esc] #if in edit mode
 :wq
-vim ~/code/bash/download_eri_single.sh
+vim ~/code/bash/download_eri_single_pry.sh
 # Find line: MY_USERNAME="" and enter your username between the quotes
-# Find line: MY_COUNTRY="" and enter your country between the quotes (no caps)  
 [Esc] #if in edit mode
 :wq
-vim ~/code/bash/post_eri.sh
+vim ~/code/bash/post_eri_pry.sh
 # Find line: MY_USERNAME="" and enter your username between the quotes
-# Find line: MY_COUNTRY="" and enter your country between the quotes (no caps)  
 [Esc] #if in edit mode
 :wq
 ```
