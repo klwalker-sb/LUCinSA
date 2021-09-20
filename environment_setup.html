@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Install Python tools/packages and dependencies from project github scripts: &#8212; LUCinSA</title>
+    <title>&lt;no title&gt; &#8212; LUCinSA</title>
     
   <link href="_static/css/theme.css" rel="stylesheet" />
   <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -111,15 +111,10 @@
   Computer setup
  </span>
 </p>
-<ul class="current nav bd-sidenav">
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="Connecting_to_cluster.html">
    Connecting to the ERI cluster
-  </a>
- </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   Install Python tools/packages and dependencies from project github scripts:
   </a>
  </li>
  <li class="toctree-l1">
@@ -289,17 +284,7 @@
                 <i class="fas fa-list"></i> Contents
             </div>
             <nav id="bd-toc-nav">
-                <ul class="visible nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   Install Python tools/packages and dependencies from project github scripts:
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#add-a-personalized-profile-file-optional-add-a-personalized-profile-file-optional">
-   Add a personalized .profile file (optional) {#add-a-personalized-profile-file-optional}
-  </a>
- </li>
+                <ul class="simple visible nav section-nav flex-column">
 </ul>
 
             </nav>
@@ -311,7 +296,7 @@
         
               <div>
                 
-  <div class="highlight-{.cell notranslate"><div class="highlight"><pre><span></span># \# Setting up your remote environment {#-setting-up-your-remote-environment}
+  <div class="highlight-{.cell notranslate"><div class="highlight"><pre><span></span># \# Setting up your remote environment {\#-setting-up-your-remote-environment} {#-setting-up-your-remote-environment--setting-up-your-remote-environment}
 
 ## The general cluster environment
 
@@ -328,168 +313,171 @@ You should see your username \@bellows in the command prompt.
 If you are unsure whether you are in your home directory, type cd \~/
 </pre></div>
 </div>
-<p>For this project, we will create a virtual environment in Python 3 called .nasaenv (output -&gt; ~/.nasaenv):</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>python3 -m venv .nasaenv
-</pre></div>
-</div>
-<p><em><strong>Activate your virtual environment:</strong></em> every time you run code that isn’t BASH/SLURM from within the cluster:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>source .nasaenv/bin/activate
-</pre></div>
-</div>
-<p><em><strong>Deactivate the virtual environment:</strong></em> when you are done:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>(.nasaenv) deactivate
-</pre></div>
-</div>
-<div class="section" id="install-python-tools-packages-and-dependencies-from-project-github-scripts">
-<h1>Install Python tools/packages and dependencies from project github scripts:<a class="headerlink" href="#install-python-tools-packages-and-dependencies-from-project-github-scripts" title="Permalink to this headline">¶</a></h1>
-<p>To <strong>interact with github on your virtual computer</strong>, you first need to feed the remote computer the password. You can do this with <a class="reference external" href="https://docs.github.com/en/get-started/getting-started-with-git/updating-credentials-from-the-macos-keychain">an osxcechain credential</a> or by simply caching it by entering the following into your local git bash or mac terminal:
-<code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">config</span> <span class="pre">--global</span> <span class="pre">credential.helper</span> <span class="pre">cache</span></code>
-Or in git for Windows enter: <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">config</span> <span class="pre">--global</span> <span class="pre">credential.helper</span> <span class="pre">wincred</span></code></p>
-<p><strong>While in your home directory,</strong> enter the following commands to setup your Python environment:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>​
-# Activate the virtual environment
-source .nasaenv/bin/activate
-​
-# First update pip and other install tools
-(.nasaenv) pip install -U pip setuptools wheel
-​
-# Install numpy and cython required for compiling .c code
-(.nasaenv) pip install cython numpy
-​
-# Install extra dependencies not installed with packages below
-(.nasaenv) pip install gsutil descartes ray requests opencv-python
-​
-# Install geowombatdev package from github(the dependencies here will take care of most other dependencies)
-(.nasaenv) mkdir tmp
-(.nasaenv) cd tmp/
-(.nasaenv) git clone https://github.com/jgrss/geowombatdev.git
-(.nasaenv) cd geowombatdev/
-(.nasaenv) python setup.py build &amp;&amp; pip install .
-​
-# Install eosvault package from github
-(.nasaenv) cd ~/tmp/
-(.nasaenv) git clone https://github.com/jgrss/eosvault.git
-(.nasaenv) cd eosvault/
-(.nasaenv) python setup.py build &amp;&amp; pip install .
-​
-# Install rastercrf from github
-(.nasaenv) cd ~/tmp/
-(.nasaenv) git clone https://github.com/jgrss/rastercrf.git
-(.nasaenv) cd rastercrf/
-(.nasaenv) python setup.py build &amp;&amp; pip install .
-​
-# Install satsmooth from github
-(.nasaenv) cd ~/tmp/
-(.nasaenv) git clone https://github.com/jgrss/satsmooth.git
-(.nasaenv) cd satsmooth/
-(.nasaenv) python setup.py build &amp;&amp; pip install .
-​
-# Install sacfei from github
-(.nasaenv) cd ~/tmp/
-(.nasaenv) git clone https://github.com/jgrss/sacfei.git
-(.nasaenv) cd sacfei/
-(.nasaenv) python setup.py build &amp;&amp; pip install .
-​
-# Install pymorph3 from github
-(.nasaenv) cd ~/tmp/
-(.nasaenv) git clone https://github.com/jgrss/pymorph3.git
-(.nasaenv) cd pymorph3/
-(.nasaenv) python setup.py build &amp;&amp; pip install .
-​
-# Install pytuyau from github
-(.nasaenv) cd ~/tmp/
-(.nasaenv) git clone https://github.com/jgrss/pytuyau.git
-(.nasaenv) cd pytuyau/
-(.nasaenv) python setup.py build &amp;&amp; pip install .
-​
-# Install IPython
-(.nasaenv) pip install ipython[all]
-​
-# Deactivate the virtual environment when finished
-(.nasaenv) deactivate
-</pre></div>
-</div>
-<p><strong>to uninstall and reinstall a package from a github repo:</strong> (i.e. if changes are made to the package that need to be incorporated)</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>source .nasaenv/bin/activate
-(.nasaenv) pip uninstall &lt;package&gt; -y
-(.nasaenv) cd ~/tmp/&lt;package directory&gt;
-#(look up the name of the main branch in the GitHub repo). Here it is &#39;main&#39;, but it could be &#39;master&#39;/&#39;dev&#39;/etc. 
-(.nasaenv) git pull origin main
-(.nasaenv) python setup.py build &amp;&amp; pip install .
-(.nasaenv) deactivate
-</pre></div>
-</div>
-<p id="configvim">### Configure vim (optional)
-Text documents are edited in vim, which is not the most intuitive tool to those unfamiliar with it. Here you can find commands and tips for <a class="reference internal" href="vim.html#vimcommands"><span class="std std-ref">working with vim</span></a>. You can improve your experience with vim by creating a personalized
-<code class="docutils literal notranslate"><span class="pre">.vimrc</span></code> file in your HOME directory ((output -&gt; ~/.vimrc) to configure vim.</p>
-<p>Here is an example of a <code class="docutils literal notranslate"><span class="pre">.vimrc</span></code> doc (you can clone this from /jad-cel/cel-sandbox/templates/home_vimrc.sh):</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Add line numbers
-set number
-​
-au BufNewFile,BufRead *.py
-    \ set tabstop=4 |
-    \ set softtabstop=4 |
-    \ set shiftwidth=4 |
-    \ set textwidth=79 |
-    \ set expandtab |
-    \ set autoindent |
-    \ set fileformat=unix
-	
-highlight BadWhitespace ctermbg=red guibg=darkred
-au BufRead,BufNewFile *.py,*.pyw,*.pyx,*.pxd,*.c,*.h match BadWhitespace /\s\+$/
-​
-set encoding=utf-8
-​
-let python_highlight_all=1
-syntax on
-​
-set cursorline
-​
-set foldmethod=indent
-set foldlevel=99
-​
-set ic
-</pre></div>
-</div>
-</div>
-<div class="section" id="add-a-personalized-profile-file-optional-add-a-personalized-profile-file-optional">
-<h1>Add a personalized .profile file (optional) {#add-a-personalized-profile-file-optional}<a class="headerlink" href="#add-a-personalized-profile-file-optional-add-a-personalized-profile-file-optional" title="Permalink to this headline">¶</a></h1>
-<p>You can add a personalized <code class="docutils literal notranslate"><span class="pre">.profile</span></code> file in your HOME directory (output -&gt; ~/.profile).
-This is useful if you want to create keyboard shortcuts (alias) or ensure global variables are properly set.</p>
-<p>Here is an example of things you might want in a <code class="docutils literal notranslate"><span class="pre">.profile</span></code> doc (you can clone this from /jad-cel/cel-sandbox/templates/home_profile.sh):</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># color enhancement for the terminal window
-export PS1=&quot;\[\033[36m\]\u\[\033[m\]@\[\033[32m\]\h:\[\033[33;1m\]\w\[\033[m\]\$ &quot;
-export CLICOLOR=1
-export LSCOLORS=ExFxBxDxCxegedabagacad
-​
-#simpler file navigation:
-alias .1=&#39;cd ../&#39;
-alias .2=&#39;cd ../..&#39;
-alias .3=&#39;cd ../../..&#39;
-​
-# shortcut to list SLURM job status ([username] = your username)
-alias qs=&quot;squeue -u [username]&quot;
+<div class="highlight-{.cell notranslate"><div class="highlight"><pre><span></span>For this project, we will create a virtual environment in Python 3 called .nasaenv (output -\&gt; \~/.nasaenv):
 
-if [ -n &quot;$BASH_VERSION&quot; ]; then
-  if [ -f &quot;$HOME/.bashrc&quot; ]; then
-    . &quot;$HOME/.bashrc&quot;
-  fi
-fi
-​
-if [ -d &quot;$HOME/bin&quot; ] ; then
-  PATH=&quot;$HOME/bin:$PATH&quot;
-fi
-​
-# global vars for GDAL
-export CPLUS_INCLUDE_PATH=/usr/include/gdal
-export C_INCLUDE_PATH=/usr/include/gdal
-export GDAL_DATA=/usr/share/gdal/2.2
+    python3 -m venv .nasaenv
+
+***Activate your virtual environment:*** every time you run code that isn&#39;t BASH/SLURM from within the cluster:
+
+    source .nasaenv/bin/activate
+
+***Deactivate the virtual environment:*** when you are done:
+
+    (.nasaenv) deactivate
+
+### Install Python tools/packages and dependencies from project github scripts:
+
+To **interact with github on your virtual computer**, you first need to feed the remote computer the password. You can do this with [an osxcechain credential](https://docs.github.com/en/get-started/getting-started-with-git/updating-credentials-from-the-macos-keychain) or by simply caching it by entering the following into your local git bash or mac terminal:
+`git config --global credential.helper cache`
+Or in git for Windows enter: `git config --global credential.helper wincred`
+
+**While in your home directory,** enter the following commands to setup your Python environment:
+
+    ​
+    # Activate the virtual environment
+    source .nasaenv/bin/activate
+    ​
+    # First update pip and other install tools
+    (.nasaenv) pip install -U pip setuptools wheel
+    ​
+    # Install numpy and cython required for compiling .c code
+    (.nasaenv) pip install cython numpy
+    ​
+    # Install extra dependencies not installed with packages below
+    (.nasaenv) pip install gsutil descartes ray requests opencv-python
+    ​
+    # Install geowombatdev package from github(the dependencies here will take care of most other dependencies)
+    (.nasaenv) mkdir tmp
+    (.nasaenv) cd tmp/
+    (.nasaenv) git clone https://github.com/jgrss/geowombatdev.git
+    (.nasaenv) cd geowombatdev/
+    (.nasaenv) python setup.py build &amp;&amp; pip install .
+    ​
+    # Install eosvault package from github
+    (.nasaenv) cd ~/tmp/
+    (.nasaenv) git clone https://github.com/jgrss/eosvault.git
+    (.nasaenv) cd eosvault/
+    (.nasaenv) python setup.py build &amp;&amp; pip install .
+    ​
+    # Install rastercrf from github
+    (.nasaenv) cd ~/tmp/
+    (.nasaenv) git clone https://github.com/jgrss/rastercrf.git
+    (.nasaenv) cd rastercrf/
+    (.nasaenv) python setup.py build &amp;&amp; pip install .
+    ​
+    # Install satsmooth from github
+    (.nasaenv) cd ~/tmp/
+    (.nasaenv) git clone https://github.com/jgrss/satsmooth.git
+    (.nasaenv) cd satsmooth/
+    (.nasaenv) python setup.py build &amp;&amp; pip install .
+    ​
+    # Install sacfei from github
+    (.nasaenv) cd ~/tmp/
+    (.nasaenv) git clone https://github.com/jgrss/sacfei.git
+    (.nasaenv) cd sacfei/
+    (.nasaenv) python setup.py build &amp;&amp; pip install .
+    ​
+    # Install pymorph3 from github
+    (.nasaenv) cd ~/tmp/
+    (.nasaenv) git clone https://github.com/jgrss/pymorph3.git
+    (.nasaenv) cd pymorph3/
+    (.nasaenv) python setup.py build &amp;&amp; pip install .
+    ​
+    # Install pytuyau from github
+    (.nasaenv) cd ~/tmp/
+    (.nasaenv) git clone https://github.com/jgrss/pytuyau.git
+    (.nasaenv) cd pytuyau/
+    (.nasaenv) python setup.py build &amp;&amp; pip install .
+    ​
+    # Install IPython
+    (.nasaenv) pip install ipython[all]
+    ​
+    # Deactivate the virtual environment when finished
+    (.nasaenv) deactivate
+
+**to uninstall and reinstall a package from a github repo:** (i.e. if changes are made to the package that need to be incorporated)
+
+    source .nasaenv/bin/activate
+    (.nasaenv) pip uninstall &lt;package&gt; -y
+    (.nasaenv) cd ~/tmp/&lt;package directory&gt;
+    #(look up the name of the main branch in the GitHub repo). Here it is &#39;main&#39;, but it could be &#39;master&#39;/&#39;dev&#39;/etc. 
+    (.nasaenv) git pull origin main
+    (.nasaenv) python setup.py build &amp;&amp; pip install .
+    (.nasaenv) deactivate
+
+(configVim)=
+\#\#\# Configure vim (optional)
+Text documents are edited in vim, which is not the most intuitive tool to those unfamiliar with it. Here you can find commands and tips for [working with vim](vimCommands). You can improve your experience with vim by creating a personalized
+`.vimrc` file in your HOME directory ((output -\&gt; \~/.vimrc) to configure vim.
+
+Here is an example of a `.vimrc` doc (you can clone this from /jad-cel/cel-sandbox/templates/home_vimrc.sh):
+
+    # Add line numbers
+    set number
+    ​
+    au BufNewFile,BufRead *.py
+        \ set tabstop=4 |
+        \ set softtabstop=4 |
+        \ set shiftwidth=4 |
+        \ set textwidth=79 |
+        \ set expandtab |
+        \ set autoindent |
+        \ set fileformat=unix
+    	
+    highlight BadWhitespace ctermbg=red guibg=darkred
+    au BufRead,BufNewFile *.py,*.pyw,*.pyx,*.pxd,*.c,*.h match BadWhitespace /\s\+$/
+    ​
+    set encoding=utf-8
+    ​
+    let python_highlight_all=1
+    syntax on
+    ​
+    set cursorline
+    ​
+    set foldmethod=indent
+    set foldlevel=99
+    ​
+    set ic
+
+### Add a personalized .profile file (optional) {#add-a-personalized-profile-file-optional}
+
+You can add a personalized `.profile` file in your HOME directory (output -\&gt; \~/.profile).
+This is useful if you want to create keyboard shortcuts (alias) or ensure global variables are properly set.
+
+Here is an example of things you might want in a `.profile` doc (you can clone this from /jad-cel/cel-sandbox/templates/home_profile.sh):
+
+    # color enhancement for the terminal window
+    export PS1=&quot;\[\033[36m\]\u\[\033[m\]@\[\033[32m\]\h:\[\033[33;1m\]\w\[\033[m\]\$ &quot;
+    export CLICOLOR=1
+    export LSCOLORS=ExFxBxDxCxegedabagacad
+    ​
+    #simpler file navigation:
+    alias .1=&#39;cd ../&#39;
+    alias .2=&#39;cd ../..&#39;
+    alias .3=&#39;cd ../../..&#39;
+    ​
+    # shortcut to list SLURM job status ([username] = your username)
+    alias qs=&quot;squeue -u [username]&quot;
+
+    if [ -n &quot;$BASH_VERSION&quot; ]; then
+      if [ -f &quot;$HOME/.bashrc&quot; ]; then
+        . &quot;$HOME/.bashrc&quot;
+      fi
+    fi
+    ​
+    if [ -d &quot;$HOME/bin&quot; ] ; then
+      PATH=&quot;$HOME/bin:$PATH&quot;
+    fi
+    ​
+    # global vars for GDAL
+    export CPLUS_INCLUDE_PATH=/usr/include/gdal
+    export C_INCLUDE_PATH=/usr/include/gdal
+    export GDAL_DATA=/usr/share/gdal/2.2
+
+(profileIssue)=
+\#\#\# Sourcing the profile (optional; only do if you created a .profile above)
+:::{warning}Your personalized profile may not function correctly due to an irregular issue in the bash_profile.
 </pre></div>
-</div>
-<p id="profileissue">### Sourcing the profile (optional; only do if you created a .profile above)</p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Your personalized profile may not function correctly due to an irregular issue in the bash_profile.</p>
 </div>
 <p>You could fix this everytime you log in by sourcing the profile:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>source .profile
@@ -517,7 +505,6 @@ export TMOUT=0
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
 </pre></div>
-</div>
 </div>
 
     <script type="text/x-thebe-config">

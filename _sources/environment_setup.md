@@ -5,7 +5,7 @@ jupyter:
       extension: .md
       format_name: pandoc
       format_version: 2.12
-      jupytext_version: 1.10.3
+      jupytext_version: 1.11.4
   kernelspec:
     display_name: Python 3
     language: python
@@ -15,7 +15,7 @@ jupyter:
 ---
 
 ::: {.cell .markdown}
-# \# Setting up your remote environment {#-setting-up-your-remote-environment}
+# \# Setting up your remote environment {\#-setting-up-your-remote-environment} {#-setting-up-your-remote-environment--setting-up-your-remote-environment}
 
 ## The general cluster environment
 
@@ -32,6 +32,7 @@ You should see your username \@bellows in the command prompt.
 If you are unsure whether you are in your home directory, type cd \~/
 :::
 
+::: {.cell .markdown}
 For this project, we will create a virtual environment in Python 3 called .nasaenv (output -\> \~/.nasaenv):
 
     python3 -m venv .nasaenv
@@ -220,4 +221,6 @@ But better to make the adjustment permanant by adding a`.bash_profile` to your h
 
     #export USERNAME BASH_ENV PATH
     export TMOUT=0
+
+:::
 :::
