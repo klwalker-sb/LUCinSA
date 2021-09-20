@@ -118,11 +118,6 @@
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="environment_setup.html">
-   Install Python tools/packages and dependencies from project github scripts:
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="TransferingFiles.html">
    Transfering Files to/from cluster
   </a>
@@ -345,7 +340,8 @@
 <p>To run the script:</p>
 <div class="section" id="get-gridcells-to-download">
 <span id="getcells"></span><h2>1. Get gridcells to download<a class="headerlink" href="#get-gridcells-to-download" title="Permalink to this headline">¶</a></h2>
-<p>Find a block of cells in need of processing in the <code class="docutils literal notranslate"><span class="pre">cell_blocks.txt</span></code> file in <code class="docutils literal notranslate"><span class="pre">jad-cel/sandbox-cel/paraguay_lc</span></code> (anything without an X next to it is free)</p>
+<p>Find a block of cells in need of processing in the <code class="docutils literal notranslate"><span class="pre">cell_blocks.txt</span></code> file in <code class="docutils literal notranslate"><span class="pre">jad-cel/sandbox-cel/paraguay_lc</span></code> (anything without an X next to it is free)
+(if working ion another country, replace ‘paraguay’ with your country name)</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">~/../../</span>
 <span class="n">cd</span> <span class="n">jad</span><span class="o">-</span><span class="n">cel</span><span class="o">/</span><span class="n">sandbox</span><span class="o">-</span><span class="n">cel</span><span class="o">/</span><span class="n">paraguay_lc</span><span class="o">/</span>
 <span class="n">vim</span> <span class="n">cell_blocks</span><span class="o">.</span><span class="n">txt</span>
@@ -359,7 +355,7 @@
 <div class="section" id="edit-the-download-eri-sh-document-for-targeted-grid-cells-and-sensor-product">
 <span id="downloading"></span><h2>2. Edit the download_eri.sh document for targeted grid cells and sensor product<a class="headerlink" href="#edit-the-download-eri-sh-document-for-targeted-grid-cells-and-sensor-product" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">~/</span><span class="n">code</span><span class="o">/</span><span class="n">bash</span><span class="o">/</span>
-<span class="n">vim</span> <span class="n">download_eri</span><span class="o">.</span><span class="n">sh</span>
+<span class="n">vim</span> <span class="n">download_eri_pry</span><span class="o">.</span><span class="n">sh</span>
 </pre></div>
 </div>
 <p>To edit a line, type <code class="docutils literal notranslate"><span class="pre">i</span></code>, edit as desired, then hit <code class="docutils literal notranslate"><span class="pre">Esc</span></code> key and type <code class="docutils literal notranslate"><span class="pre">:wq</span></code>. Hit <code class="docutils literal notranslate"><span class="pre">Enter</span></code> key
@@ -401,7 +397,7 @@ Go here for <a class="reference internal" href="vim.html#vimcommands"><span clas
 34-  MY_USERNAME=&quot;&quot;
 35-  
 36-  GRID_FILE=&quot;${PROJECT_HOME}/vector/pry_grids.gpkg&quot;
-37-  CONFIG_FILE=&quot;/home/${MY_USERNAME}/project/config/config_eri.yaml&quot;
+37-  CONFIG_FILE=&quot;/home/${MY_USERNAME}/project/config/config_eri_pry.yaml&quot;
 38-  CRS_PROJ4=&quot;+proj=aea +lat_1=-5 +lat_2=-42 +lat_0=-32 +lon_0=-60 +x_0=0 +y_0=0 +ellps=aust_SA +units=m +no_defs &quot;
 39-  
 40-  #############################################
@@ -516,7 +512,8 @@ step 5 if all images don’t download properly the first time.)</p></li>
 </li>
 <li><p>Lines 15-16</p>
 <ul>
-<li><p>User variables for start and end dates to stream. (For this project, the dates are from 1-Mar-2010 to 1-Nov-2020)</p></li>
+<li><p>User variables for start and end dates to stream. (For Paraguay, the dates are from 1-Mar-2010 to 1-Nov-2020. For Chile,
+the dates are from 1-Jan-1985 to 31-Dec-2020)</p></li>
 </ul>
 </li>
 <li><p>Lines 18-20</p>
@@ -618,7 +615,11 @@ step 5 if all images don’t download properly the first time.)</p></li>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#Activate virtual environment:</span>
 <span class="n">source</span> <span class="o">.</span><span class="n">nasaenv</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
 <span class="c1">#Run status command (choose a cell number to zoom around for zoom-grid, usually in the middle of your line):</span>
-<span class="n">eosvault</span> <span class="n">status</span> <span class="o">--</span><span class="n">config</span><span class="o">-</span><span class="n">file</span> <span class="o">~/</span><span class="n">project</span><span class="o">/</span><span class="n">config</span><span class="o">/</span><span class="n">config_eri</span><span class="o">.</span><span class="n">yaml</span> <span class="o">--</span><span class="n">out</span><span class="o">-</span><span class="nb">dir</span> <span class="o">~/</span><span class="n">code</span><span class="o">/</span><span class="n">bash</span> <span class="o">--</span><span class="n">grid</span><span class="o">-</span><span class="n">file</span> <span class="o">/</span><span class="n">jad</span><span class="o">-</span><span class="n">cel</span><span class="o">/</span><span class="n">sandbox</span><span class="o">-</span><span class="n">cel</span><span class="o">/</span><span class="n">paraguay_lc</span><span class="o">/</span><span class="n">vector</span><span class="o">/</span><span class="n">pry_grids</span><span class="o">.</span><span class="n">gpkg</span> <span class="o">--</span><span class="n">zoom</span><span class="o">-</span><span class="n">grid</span> <span class="o">&lt;</span><span class="nb">id</span> <span class="c1"># of cell to zoom to&gt; --zoom-offset 200000</span>
+<span class="c1">#For Paraguay:</span>
+<span class="n">eosvault</span> <span class="n">status</span> <span class="o">--</span><span class="n">config</span><span class="o">-</span><span class="n">file</span> <span class="o">~/</span><span class="n">project</span><span class="o">/</span><span class="n">config</span><span class="o">/</span><span class="n">config_eri_pry</span><span class="o">.</span><span class="n">yaml</span> <span class="o">--</span><span class="n">out</span><span class="o">-</span><span class="nb">dir</span> <span class="o">~/</span><span class="n">code</span><span class="o">/</span><span class="n">bash</span> <span class="o">--</span><span class="n">grid</span><span class="o">-</span><span class="n">file</span> <span class="o">/</span><span class="n">jad</span><span class="o">-</span><span class="n">cel</span><span class="o">/</span><span class="n">sandbox</span><span class="o">-</span><span class="n">cel</span><span class="o">/</span><span class="n">paraguay_lc</span><span class="o">/</span><span class="n">vector</span><span class="o">/</span><span class="n">pry_grids</span><span class="o">.</span><span class="n">gpkg</span> <span class="o">--</span><span class="n">zoom</span><span class="o">-</span><span class="n">grid</span> <span class="o">&lt;</span><span class="nb">id</span> <span class="c1"># of cell to zoom to&gt; --zoom-offset 200000</span>
+<span class="c1">#For Chile:</span>
+<span class="n">eosvault</span> <span class="n">status</span> <span class="o">--</span><span class="n">config</span><span class="o">-</span><span class="n">file</span> <span class="o">~/</span><span class="n">project</span><span class="o">/</span><span class="n">config</span><span class="o">/</span><span class="n">config_eri_chile</span><span class="o">.</span><span class="n">yaml</span> <span class="o">--</span><span class="n">out</span><span class="o">-</span><span class="nb">dir</span> <span class="o">~/</span><span class="n">code</span><span class="o">/</span><span class="n">bash</span> <span class="o">--</span><span class="n">grid</span><span class="o">-</span><span class="n">file</span> <span class="o">/</span><span class="n">jad</span><span class="o">-</span><span class="n">cel</span><span class="o">/</span><span class="n">sandbox</span><span class="o">-</span><span class="n">cel</span><span class="o">/</span><span class="n">chile_lc</span><span class="o">/</span><span class="n">vector</span><span class="o">/</span><span class="n">chl_grids</span><span class="o">.</span><span class="n">gpkg</span> <span class="o">--</span><span class="n">zoom</span><span class="o">-</span><span class="n">grid</span> <span class="o">&lt;</span><span class="nb">id</span> <span class="c1"># of cell to zoom to&gt; --zoom-offset 200000</span>
+
 <span class="c1">#Deactivate virtual environment:</span>
 <span class="n">deactivate</span>
 <span class="c1">#Note you can zoom to the full figure (without cell numbers) by dropping the last two cell flags.</span>
