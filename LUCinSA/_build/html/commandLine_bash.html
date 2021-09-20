@@ -118,11 +118,6 @@
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="environment_setup.html">
-   Setting up your remote environment
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="TransferingFiles.html">
    Transfering Files to/from cluster
   </a>
@@ -157,6 +152,18 @@
  <li class="toctree-l1">
   <a class="reference internal" href="Pipeline.html">
    Pipeline process
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  New project configuration
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Setting_up_new_project.html">
+   Setting up a new project
   </a>
  </li>
 </ul>
@@ -357,6 +364,18 @@ Here are some basic Unix commands used in Bash. For more detailed instructions o
 </tr>
 <tr class="row-odd"><td class="text-align:left"><p><strong>View a text file</strong></p></td>
 <td class="text-align:left"><p><strong><span style='color:green'> cat [file] </span></strong></p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p><strong>Check memmory size of a directory</strong></p></td>
+<td class="text-align:left"><p><strong><span style='color:green'> du -h [directory] </span></strong></p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p><strong>Change permissions for a file</strong></p></td>
+<td class="text-align:left"><p><strong><span style='color:green'> chmod g+rxw [file] </span></strong></p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p><strong>Change permissions for all files</strong> in a directory</p></td>
+<td class="text-align:left"><p><strong><span style='color:green'> chmod -R g+rxw .</span></strong> (from directory)</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>note: to change permissions, characters before + are for the type of person (u=user=yourself, g=group, o=others) and characters after the + are for the type of permission (r=read, w=write, x=execute)</p></td>
+<td class="text-align:left"><p></p></td>
 </tr>
 </tbody>
 </table>

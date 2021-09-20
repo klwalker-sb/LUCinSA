@@ -24,3 +24,7 @@ Here are some basic Unix commands used in Bash. For more detailed instructions o
 | **Delete file** | **<span style='color:green'> rm [file] </span>** |
 | **Delete all files with specified extension** xyz | <span style='color:green'> rm *.xyz </span> |
 | **View a text file**  | **<span style='color:green'> cat [file] </span>** |
+| **Check memmory size of a directory** | **<span style='color:green'> du -h [directory] </span>** |
+| **Change permissions for a file** | **<span style='color:green'> chmod g+rxw [file] </span>** |
+| **Change permissions for all files** in a directory | **<span style='color:green'> chmod -R g+rxw .</span>** (from directory)|
+| note: to change permissions, characters before + are for the type of person (u=user=yourself, g=group, o=others) and characters after the + are for the type of permission (r=read, w=write, x=execute) |

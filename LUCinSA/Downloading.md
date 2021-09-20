@@ -235,7 +235,11 @@ You can also generate a figure to see which cells downloaded fully:
 #Activate virtual environment:
 source .nasaenv/bin/activate
 #Run status command (choose a cell number to zoom around for zoom-grid, usually in the middle of your line):
-eosvault status --config-file ~/project/config/config_eri.yaml --out-dir ~/code/bash --grid-file /jad-cel/sandbox-cel/paraguay_lc/vector/pry_grids.gpkg --zoom-grid <id # of cell to zoom to> --zoom-offset 200000
+#For Paraguay:
+eosvault status --config-file ~/project/config/config_eri_pry.yaml --out-dir ~/code/bash --grid-file /jad-cel/sandbox-cel/paraguay_lc/vector/pry_grids.gpkg --zoom-grid <id # of cell to zoom to> --zoom-offset 200000
+#For Chile:
+eosvault status --config-file ~/project/config/config_eri_chile.yaml --out-dir ~/code/bash --grid-file /jad-cel/sandbox-cel/chile_lc/vector/chl_grids.gpkg --zoom-grid <id # of cell to zoom to> --zoom-offset 200000
+
 #Deactivate virtual environment:
 deactivate
 #Note you can zoom to the full figure (without cell numbers) by dropping the last two cell flags.

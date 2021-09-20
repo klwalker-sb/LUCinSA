@@ -7,6 +7,7 @@ To run the script:
 (GetCells)=
 ## 1. Get gridcells to download
 Find a block of cells in need of processing in the `cell_blocks.txt` file in `jad-cel/sandbox-cel/paraguay_lc` (anything without an X next to it is free)
+(if working ion another country, replace 'paraguay' with your country name) 
 ```
 cd ~/../../
 cd jad-cel/sandbox-cel/paraguay_lc/
@@ -20,7 +21,7 @@ vim cell_blocks.txt
 ## 2. Edit the download_eri.sh document for targeted grid cells and sensor product
 ```
 cd ~/code/bash/
-vim download_eri.sh
+vim download_eri_pry.sh
 ```
 To edit a line, type `i`, edit as desired, then hit `Esc` key and type `:wq`. Hit `Enter` key
 Go here for [more info on editing in vim](vimCommands)
@@ -63,7 +64,7 @@ This is the default script (with line numbering added for reference below):
 34-  MY_USERNAME=""
 35-  
 36-  GRID_FILE="${PROJECT_HOME}/vector/pry_grids.gpkg"
-37-  CONFIG_FILE="/home/${MY_USERNAME}/project/config/config_eri.yaml"
+37-  CONFIG_FILE="/home/${MY_USERNAME}/project/config/config_eri_pry.yaml"
 38-  CRS_PROJ4="+proj=aea +lat_1=-5 +lat_2=-42 +lat_0=-32 +lon_0=-60 +x_0=0 +y_0=0 +ellps=aust_SA +units=m +no_defs "
 39-  
 40-  #############################################
@@ -159,7 +160,8 @@ For further information on the rest of the script (parts you will NOT likely edi
 >* Line 12
 >    * umask sets the permission for files that are creates. left digit is for user, middle digit is for group and right digit is for others. 0= no permissions denied (read/write/execute allowed), 2= write permission denied, 7= all permissions denied  
 >* Lines 15-16
->    * User variables for start and end dates to stream. (For this project, the dates are from 1-Mar-2010 to 1-Nov-2020)
+>    * User variables for start and end dates to stream. (For Paraguay, the dates are from 1-Mar-2010 to 1-Nov-2020. For Chile, 
+    the dates are from 1-Jan-1985 to 31-Dec-2020)
 >* Lines 18-20
 >    * if yes, flag as incomplete if all images did not download correctly. If no, consider complete even if some images are >missing
 >* Lines 21-22
@@ -233,7 +235,11 @@ You can also generate a figure to see which cells downloaded fully:
 #Activate virtual environment:
 source .nasaenv/bin/activate
 #Run status command (choose a cell number to zoom around for zoom-grid, usually in the middle of your line):
-eosvault status --config-file ~/project/config/config_eri.yaml --out-dir ~/code/bash --grid-file /jad-cel/sandbox-cel/paraguay_lc/vector/pry_grids.gpkg --zoom-grid <id # of cell to zoom to> --zoom-offset 200000
+#For Paraguay:
+eosvault status --config-file ~/project/config/config_eri_pry.yaml --out-dir ~/code/bash --grid-file /jad-cel/sandbox-cel/paraguay_lc/vector/pry_grids.gpkg --zoom-grid <id # of cell to zoom to> --zoom-offset 200000
+#For Chile:
+eosvault status --config-file ~/project/config/config_eri_chile.yaml --out-dir ~/code/bash --grid-file /jad-cel/sandbox-cel/chile_lc/vector/chl_grids.gpkg --zoom-grid <id # of cell to zoom to> --zoom-offset 200000
+
 #Deactivate virtual environment:
 deactivate
 #Note you can zoom to the full figure (without cell numbers) by dropping the last two cell flags.

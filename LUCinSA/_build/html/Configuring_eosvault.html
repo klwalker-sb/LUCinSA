@@ -118,11 +118,6 @@
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="environment_setup.html">
-   Setting up your remote environment
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="TransferingFiles.html">
    Transfering Files to/from cluster
   </a>
@@ -157,6 +152,18 @@
  <li class="toctree-l1">
   <a class="reference internal" href="Pipeline.html">
    Pipeline process
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  New project configuration
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Setting_up_new_project.html">
+   Setting up a new project
   </a>
  </li>
 </ul>
@@ -384,7 +391,9 @@ Follow the five steps (and links) of <a class="reference external" href="https:/
 </div>
 <div class="section" id="create-a-nasa-earthdata-key">
 <h2>3. Create a NASA Earthdata key<a class="headerlink" href="#create-a-nasa-earthdata-key" title="Permalink to this headline">¶</a></h2>
-<p>A NASA Earthdata secret key/code file pair is needed to download data from the Nasa Earthdata repository. These can be generated  through Geowombat (which you already installed in your Python environment) through IPython (the Python interpreter that you also already installed in your Python environment):</p>
+<p>A NASA Earthdata secret key/code file pair is needed to download data from the Nasa Earthdata repository.</p>
+<p>You first need to create a free NASA Earthdata account at <a class="reference external" href="https://urs.earthdata.nasa.gov/home">https://urs.earthdata.nasa.gov/home</a>. Remember your username and your password for the steps below.</p>
+<p>Now generate your key/code files through Geowombat (which you already installed in your Python environment) using IPython (the Python interpreter that you also already installed in your Python environment):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># From inside the directory where you want your keys (i.e. cd ~/.eosvault)</span>
 <span class="c1"># Activate your venv</span>
 <span class="n">source</span> <span class="o">.</span><span class="n">nasaenv</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
@@ -397,7 +406,7 @@ Follow the five steps (and links) of <a class="reference external" href="https:/
 <span class="n">In</span> <span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="n">pk</span> <span class="o">=</span> <span class="n">PassKey</span><span class="p">()</span>
 <span class="n">In</span> <span class="p">[</span><span class="mi">3</span><span class="p">]:</span> <span class="n">pk</span><span class="o">.</span><span class="n">create_key</span><span class="p">(</span><span class="s1">&#39;nasaearth.key&#39;</span><span class="p">)</span>
 <span class="n">In</span> <span class="p">[</span><span class="mi">4</span><span class="p">]:</span> <span class="n">pk</span><span class="o">.</span><span class="n">create_passcode</span><span class="p">(</span><span class="s1">&#39;nasaearth.key&#39;</span><span class="p">,</span> <span class="s1">&#39;nasaearth.code&#39;</span><span class="p">)</span>
-<span class="c1">#This will prompt a password entry</span>
+<span class="c1">#This will prompt a password entry, where you will enter the password you used to set up your NASA Earthdata account</span>
 <span class="n">In</span> <span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="n">exit</span>
 <span class="c1"># Deactivate your venv</span>
 <span class="p">(</span><span class="o">.</span><span class="n">nasaenv</span><span class="p">)</span> <span class="n">deactivate</span>
@@ -406,21 +415,24 @@ Follow the five steps (and links) of <a class="reference external" href="https:/
 </div>
 <div class="section" id="copy-and-edit-the-config-yaml-file">
 <h2>4. Copy and edit the config.yaml file<a class="headerlink" href="#copy-and-edit-the-config-yaml-file" title="Permalink to this headline">¶</a></h2>
-<p><strong>Copy the config.yaml template to the project/config directory on your space</strong></p>
+<p><strong>Copy the config.yaml template to the project/config directory on your space</strong>
+If working on Paraguay, <cntry> = pry. if working on Chile, <cntry> = chile.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#Create project/config directory if it doesn&#39;t already exist</span>
 <span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="o">~/</span><span class="n">project</span><span class="o">/</span><span class="n">config</span>
-<span class="n">cp</span> <span class="o">/</span><span class="n">jad</span><span class="o">-</span><span class="n">cel</span><span class="o">/</span><span class="n">sandbox</span><span class="o">-</span><span class="n">cel</span><span class="o">/</span><span class="n">paraguay_lc</span><span class="o">/</span><span class="n">templates</span><span class="o">/</span><span class="n">eosvault_config_eri_pry</span><span class="o">.</span><span class="n">yaml</span> <span class="o">~/</span><span class="n">project</span><span class="o">/</span><span class="n">config</span><span class="o">/</span><span class="n">config_eri</span><span class="o">.</span><span class="n">yaml</span>
+<span class="n">cp</span> <span class="o">/</span><span class="n">jad</span><span class="o">-</span><span class="n">cel</span><span class="o">/</span><span class="n">sandbox</span><span class="o">-</span><span class="n">cel</span><span class="o">/</span><span class="n">templates</span><span class="o">/</span><span class="n">eosvault_config_eri</span><span class="o">.</span><span class="n">yaml</span> <span class="o">~/</span><span class="n">project</span><span class="o">/</span><span class="n">config</span><span class="o">/</span><span class="n">config_eri_</span><span class="o">&lt;</span><span class="n">cntry</span><span class="o">&gt;.</span><span class="n">yaml</span>
 </pre></div>
 </div>
 <p><strong>Open the template in the vim editor</strong></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vim</span> <span class="o">~/</span><span class="n">project</span><span class="o">/</span><span class="n">config</span><span class="o">/</span><span class="n">config_eri</span><span class="o">.</span><span class="n">yaml</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vim</span> <span class="o">~/</span><span class="n">project</span><span class="o">/</span><span class="n">config</span><span class="o">/</span><span class="n">config_eri_</span><span class="o">&lt;</span><span class="n">cntry</span><span class="o">&gt;.</span><span class="n">yaml</span>
 </pre></div>
 </div>
 <p>To edit a line, type <code class="docutils literal notranslate"><span class="pre">i</span></code>, edit as desired, then hit <code class="docutils literal notranslate"><span class="pre">Esc</span></code> key and type <code class="docutils literal notranslate"><span class="pre">:wq</span></code>. Hit <code class="docutils literal notranslate"><span class="pre">Enter</span></code> key. For help editing in Vim, <a class="reference internal" href="vim.html#vimcommands"><span class="std std-ref">see Vim Commands</span></a>.
 <strong>Edit the following lines to match your paths:</strong></p>
 <ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">Google</span> <span class="pre">secret</span> <span class="pre">key</span></code> (line 13 below): Edit path to match that of the secret key you uploaded in step #2 above</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">angles</span></code> (lines 17-18 of the template below): Edit path to match your own. First you need to <strong>extract the angle files</strong> into the corresponding directory:</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">MY_USERNAME</span></code> (line 1 of the template below): enter your ERI username between the quotes. This is a variable and should autofill everywhere else it says ${MY_USERNAME}</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MY_COUNTRY</span></code> (line 3 of the template below): enter the name of the country you are working on between the quotes (without caps). This is a variable and should autofill everywhere else it says ${MY_CONUTRY}</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Google</span> <span class="pre">secret</span> <span class="pre">key</span></code> (line 18 below): Edit path to match that of the secret key you uploaded in step #2 above</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">angles</span></code> (lines 22-23 of the template below): Make sure that the path matches yours. (You need to <strong>extract the angle files</strong> into the corresponding directory):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="c1">#make the directory if it doesn&#39;t alreay exist:</span>
   <span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="o">~/</span><span class="n">code</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span>
   <span class="c1">#move the ESPA.tar.gz file into the directory prior to extracting:</span>
@@ -432,88 +444,93 @@ Follow the five steps (and links) of <a class="reference external" href="https:/
 </pre></div>
 </div>
 </li>
-<li><p><code class="docutils literal notranslate"><span class="pre">Nasa</span> <span class="pre">Earth</span> <span class="pre">data</span></code>: In line 67, modify your username. In lines 68 and 69, modify the path to where you put your Nasa Earth key and code in step 3.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Nasa</span> <span class="pre">Earthdata</span></code>: In line 72, modify your username to match the username you used for your NASA Earthdata account. Check that the paths in lines 74 and 75 match where you put your Nasa Earth key and code in step 3.</p></li>
 </ul>
 <p>config_eri.yaml template (with added line #s for reference):</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="o">-</span>  <span class="n">project_path</span><span class="p">:</span> <span class="s1">&#39;/jad-cel/sandbox-cel/paraguay_lc/raster/grids&#39;</span>
-<span class="mi">2</span><span class="o">-</span>    <span class="c1"># Root directory for the GCP index files</span>
-<span class="mi">3</span><span class="o">-</span>  <span class="n">index_dir</span><span class="p">:</span> <span class="s1">&#39;/jad-cel/sandbox-cel/paraguay_lc/raster&#39;</span>
-<span class="mi">4</span><span class="o">-</span>  
-<span class="mi">5</span><span class="o">-</span>  <span class="c1"># Directory to save text files of incomplete batch jobs</span>
-<span class="mi">6</span><span class="o">-</span>  <span class="n">log_dir</span><span class="p">:</span> <span class="s1">&#39;/home/&lt;username&gt;/code/bash&#39;</span>
-<span class="mi">7</span><span class="o">-</span>  
-<span class="mi">8</span><span class="o">-</span>  <span class="c1"># Length (in meters) on each side of grid</span>
-<span class="mi">9</span><span class="o">-</span>  <span class="n">grid_size</span><span class="p">:</span> <span class="mi">20000</span>
-<span class="mi">10</span><span class="o">-</span>  
-<span class="mi">11</span><span class="o">-</span> <span class="n">google</span><span class="p">:</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="o">-</span> <span class="n">MY_USERNAME</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+<span class="mi">2</span><span class="o">-</span> <span class="c1"># Current country options(note no caps): paraguay, chile</span>
+<span class="mi">3</span><span class="o">-</span> <span class="n">MY_COUNTRY</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+<span class="mi">4</span><span class="o">-</span> 
+<span class="mi">5</span><span class="o">-</span> <span class="n">project_path</span><span class="p">:</span> <span class="s1">&#39;/jad-cel/sandbox-cel/$</span><span class="si">{MY_COUNTRY}</span><span class="s1">_lc/raster/grids&#39;</span>
+<span class="mi">6</span><span class="o">-</span> 
+<span class="mi">7</span><span class="o">-</span> <span class="c1"># Root directory for the GCP index files</span>
+<span class="mi">8</span><span class="o">-</span> <span class="n">index_dir</span><span class="p">:</span> <span class="s1">&#39;/jad-cel/sandbox-cel/</span><span class="si">{MY_COUNTRY}</span><span class="s1">_lc/raster&#39;</span>
+<span class="mi">9</span><span class="o">-</span>
+<span class="mi">10</span><span class="o">-</span> <span class="c1"># Directory to save text files of incomplete batch jobs</span>
+<span class="mi">11</span><span class="o">-</span> <span class="n">log_dir</span><span class="p">:</span> <span class="s1">&#39;/home/$</span><span class="si">{MY_USERNAME}</span><span class="s1">/code/bash&#39;</span>
 <span class="mi">12</span><span class="o">-</span> 
-<span class="mi">13</span><span class="o">-</span>  <span class="n">secret_key</span><span class="p">:</span> <span class="s1">&#39;/home/&lt;username&gt;/.eosvault/&lt;key&gt;.json&#39;</span>
-<span class="mi">14</span><span class="o">-</span> 
-<span class="mi">15</span><span class="o">-</span> <span class="n">angles</span><span class="p">:</span>
-<span class="mi">16</span><span class="o">-</span> 
-<span class="mi">17</span><span class="o">-</span>   <span class="n">l57_angles_path</span><span class="p">:</span> <span class="s1">&#39;/home/&lt;username&gt;/code/bin/ESPA/landsat_angles&#39;</span>
-<span class="mi">18</span><span class="o">-</span>   <span class="n">l8_angles_path</span><span class="p">:</span> <span class="s1">&#39;/home/&lt;username&gt;/code/bin/ESPA/l8_angles&#39;</span>
-<span class="mi">19</span><span class="o">-</span>   <span class="n">subsample</span><span class="p">:</span> <span class="mi">10</span>
-<span class="mi">20</span><span class="o">-</span>   <span class="n">resampling</span><span class="p">:</span> <span class="s1">&#39;bilinear&#39;</span>
+<span class="mi">13</span><span class="o">-</span> <span class="c1"># Length (in meters) on each side of grid</span>
+<span class="mi">14</span><span class="o">-</span> <span class="n">grid_size</span><span class="p">:</span> <span class="mi">20000</span>
+<span class="mi">15</span><span class="o">-</span> 
+<span class="mi">16</span><span class="o">-</span> <span class="n">google</span><span class="p">:</span>
+<span class="mi">17</span><span class="o">-</span> 
+<span class="mi">18</span><span class="o">-</span> <span class="n">secret_key</span><span class="p">:</span> <span class="s1">&#39;&lt;key&gt;.json&#39;</span>
+<span class="mi">19</span><span class="o">-</span> 
+<span class="mi">20</span><span class="o">-</span> <span class="n">angles</span><span class="p">:</span>
 <span class="mi">21</span><span class="o">-</span> 
-<span class="mi">22</span><span class="o">-</span> <span class="n">sixs</span><span class="p">:</span>
-<span class="mi">23</span><span class="o">-</span> 
-<span class="mi">24</span><span class="o">-</span>   <span class="n">coarse_res</span><span class="p">:</span> <span class="mf">100.0</span>
-<span class="mi">25</span><span class="o">-</span> 
-<span class="mi">26</span><span class="o">-</span> <span class="n">io</span><span class="p">:</span>
-<span class="mi">27</span><span class="o">-</span> 
-<span class="mi">28</span><span class="o">-</span>   <span class="c1"># netcdf | geotiff</span>
-<span class="mi">29</span><span class="o">-</span>   <span class="n">file_format</span><span class="p">:</span> <span class="s1">&#39;netcdf&#39;</span>
-<span class="mi">30</span><span class="o">-</span>   <span class="n">chunks</span><span class="p">:</span> <span class="mi">512</span>
-<span class="mi">31</span><span class="o">-</span>   <span class="n">resampling</span><span class="p">:</span> <span class="s1">&#39;cubic&#39;</span>
-<span class="mi">32</span><span class="o">-</span>   <span class="n">num_threads</span><span class="p">:</span> <span class="mi">2</span>
-<span class="mi">33</span><span class="o">-</span>   <span class="n">nodataval</span><span class="p">:</span> <span class="mi">65535</span>
-<span class="mi">34</span><span class="o">-</span> 
-<span class="mi">35</span><span class="o">-</span>   <span class="n">to_netcdf_kwargs</span><span class="p">:</span>
-<span class="mi">36</span><span class="o">-</span>     <span class="n">zlib</span><span class="p">:</span> <span class="kc">True</span>
-<span class="mi">37</span><span class="o">-</span>     <span class="n">complevel</span><span class="p">:</span> <span class="mi">5</span>
-<span class="mi">38</span><span class="o">-</span> 
-<span class="mi">39</span><span class="o">-</span>   <span class="n">to_raster_kwargs</span><span class="p">:</span>
-<span class="mi">40</span><span class="o">-</span>     <span class="n">overwrite</span><span class="p">:</span> <span class="kc">True</span>
-<span class="mi">41</span><span class="o">-</span>     <span class="n">compress</span><span class="p">:</span> <span class="s1">&#39;lzw&#39;</span>
-<span class="mi">42</span><span class="o">-</span>     <span class="n">tiled</span><span class="p">:</span> <span class="kc">True</span>
-<span class="mi">43</span><span class="o">-</span>     <span class="n">n_workers</span><span class="p">:</span> <span class="mi">1</span>
-<span class="mi">44</span><span class="o">-</span>     <span class="n">n_threads</span><span class="p">:</span> <span class="mi">2</span>
-<span class="mi">45</span><span class="o">-</span> 
-<span class="mi">46</span><span class="o">-</span>   <span class="n">post</span><span class="p">:</span>
-<span class="mi">47</span><span class="o">-</span> 
-<span class="mi">48</span><span class="o">-</span>     <span class="c1"># Chunk read size</span>
-<span class="mi">49</span><span class="o">-</span>     <span class="n">chunks</span><span class="p">:</span> <span class="mi">1024</span>
-<span class="mi">50</span><span class="o">-</span> 
-<span class="mi">51</span><span class="o">-</span> <span class="n">storage</span><span class="p">:</span>
-<span class="mi">52</span><span class="o">-</span> 
-<span class="mi">53</span><span class="o">-</span>   <span class="n">crs</span><span class="p">:</span> <span class="s1">&#39;utm&#39;</span>
-<span class="mi">54</span><span class="o">-</span>   <span class="n">res</span><span class="p">:</span> <span class="mf">10.0</span>
-<span class="mi">55</span><span class="o">-</span>   <span class="n">bands</span><span class="p">:</span>
-<span class="mi">56</span><span class="o">-</span>     <span class="o">-</span> <span class="s1">&#39;blue&#39;</span>
-<span class="mi">57</span><span class="o">-</span>     <span class="o">-</span> <span class="s1">&#39;green&#39;</span>
-<span class="mi">58</span><span class="o">-</span>     <span class="o">-</span> <span class="s1">&#39;red&#39;</span>
-<span class="mi">59</span><span class="o">-</span>     <span class="o">-</span> <span class="s1">&#39;nir&#39;</span>
-<span class="mi">60</span><span class="o">-</span>     <span class="o">-</span> <span class="s1">&#39;swir1&#39;</span>
-<span class="mi">61</span><span class="o">-</span>     <span class="o">-</span> <span class="s1">&#39;swir2&#39;</span>
-<span class="mi">62</span><span class="o">-</span> 
-<span class="mi">63</span><span class="o">-</span> <span class="n">nasaearth</span><span class="p">:</span>
-<span class="mi">64</span><span class="o">-</span> 
-<span class="mi">65</span><span class="o">-</span>   <span class="c1"># The NASA Earthdata username to download HGT SRTM files</span>
-<span class="mi">66</span><span class="o">-</span>   <span class="c1"># https://urs.earthdata.nasa.gov/</span>
-<span class="mi">67</span><span class="o">-</span>   <span class="n">username</span><span class="p">:</span> <span class="s1">&#39;&lt;username&gt;&#39;</span>
-<span class="mi">68</span><span class="o">-</span> 
-<span class="mi">69</span><span class="o">-</span>   <span class="n">key_file</span><span class="p">:</span> <span class="s1">&#39;/home/&lt;username&gt;/.eosvault/nasaearth.key&#39;</span>
-<span class="mi">70</span><span class="o">-</span>   <span class="n">code_file</span><span class="p">:</span> <span class="s1">&#39;/home/&lt;username&gt;/.eosvault/nasaearth.code&#39;</span>
-<span class="mi">71</span><span class="o">-</span> 
-<span class="mi">72</span><span class="o">-</span> <span class="n">srtm</span><span class="p">:</span>
-<span class="mi">73</span><span class="o">-</span> 
-<span class="mi">74</span><span class="o">-</span>   <span class="n">srtm_path</span><span class="p">:</span> <span class="s1">&#39;/jad-cel/sandbox-cel/paraguay_lc/raster/srtm&#39;</span>
-<span class="mi">75</span><span class="o">-</span> 
-<span class="mi">76</span><span class="o">-</span> <span class="n">masks</span><span class="p">:</span>
-<span class="mi">77</span><span class="o">-</span> 
-<span class="mi">78</span><span class="o">-</span>   <span class="c1"># 0-100 range</span>
-<span class="mi">79</span><span class="o">-</span>   <span class="n">s2cloudless_thresh</span><span class="p">:</span> <span class="mi">60</span>
+<span class="mi">22</span><span class="o">-</span> <span class="n">l57_angles_path</span><span class="p">:</span> <span class="s1">&#39;/home/$</span><span class="si">{MY_USERNAME}</span><span class="s1">/code/bin/ESPA/landsat_angles&#39;</span>
+<span class="mi">23</span><span class="o">-</span> <span class="n">l8_angles_path</span><span class="p">:</span> <span class="s1">&#39;/home/$</span><span class="si">{MY_USERNAME}</span><span class="s1">/code/bin/ESPA/l8_angles&#39;</span>
+<span class="mi">24</span><span class="o">-</span> <span class="n">subsample</span><span class="p">:</span> <span class="mi">10</span>
+<span class="mi">25</span><span class="o">-</span> <span class="n">resampling</span><span class="p">:</span> <span class="s1">&#39;bilinear&#39;</span>
+<span class="mi">26</span><span class="o">-</span>
+<span class="mi">27</span><span class="o">-</span> <span class="n">sixs</span><span class="p">:</span>
+<span class="mi">28</span><span class="o">-</span>
+<span class="mi">29</span><span class="o">-</span>  <span class="n">coarse_res</span><span class="p">:</span> <span class="mf">100.0</span>
+<span class="mi">30</span><span class="o">-</span>
+<span class="mi">31</span><span class="o">-</span> <span class="n">io</span><span class="p">:</span>
+<span class="mi">32</span><span class="o">-</span>
+<span class="mi">33</span><span class="o">-</span>  <span class="c1"># netcdf | geotiff</span>
+<span class="mi">34</span><span class="o">-</span>  <span class="n">file_format</span><span class="p">:</span> <span class="s1">&#39;netcdf&#39;</span>
+<span class="mi">35</span><span class="o">-</span>  <span class="n">chunks</span><span class="p">:</span> <span class="mi">512</span>
+<span class="mi">36</span><span class="o">-</span>  <span class="n">resampling</span><span class="p">:</span> <span class="s1">&#39;cubic&#39;</span>
+<span class="mi">37</span><span class="o">-</span>  <span class="n">num_threads</span><span class="p">:</span> <span class="mi">2</span>
+<span class="mi">38</span><span class="o">-</span>  <span class="n">nodataval</span><span class="p">:</span> <span class="mi">65535</span>
+<span class="mi">39</span><span class="o">-</span>
+<span class="mi">40</span><span class="o">-</span>  <span class="n">to_netcdf_kwargs</span><span class="p">:</span>
+<span class="mi">41</span><span class="o">-</span>    <span class="n">zlib</span><span class="p">:</span> <span class="kc">True</span>
+<span class="mi">42</span><span class="o">-</span>    <span class="n">complevel</span><span class="p">:</span> <span class="mi">5</span>
+<span class="mi">43</span><span class="o">-</span>
+<span class="mi">44</span><span class="o">-</span>  <span class="n">to_raster_kwargs</span><span class="p">:</span>
+<span class="mi">45</span><span class="o">-</span>    <span class="n">overwrite</span><span class="p">:</span> <span class="kc">True</span>
+<span class="mi">46</span><span class="o">-</span>    <span class="n">compress</span><span class="p">:</span> <span class="s1">&#39;lzw&#39;</span>
+<span class="mi">47</span><span class="o">-</span>    <span class="n">tiled</span><span class="p">:</span> <span class="kc">True</span>
+<span class="mi">48</span><span class="o">-</span>    <span class="n">n_workers</span><span class="p">:</span> <span class="mi">1</span>
+<span class="mi">49</span><span class="o">-</span>    <span class="n">n_threads</span><span class="p">:</span> <span class="mi">2</span>
+<span class="mi">50</span><span class="o">-</span>
+<span class="mi">51</span><span class="o">-</span>  <span class="n">post</span><span class="p">:</span>
+<span class="mi">52</span><span class="o">-</span>
+<span class="mi">53</span><span class="o">-</span>    <span class="c1"># Chunk read size</span>
+<span class="mi">54</span><span class="o">-</span>    <span class="n">chunks</span><span class="p">:</span> <span class="mi">1024</span>
+<span class="mi">55</span><span class="o">-</span>
+<span class="mi">56</span><span class="o">-</span> <span class="n">storage</span><span class="p">:</span>
+<span class="mi">57</span><span class="o">-</span>
+<span class="mi">58</span><span class="o">-</span>  <span class="n">crs</span><span class="p">:</span> <span class="s1">&#39;utm&#39;</span>
+<span class="mi">59</span><span class="o">-</span>  <span class="n">res</span><span class="p">:</span> <span class="mf">10.0</span>
+<span class="mi">60</span><span class="o">-</span>  <span class="n">bands</span><span class="p">:</span>
+<span class="mi">61</span><span class="o">-</span>    <span class="o">-</span> <span class="s1">&#39;blue&#39;</span>
+<span class="mi">62</span><span class="o">-</span>    <span class="o">-</span> <span class="s1">&#39;green&#39;</span>
+<span class="mi">63</span><span class="o">-</span>    <span class="o">-</span> <span class="s1">&#39;red&#39;</span>
+<span class="mi">64</span><span class="o">-</span>    <span class="o">-</span> <span class="s1">&#39;nir&#39;</span>
+<span class="mi">65</span><span class="o">-</span>    <span class="o">-</span> <span class="s1">&#39;swir1&#39;</span>
+<span class="mi">66</span><span class="o">-</span>    <span class="o">-</span> <span class="s1">&#39;swir2&#39;</span>
+<span class="mi">67</span><span class="o">-</span>
+<span class="mi">68</span><span class="o">-</span> <span class="n">nasaearth</span><span class="p">:</span>
+<span class="mi">69</span><span class="o">-</span>
+<span class="mi">70</span><span class="o">-</span>  <span class="c1"># The NASA Earthdata username your username for the following account:</span>
+<span class="mi">71</span><span class="o">-</span>  <span class="c1"># https://urs.earthdata.nasa.gov/</span>
+<span class="mi">72</span><span class="o">-</span>  <span class="n">username</span><span class="p">:</span> <span class="s1">&#39;&lt;username&gt;&#39;</span>
+<span class="mi">73</span><span class="o">-</span>
+<span class="mi">74</span><span class="o">-</span>  <span class="n">key_file</span><span class="p">:</span> <span class="s1">&#39;/home/$</span><span class="si">{MY_USERNAME}</span><span class="s1">/.eosvault/nasaearth.key&#39;</span>
+<span class="mi">75</span><span class="o">-</span>  <span class="n">code_file</span><span class="p">:</span> <span class="s1">&#39;/home/$</span><span class="si">{MY_USERNAME}</span><span class="s1">/.eosvault/nasaearth.code&#39;</span>
+<span class="mi">76</span><span class="o">-</span>
+<span class="mi">77</span><span class="o">-</span> <span class="n">srtm</span><span class="p">:</span>
+<span class="mi">78</span><span class="o">-</span>
+<span class="mi">79</span><span class="o">-</span>  <span class="n">srtm_path</span><span class="p">:</span> <span class="s1">&#39;/jad-cel/cel-sandbox/$</span><span class="si">{MY_COUNTRY}</span><span class="s1">_lc/raster/srtm&#39;</span>
+<span class="mi">80</span><span class="o">-</span>
+<span class="mi">81</span><span class="o">-</span> <span class="n">masks</span><span class="p">:</span>
+<span class="mi">82</span><span class="o">-</span>
+<span class="mi">83</span><span class="o">-</span>  <span class="c1"># 0-100 range</span>
+<span class="mi">84</span><span class="o">-</span>  <span class="n">s2cloudless_thresh</span><span class="p">:</span> <span class="mi">60</span>
 </pre></div>
 </div>
 </div>
@@ -523,23 +540,29 @@ Follow the five steps (and links) of <a class="reference external" href="https:/
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#Make code/bash directory:</span>
 <span class="n">mkdir</span> <span class="o">~/</span><span class="n">code</span><span class="o">/</span><span class="n">bash</span>
 <span class="c1">#Copy scripts over:</span>
-<span class="n">cp</span> <span class="o">/</span><span class="n">jad</span><span class="o">-</span><span class="n">cel</span><span class="o">/</span><span class="n">sandbox</span><span class="o">-</span><span class="n">cel</span><span class="o">/</span><span class="n">paraguay_lc</span><span class="o">/</span><span class="n">templates</span><span class="o">/</span><span class="n">eosvault_download_eri_pry</span><span class="o">.</span><span class="n">sh</span> <span class="o">~/</span><span class="n">code</span><span class="o">/</span><span class="n">bash</span><span class="o">/</span><span class="n">download_eri</span><span class="o">.</span><span class="n">sh</span>
-<span class="n">cp</span> <span class="o">/</span><span class="n">jad</span><span class="o">-</span><span class="n">cel</span><span class="o">/</span><span class="n">sandbox</span><span class="o">-</span><span class="n">cel</span><span class="o">/</span><span class="n">paraguay_lc</span><span class="o">/</span><span class="n">templates</span><span class="o">/</span><span class="n">eosvault_download_eri_pry_single</span><span class="o">.</span><span class="n">sh</span> <span class="o">~/</span><span class="n">code</span><span class="o">/</span><span class="n">bash</span><span class="o">/</span><span class="n">download_eri_single</span><span class="o">.</span><span class="n">sh</span>
-<span class="n">cp</span> <span class="o">/</span><span class="n">jad</span><span class="o">-</span><span class="n">cel</span><span class="o">/</span><span class="n">sandbox</span><span class="o">-</span><span class="n">cel</span><span class="o">/</span><span class="n">paraguay_lc</span><span class="o">/</span><span class="n">templates</span><span class="o">/</span><span class="n">eosvault_post_eri_pry</span><span class="o">.</span><span class="n">sh</span> <span class="o">~/</span><span class="n">code</span><span class="o">/</span><span class="n">bash</span><span class="o">/</span><span class="n">post_eri</span><span class="o">.</span><span class="n">sh</span>
-<span class="n">cp</span> <span class="o">/</span><span class="n">jad</span><span class="o">-</span><span class="n">cel</span><span class="o">/</span><span class="n">sandbox</span><span class="o">-</span><span class="n">cel</span><span class="o">/</span><span class="n">paraguay_lc</span><span class="o">/</span><span class="n">templates</span><span class="o">/</span><span class="n">pytuyau_pipeline_eri</span><span class="o">.</span><span class="n">sh</span> <span class="o">~/</span><span class="n">code</span><span class="o">/</span><span class="n">bash</span><span class="o">/</span><span class="n">pipeline_eri</span><span class="o">.</span><span class="n">sh</span>
+<span class="c1">#If working on Paraguay:</span>
+<span class="n">cp</span> <span class="o">/</span><span class="n">jad</span><span class="o">-</span><span class="n">cel</span><span class="o">/</span><span class="n">sandbox</span><span class="o">-</span><span class="n">cel</span><span class="o">/</span><span class="n">paraguay_lc</span><span class="o">/</span><span class="n">templates</span><span class="o">/</span><span class="n">eosvault_download_eri_pry</span><span class="o">.</span><span class="n">sh</span> <span class="o">~/</span><span class="n">code</span><span class="o">/</span><span class="n">bash</span><span class="o">/</span><span class="n">download_eri_pry</span><span class="o">.</span><span class="n">sh</span>
+<span class="n">cp</span> <span class="o">/</span><span class="n">jad</span><span class="o">-</span><span class="n">cel</span><span class="o">/</span><span class="n">sandbox</span><span class="o">-</span><span class="n">cel</span><span class="o">/</span><span class="n">paraguay_lc</span><span class="o">/</span><span class="n">templates</span><span class="o">/</span><span class="n">eosvault_download_eri_single_pry</span><span class="o">.</span><span class="n">sh</span> <span class="o">~/</span><span class="n">code</span><span class="o">/</span><span class="n">bash</span><span class="o">/</span><span class="n">download_eri_single_pry</span><span class="o">.</span><span class="n">sh</span>
+<span class="n">cp</span> <span class="o">/</span><span class="n">jad</span><span class="o">-</span><span class="n">cel</span><span class="o">/</span><span class="n">sandbox</span><span class="o">-</span><span class="n">cel</span><span class="o">/</span><span class="n">paraguay_lc</span><span class="o">/</span><span class="n">templates</span><span class="o">/</span><span class="n">eosvault_post_eri_pry</span><span class="o">.</span><span class="n">sh</span> <span class="o">~/</span><span class="n">code</span><span class="o">/</span><span class="n">bash</span><span class="o">/</span><span class="n">post_eri_pry</span><span class="o">.</span><span class="n">sh</span>
+<span class="n">cp</span> <span class="o">/</span><span class="n">jad</span><span class="o">-</span><span class="n">cel</span><span class="o">/</span><span class="n">sandbox</span><span class="o">-</span><span class="n">cel</span><span class="o">/</span><span class="n">paraguay_lc</span><span class="o">/</span><span class="n">templates</span><span class="o">/</span><span class="n">paraguay_lc</span><span class="o">/</span><span class="n">pytuyau_pipeline_eri</span><span class="o">.</span><span class="n">sh</span> <span class="o">~/</span><span class="n">code</span><span class="o">/</span><span class="n">bash</span><span class="o">/</span><span class="n">pipeline_pty</span><span class="o">.</span><span class="n">sh</span>
+<span class="c1">#If working on Chile:</span>
+<span class="n">cp</span> <span class="o">/</span><span class="n">jad</span><span class="o">-</span><span class="n">cel</span><span class="o">/</span><span class="n">sandbox</span><span class="o">-</span><span class="n">cel</span><span class="o">/</span><span class="n">chile_lc</span><span class="o">/</span><span class="n">templates</span><span class="o">/</span><span class="n">eosvault_download_eri_chile</span><span class="o">.</span><span class="n">sh</span> <span class="o">~/</span><span class="n">code</span><span class="o">/</span><span class="n">bash</span><span class="o">/</span><span class="n">download_eri_chile</span><span class="o">.</span><span class="n">sh</span>
+<span class="n">cp</span> <span class="o">/</span><span class="n">jad</span><span class="o">-</span><span class="n">cel</span><span class="o">/</span><span class="n">sandbox</span><span class="o">-</span><span class="n">cel</span><span class="o">/</span><span class="n">chile_lc</span><span class="o">/</span><span class="n">templates</span><span class="o">/</span><span class="n">eosvault_download_eri_single_chile</span><span class="o">.</span><span class="n">sh</span> <span class="o">~/</span><span class="n">code</span><span class="o">/</span><span class="n">bash</span><span class="o">/</span><span class="n">download_eri_single_chile</span><span class="o">.</span><span class="n">sh</span>
+<span class="n">cp</span> <span class="o">/</span><span class="n">jad</span><span class="o">-</span><span class="n">cel</span><span class="o">/</span><span class="n">sandbox</span><span class="o">-</span><span class="n">cel</span><span class="o">/</span><span class="n">chile_lc</span><span class="o">/</span><span class="n">templates</span><span class="o">/</span><span class="n">eosvault_post_eri_chile</span><span class="o">.</span><span class="n">sh</span> <span class="o">~/</span><span class="n">code</span><span class="o">/</span><span class="n">bash</span><span class="o">/</span><span class="n">post_eri_chile</span><span class="o">.</span><span class="n">sh</span>    
 </pre></div>
 </div>
 <p>Edit the “download_eri.sh” “download_eri_single.sh” and “post_eri.sh” scripts to point to enter your username between the quotes in the line: MY_USERNAME=””
-(For help editing in Vim, <a class="reference internal" href="vim.html#vimcommands"><span class="std std-ref">see Vim Commands</span></a>.)</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vim</span> <span class="o">~/</span><span class="n">code</span><span class="o">/</span><span class="n">bash</span><span class="o">/</span><span class="n">download_eri</span><span class="o">.</span><span class="n">sh</span>
+(For help editing in Vim, <a class="reference internal" href="vim.html#vimcommands"><span class="std std-ref">see Vim Commands</span></a>.)
+(if working on Chile, replace pry with chile below:)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vim</span> <span class="o">~/</span><span class="n">code</span><span class="o">/</span><span class="n">bash</span><span class="o">/</span><span class="n">download_eri_pry</span><span class="o">.</span><span class="n">sh</span>
 <span class="c1"># Find line: MY_USERNAME=&quot;&quot; and enter your username between the quotes</span>
 <span class="p">[</span><span class="n">Esc</span><span class="p">]</span> <span class="c1">#if in edit mode</span>
 <span class="p">:</span><span class="n">wq</span>
-<span class="n">vim</span> <span class="o">~/</span><span class="n">code</span><span class="o">/</span><span class="n">bash</span><span class="o">/</span><span class="n">download_eri_single</span><span class="o">.</span><span class="n">sh</span>
+<span class="n">vim</span> <span class="o">~/</span><span class="n">code</span><span class="o">/</span><span class="n">bash</span><span class="o">/</span><span class="n">download_eri_single_pry</span><span class="o">.</span><span class="n">sh</span>
 <span class="c1"># Find line: MY_USERNAME=&quot;&quot; and enter your username between the quotes</span>
 <span class="p">[</span><span class="n">Esc</span><span class="p">]</span> <span class="c1">#if in edit mode</span>
 <span class="p">:</span><span class="n">wq</span>
-<span class="n">vim</span> <span class="o">~/</span><span class="n">code</span><span class="o">/</span><span class="n">bash</span><span class="o">/</span><span class="n">post_eri</span><span class="o">.</span><span class="n">sh</span>
+<span class="n">vim</span> <span class="o">~/</span><span class="n">code</span><span class="o">/</span><span class="n">bash</span><span class="o">/</span><span class="n">post_eri_pry</span><span class="o">.</span><span class="n">sh</span>
 <span class="c1"># Find line: MY_USERNAME=&quot;&quot; and enter your username between the quotes</span>
 <span class="p">[</span><span class="n">Esc</span><span class="p">]</span> <span class="c1">#if in edit mode</span>
 <span class="p">:</span><span class="n">wq</span>
