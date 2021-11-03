@@ -149,11 +149,6 @@
    Post-download processing
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Pipeline.html">
-   Pipeline process
-  </a>
- </li>
 </ul>
 <p class="caption">
  <span class="caption-text">
@@ -399,7 +394,7 @@ Go here for <a class="reference internal" href="vim.html#vimcommands"><span clas
 36-  GRID_FILE=&quot;${PROJECT_HOME}/vector/pry_grids.gpkg&quot;
 37-  CONFIG_FILE=&quot;/home/${MY_USERNAME}/project/config/config_eri_pry.yaml&quot;
 38-  CRS_PROJ4=&quot;+proj=aea +lat_1=-5 +lat_2=-42 +lat_0=-32 +lon_0=-60 +x_0=0 +y_0=0 +ellps=aust_SA +units=m +no_defs &quot;
-39-  
+39-  RES=10.0
 40-  #############################################
 41-  # Turn off NumPy parallelism and rely on dask
 42-  #############################################
@@ -434,7 +429,7 @@ Go here for <a class="reference internal" href="vim.html#vimcommands"><span clas
 71- 
 72-    eosvault download --out-dir $OUT_DIR --grid-file $GRID_FILE --grid $GRID_ID --start-date $START_DATE --end-date
 73-  $END_DATE --config-file $CONFIG_FILE --batch-size $BATCH_SIZE --max-workers $SLURM_CPUS_ON_NODE --satellite $SATELLITE
-74-  --asset-id $ASSET_ID --grid-crs &quot;${CRS_PROJ4}&quot; --ignore-incomplete #--reset-asset #--clear-all #--reset-db
+74-  --asset-id $ASSET_ID --grid-crs &quot;${CRS_PROJ4}&quot; --out-res $RES --ignore-incomplete #--reset-asset #--clear-all #--reset-db
 75-  
 76-  else
 77- 
@@ -442,13 +437,13 @@ Go here for <a class="reference internal" href="vim.html#vimcommands"><span clas
 79- 
 80-    eosvault download --out-dir $OUT_DIR --grid-file $GRID_FILE --grid $GRID_ID --start-date $START_DATE --end-date 
 81- $END_DATE --config-file $CONFIG_FILE --batch-size $BATCH_SIZE --max-workers $SLURM_CPUS_ON_NODE --satellite $SATELLITE 
-82-  --asset-id $ASSET_ID --grid-crs &quot;${CRS_PROJ4}&quot; --reset-asset #--clear-all #--reset-db
+82-  --asset-id $ASSET_ID --grid-crs &quot;${CRS_PROJ4}&quot; --out-res $RES --reset-asset #--clear-all #--reset-db
 83- 
 84-    else
 85- 
 86-     eosvault download --out-dir $OUT_DIR --grid-file $GRID_FILE --grid $GRID_ID --start-date $START_DATE --end-date 
 87-  $END_DATE --config-file $CONFIG_FILE --batch-size $BATCH_SIZE --max-workers $SLURM_CPUS_ON_NODE --satellite $SATELLITE 
-88-  --asset-id $ASSET_ID --grid-crs &quot;${CRS_PROJ4}&quot; #--clear-all #--reset-db
+88-  --asset-id $ASSET_ID --grid-crs &quot;${CRS_PROJ4}&quot; --out-res $RES #--clear-all #--reset-db
 89-
 90-    fi
 91-
@@ -546,6 +541,11 @@ the dates are from 1-Jan-1985 to 31-Dec-2020)</p></li>
 <li><p>Line 38</p>
 <ul>
 <li><p>Geographic projection (do not modify for this project)</p></li>
+</ul>
+</li>
+<li><p>Line 39</p>
+<ul>
+<li><p>Pixel rosolution (do not modify for this project. 10.0 is the default. using 30.0 for Chile)</p></li>
 </ul>
 </li>
 <li><p>Lines 40-48</p>
@@ -722,7 +722,7 @@ sensor (line 26 ere) to correspond to the sensor you want to process: “LT05”
 41- GRID_FILE=&quot;/jad-cel/sandbox-cel/paraguay_lc/vector/pry_grids.gpkg&quot;
 42- CONFIG_FILE=&quot;/home/${MY_USERNAME}/project/config/config_eri.yaml&quot;
 43- CRS_PROJ4=&quot;+proj=aea +lat_1=-5 +lat_2=-42 +lat_0=-32 +lon_0=-60 +x_0=0 +y_0=0 +ellps=aust_SA +units=m +no_defs &quot;
-44- 
+44- RES=10.0
 44- #############################################
 46- # Turn off NumPy parallelism and rely on dask
 47- #############################################
@@ -739,12 +739,12 @@ sensor (line 26 ere) to correspond to the sensor you want to process: “LT05”
 58- if [ &quot;$IGNORE_INCOMPLETE&quot; == &quot;yes&quot; ]; then
 59-
 60-   eosvault download --out-dir $OUT_DIR --grid-file $GRID_FILE --grid $GRID_ID --start-date $START_DATE --end-date $END_DATE 61- --config-file $CONFIG_FILE --batch-size $BATCH_SIZE --max-workers $SLURM_CPUS_ON_NODE --satellite $SATELLITE --asset-id 
-62- $ASSET_ID --grid-crs &quot;${CRS_PROJ4}&quot; --ignore-incomplete #--reset-asset #--clear-all #--reset-db
+62- $ASSET_ID --grid-crs &quot;${CRS_PROJ4}&quot; --out-res $RES --ignore-incomplete #--reset-asset #--clear-all #--reset-db
 63- 
 64- else
 65-  
 66 eosvault download --out-dir $OUT_DIR --grid-file $GRID_FILE --grid $GRID_ID --start-date $START_DATE --end-date $END_DATE 67--config-file $CONFIG_FILE --batch-size $BATCH_SIZE --max-workers $SLURM_CPUS_ON_NODE --satellite $SATELLITE --asset-id 
-68$ASSET_ID --grid-crs &quot;${CRS_PROJ4}&quot; #--reset-asset #--clear-all #--reset-db
+68$ASSET_ID --grid-crs &quot;${CRS_PROJ4}&quot; --out-res $RES #--reset-asset #--clear-all #--reset-db
 69
 70 fi
 71

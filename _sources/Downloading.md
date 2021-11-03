@@ -66,7 +66,7 @@ This is the default script (with line numbering added for reference below):
 36-  GRID_FILE="${PROJECT_HOME}/vector/pry_grids.gpkg"
 37-  CONFIG_FILE="/home/${MY_USERNAME}/project/config/config_eri_pry.yaml"
 38-  CRS_PROJ4="+proj=aea +lat_1=-5 +lat_2=-42 +lat_0=-32 +lon_0=-60 +x_0=0 +y_0=0 +ellps=aust_SA +units=m +no_defs "
-39-  
+39-  RES=10.0
 40-  #############################################
 41-  # Turn off NumPy parallelism and rely on dask
 42-  #############################################
@@ -101,7 +101,7 @@ This is the default script (with line numbering added for reference below):
 71- 
 72-    eosvault download --out-dir $OUT_DIR --grid-file $GRID_FILE --grid $GRID_ID --start-date $START_DATE --end-date
 73-  $END_DATE --config-file $CONFIG_FILE --batch-size $BATCH_SIZE --max-workers $SLURM_CPUS_ON_NODE --satellite $SATELLITE
-74-  --asset-id $ASSET_ID --grid-crs "${CRS_PROJ4}" --ignore-incomplete #--reset-asset #--clear-all #--reset-db
+74-  --asset-id $ASSET_ID --grid-crs "${CRS_PROJ4}" --out-res $RES --ignore-incomplete #--reset-asset #--clear-all #--reset-db
 75-  
 76-  else
 77- 
@@ -109,13 +109,13 @@ This is the default script (with line numbering added for reference below):
 79- 
 80-    eosvault download --out-dir $OUT_DIR --grid-file $GRID_FILE --grid $GRID_ID --start-date $START_DATE --end-date 
 81- $END_DATE --config-file $CONFIG_FILE --batch-size $BATCH_SIZE --max-workers $SLURM_CPUS_ON_NODE --satellite $SATELLITE 
-82-  --asset-id $ASSET_ID --grid-crs "${CRS_PROJ4}" --reset-asset #--clear-all #--reset-db
+82-  --asset-id $ASSET_ID --grid-crs "${CRS_PROJ4}" --out-res $RES --reset-asset #--clear-all #--reset-db
 83- 
 84-    else
 85- 
 86-     eosvault download --out-dir $OUT_DIR --grid-file $GRID_FILE --grid $GRID_ID --start-date $START_DATE --end-date 
 87-  $END_DATE --config-file $CONFIG_FILE --batch-size $BATCH_SIZE --max-workers $SLURM_CPUS_ON_NODE --satellite $SATELLITE 
-88-  --asset-id $ASSET_ID --grid-crs "${CRS_PROJ4}" #--clear-all #--reset-db
+88-  --asset-id $ASSET_ID --grid-crs "${CRS_PROJ4}" --out-res $RES #--clear-all #--reset-db
 89-
 90-    fi
 91-
@@ -176,6 +176,8 @@ For further information on the rest of the script (parts you will NOT likely edi
 >    * (line 37) input configuration file. Make sure to fill in [username] in line 34.
 >* Line 38
 >    * Geographic projection (do not modify for this project)
+>* Line 39
+>    * Pixel rosolution (do not modify for this project. 10.0 is the default. using 30.0 for Chile)
 >* Lines 40-48
 >    * Do not modify.
 >* Lines 50-96
@@ -334,7 +336,7 @@ The script is copied below with line numbers added for reference.
 41- GRID_FILE="/jad-cel/sandbox-cel/paraguay_lc/vector/pry_grids.gpkg"
 42- CONFIG_FILE="/home/${MY_USERNAME}/project/config/config_eri.yaml"
 43- CRS_PROJ4="+proj=aea +lat_1=-5 +lat_2=-42 +lat_0=-32 +lon_0=-60 +x_0=0 +y_0=0 +ellps=aust_SA +units=m +no_defs "
-44- 
+44- RES=10.0
 44- #############################################
 46- # Turn off NumPy parallelism and rely on dask
 47- #############################################
@@ -351,12 +353,12 @@ The script is copied below with line numbers added for reference.
 58- if [ "$IGNORE_INCOMPLETE" == "yes" ]; then
 59-
 60-   eosvault download --out-dir $OUT_DIR --grid-file $GRID_FILE --grid $GRID_ID --start-date $START_DATE --end-date $END_DATE 61- --config-file $CONFIG_FILE --batch-size $BATCH_SIZE --max-workers $SLURM_CPUS_ON_NODE --satellite $SATELLITE --asset-id 
-62- $ASSET_ID --grid-crs "${CRS_PROJ4}" --ignore-incomplete #--reset-asset #--clear-all #--reset-db
+62- $ASSET_ID --grid-crs "${CRS_PROJ4}" --out-res $RES --ignore-incomplete #--reset-asset #--clear-all #--reset-db
 63- 
 64- else
 65-  
 66 eosvault download --out-dir $OUT_DIR --grid-file $GRID_FILE --grid $GRID_ID --start-date $START_DATE --end-date $END_DATE 67--config-file $CONFIG_FILE --batch-size $BATCH_SIZE --max-workers $SLURM_CPUS_ON_NODE --satellite $SATELLITE --asset-id 
-68$ASSET_ID --grid-crs "${CRS_PROJ4}" #--reset-asset #--clear-all #--reset-db
+68$ASSET_ID --grid-crs "${CRS_PROJ4}" --out-res $RES #--reset-asset #--clear-all #--reset-db
 69
 70 fi
 71
