@@ -1,215 +1,242 @@
+---
+jupyter:
+  jupytext:
+    text_representation:
+      extension: .md
+      format_name: pandoc
+      format_version: 2.12
+      jupytext_version: 1.11.4
+  kernelspec:
+    display_name: Python 3
+    language: python
+    name: python3
+  nbformat: 4
+  nbformat_minor: 5
+---
+
+::: {.cell .markdown}
 (pipeline)=
-# Pipeline process
+\# Pipeline process
 ===============================================================================================================================
 
 Jordan Graesser's `pytuyau` script drives the pipeline process, [see here](https://github.com/jgrss/pytuyau#readme) for more information on the script process.
 
 Pipeline template (with line numbers added for reference below):
-```
-1-   #!/bin/bash -l
-2-  
-3-   #SBATCH -N 1 # number of nodes
-4-   #SBATCH -n 8 # number of cores
-5-   #SBATCH -t 0-08:00 # time (D-HH:MM)
-6-   #SBATCH -p basic 
-7-   #SBATCH -o slpipe.%N.%a.%j.out # STDOUT
-8-   #SBATCH -e slpipe.%N.%a.%j.err # STDERR
-9-   #SBATCH --job-name="slpipe-pre"
-10-  #SBATCH --array=910
-11- 
-12-  #############################################
-13-  # Turn off NumPy parallelism and rely on dask
-14-  #############################################
-15-  export OPENBLAS_NUM_THREADS=1
-16-  export MKL_NUM_THREADS=1
-17-  # This should be sufficient for OpenBlas and MKL
-18-  export OMP_NUM_THREADS=1
-19-  ################################################
-20- 
-21-  # Choices are {preprocess, fusion, topo, reconstruct, segment, classify}
-22-  # 1. preprocess
-23-  #    a. Checks 'no data' images
-24-  #    b. Co-registers Sentinel
-25-  # X2. mask
-26-  #    Masks clouds and shadows
-27-  # X3. fusion
-28-  #    - Fusion of Landsat to Sentinel 10m using modified StarFM
-29-  # 4. topo
-30-  #    - not currently implemented
-31-  # 5. reconstruct
-32-  #    - Reconstructs weekly time series using dynamic temporal smoothing (DTS)
-33-  # 6. reindex_vi
-34-  #    - Reindexes weekly vegetation indices to bi-weekly
-35-  # 7. segment
-36-  #    - Segments vegetation objects using SACFEI
-37-  # 8. classify
-38-  #    - Classifies land cover
-39-  # 9. assess
-40-  #    - Assesses land cover predictions
-41-  # 10. clean
-42-  #    - Removes unwanted files
-43-  STEP="preprocess"
-44- 
-45-  # Comma-separated list of grids to process
-46-  #GRIDS="250"
-47-  GRIDS="${SLURM_ARRAY_TASK_ID}"
-48- 
-49-  #########
-50-  # MASKING
-51-  #########
-52- 
-53-  MASK_ONLY="no"
-54-  REF_RES=40.0
-55-  RESET_CLOUD_DB="True"
-56- 
-57-  #######
-58-  # CLEAN
-59-  #######
-60- 
-61-  # masks, downloads, nodata, nocoreg, fusion, vis, vrts, old_seg
-62-  #REMOVE_ITEMS="[downloads,masks,nodata,nocoreg,fusion,vis,vrts]"
-63-  REMOVE_ITEMS="[]"
-64- 
-65-  ########
-66-  # FUSION
-67-  ########
-68- 
-69-  WINDOW_SIZE=9
-70-  MAX_YEARS=2
-71-  MAX_DAYS=15
-72-  FOVERWRITE="True"
-73-
-74-  #############
-75-  # RECONSTRUCT
-76-  #############
-77- 
-78-  RINPUT="ms"
-79-  START_PAD="2010-03-01"
-80-  START="2010-07-01"
-81-  END_PAD="2020-11-01"
-82-  END="2020-07-01"
-83-  SKIP_INTERVAL=7
-84-  SKIP_YEARS=10
-85-  REC_VI="evi2"
-86-  ROVERWRITE="False"
-87-  SM_CHUNKS=512
-88-  PREFILL_GAPS="True"
-89-  DTS_MAX_WIN=61
-90-  DTS_MIN_WIN=15
-91-  PREFILL_MIN_RSQ=0.2
-92-  PREFILL_YEARS=2
-93-  DTS_t=5
-94- 
-95-  ############
-96-  # REINDEX VI
-97-  ############
-98-  REX_VI="evi2"
-99-
-100- ##########
-101- # CLASSIFY
-102- ##########
-103-
-104- # sample | fit | fit_predict | predict
-105- CLSMETHOD="fit"
-106- CINPUT="ms"
-107- # temperate_gss_vi2; tropical_gss_vi2
-108- CLS_REGION_NAME="tropical_gss_vi2"
-109- CLS_MODEL_NAME="${CLS_REGION_NAME}_11_11"
-110- LC_VECTOR=".kml"
-111- KEEP_FEATURES="[1,1,1,1]"
-112- # update/overwrite the sample stack
-113- UPDATE_SAMPLES="True"
-114- # overwrite each grid sample dataset
-115- OVERWRITE_SAMPLES="False"
-116- OVERWRITE_MODEL="True"
-117- OVERWRITE_IMAGE="False"
-118- CLS_BANDS="[evi2,wi]"
-119- CLS_NITERS=2000
-120-
-121- # OUTPUT files
-122- TRAIN_SAMPLES="/training/south_america_extract_${CLS_REGION_NAME}.gpkg"
-123- MODEL_FILE="/training/south_america_${CLS_MODEL_NAME}.model"
-124- 
-125- #########
-126- # SEGMENT
-127- #########
-128- 
-129- # fit | fit_predict | predict
-130- SEGMETHOD="predict"
-131- OVERWRITE_EDGE_MODEL="False"
-132- OVERWRITE_EDGE_IMAGE="True"
-133- OVERWRITE_SEG_IMAGE="True"
-134- SEG_REGION_NAME="temperate_gss_vi2"
-135- SEG_BANDS="[evi2,wi]"
-136- SEG_NITERS=2000
-137- 
-138- SEG_TRAIN_PATH="/training/edges"
-139- SEG_MODEL_FILE="/training/south_america_extract_${SEG_REGION_NAME}.edges"
-140- 
-141- ###############################
-142- # DO NOT MODIFY BELOW THIS LINE
-143- ###############################
-144- 
-145- # activate the virtual environment
-146- source ~/.nasaenv/bin/activate
-147- 
-148- CONFIG_UPDATES="grids:[${GRIDS}] main_path:/jad-cel/sandbox/cel/paraguay_lc/raster/grids num_workers:${SLURM_CPUS_ON_NODE} cloud_mask:reset_db:${RESET_CLOUD_DB} cloud_mask:ref_res:${REF_RES} fusion:window_size:${WINDOW_SIZE} fusion:fill_max_years:${MAX_YEARS} fusion:fill_max_days:${MAX_DAYS} fusion:overwrite:${FOVERWRITE} reconstruct:input:${RINPUT} reconstruct:start_pad:${START_PAD} reconstruct:end_pad:${END_PAD} reconstruct:start:${START} reconstruct:end:${END} reconstruct:skip_interval:${SKIP_INTERVAL} reconstruct:skip_years:${SKIP_YEARS} reconstruct:vi:${REC_VI} reconstruct:overwrite:${ROVERWRITE} reconstruct:chunks:${SM_CHUNKS} reconstruct:smooth_kwargs:max_window:${DTS_MAX_WIN} reconstruct:smooth_kwargs:min_window:${DTS_MIN_WIN} reconstruct:smooth_kwargs:min_prefill_rsquared:${PREFILL_MIN_RSQ} reconstruct:smooth_kwargs:max_prefill_years:${PREFILL_YEARS} reconstruct:smooth_kwargs:prefill_gaps:${PREFILL_GAPS} reconstruct:smooth_kwargs:t:${DTS_t} reindex_vi:vi:${REX_VI} classify:lc_vector:${LC_VECTOR} classify:train_samples:${TRAIN_SAMPLES} classify:model_file:${MODEL_FILE} classify:update_samples:${UPDATE_SAMPLES} classify:overwrite_samples:${OVERWRITE_SAMPLES} classify:overwrite_model:${OVERWRITE_MODEL} classify:overwrite_image:${OVERWRITE_IMAGE} classify:method:${CLSMETHOD} classify:input:${CINPUT} classify:image_bands:${CLS_BANDS} classify:image_bands_pred:${CLS_BANDS} classify:keep_features:${KEEP_FEATURES} classify:augment:n_iters:${CLS_NITERS} segment:method:${SEGMETHOD} segment:image_bands:${SEG_BANDS} segment:overwrite_model:${OVERWRITE_EDGE_MODEL} segment:overwrite_edges:${OVERWRITE_EDGE_IMAGE} segment:overwrite_seg:${OVERWRITE_SEG_IMAGE} segment:training_path:${SEG_TRAIN_PATH} segment:model_file:${SEG_MODEL_FILE} segment:augment:n_iters:${SEG_NITERS} clean:remove_items:${REMOVE_ITEMS}"
 
-if [ "$MASK_ONLY" == "yes" ]; then
-  if [ "$STEP" == "preprocess" ]; then
-    tuyau $STEP --config-updates $CONFIG_UPDATES --mask-only
-  else
-    tuyau $STEP --config-updates $CONFIG_UPDATES
-  fi
-else
-  tuyau $STEP --config-updates $CONFIG_UPDATES
-fi
+    1-   #!/bin/bash -l
+    2-  
+    3-   #SBATCH -N 1 # number of nodes
+    4-   #SBATCH -n 8 # number of cores
+    5-   #SBATCH -t 0-08:00 # time (D-HH:MM)
+    6-   #SBATCH -p basic 
+    7-   #SBATCH -o slpipe.%N.%a.%j.out # STDOUT
+    8-   #SBATCH -e slpipe.%N.%a.%j.err # STDERR
+    9-   #SBATCH --job-name="slpipe-pre"
+    10-  #SBATCH --array=910-914%4
+    11-
+    12-  #############################################
+    13-  # Turn off NumPy parallelism and rely on dask
+    14-  #############################################
+    15-  export OPENBLAS_NUM_THREADS=1
+    16-  export MKL_NUM_THREADS=1
+    17-  # This should be sufficient for OpenBlas and MKL
+    18-  export OMP_NUM_THREADS=1
+    19-  ################################################
+    20-
+    21-  # Choices are {preprocess, fusion, topo, reconstruct, segment, classify}
+    22-  # 1. preprocess
+    23-  #    a. Checks 'no data' images
+    24-  #    b. Co-registers Sentinel
+    25-  # 5. reconstruct
+    26-  #    - Reconstructs weekly time series using dynamic temporal smoothing (DTS)
+    27-  # 7. segment
+    28-  #    - Segments vegetation objects using SACFEI
+    29-  # 8. classify
+    30-  #    - Classifies land cover
+    31-  # 9. assess
+    32-  #    - Assesses land cover predictions
+    33-  # 10. clean
+    34-  #    - Removes unwanted files
+    35-
+    36-  STEP="preprocess"
+    37-
+    38-  GRIDS="${SLURM_ARRAY_TASK_ID}"
+    39-
+    40-  #########
+    41-  # MASKING
+    42-  #########
+    43-
+    44-  MASK_ONLY="no"
+    45-  REF_RES=40.0
+    46-  RESET_CLOUD_DB="False"
+    47-
+    48- #######
+    49- # CLEAN
+    50- #######
+    51- 
+    52- # masks, downloads, nodata, nocoreg, fusion, vis, vrts, old_seg
+    53- #REMOVE_ITEMS="[downloads,masks,nodata,nocoreg,fusion,vis,vrts]"
+    54- REMOVE_ITEMS="[]"
+    55-
+    56- ########
+    57- # FUSION
+    58- ########
+    59- 
+    60- WINDOW_SIZE=9
+    61- MAX_YEARS=2
+    62- MAX_DAYS=15
+    63- FOVERWRITE="True"
+    64-
+    65- #############
+    66- # RECONSTRUCT
+    67- #############
+    68- 
+    69- RINPUT="ms"
+    70- START_PAD="2010-03-01"
+    71- START="2010-07-01"
+    72- END_PAD="2020-11-01"
+    73- END="2020-07-01"
+    74- SKIP_INTERVAL=7
+    75- SKIP_YEARS=10
+    76- REC_VI="gcvi"
+    77- ROVERWRITE="False"
+    78- SM_CHUNKS=512
+    79- PREFILL_GAPS="True"
+    80- DTS_MAX_WIN=61
+    81- DTS_MIN_WIN=15
+    82- PREFILL_YEARS=2
+    83- DTS_t=5
+    84- 
+    85- ############
+    86- # REINDEX VI
+    87- ############
+    88- REX_VI="evi2"
+    89- 
+    90- ##########
+    91- # CLASSIFY
+    92- ##########
+    93-
+    94- # sample | fit | fit_predict | predict
+    95- CLSMETHOD="fit"
+    96- CINPUT="ms"
+    97- # temperate_gss_vi2; tropical_gss_vi2
+    98- CLS_REGION_NAME="tropical_gss_vi2"
+    99- CLS_MODEL_NAME="${CLS_REGION_NAME}_11_11"
+    100- LC_VECTOR=".kml"
+    101- KEEP_FEATURES="[1,1,1,1]"
+    102- # update/overwrite the sample stack
+    103- UPDATE_SAMPLES="True"
+    104- # overwrite each grid sample dataset
+    105- OVERWRITE_SAMPLES="False"
+    106- OVERWRITE_MODEL="True"
+    107- OVERWRITE_IMAGE="False"
+    108- CLS_BANDS="[evi2,wi]"
+    109- CLS_NITERS=2000
+    110-
+    111- # OUTPUT files
+    112- TRAIN_SAMPLES="/training/south_america_extract_${CLS_REGION_NAME}.gpkg"
+    113- MODEL_FILE="/training/south_america_${CLS_MODEL_NAME}.model"
+    114-
+    115- #########
+    116- # SEGMENT
+    117- #########
+    118- 
+    119- # fit | fit_predict | predict
+    120- SEGMETHOD="predict"
+    121- OVERWRITE_EDGE_MODEL="False"
+    122- OVERWRITE_EDGE_IMAGE="True"
+    123- OVERWRITE_SEG_IMAGE="True"
+    124- SEG_REGION_NAME="temperate_gss_vi2"
+    125- SEG_BANDS="[evi2,wi]"
+    126- SEG_NITERS=2000
+    127-
+    128- SEG_TRAIN_PATH="/training/edges"
+    129- SEG_MODEL_FILE="/training/south_america_extract_${SEG_REGION_NAME}.edges"
+    130-
+    131- ###############################
+    132- # DO NOT MODIFY BELOW THIS LINE
+    133- ###############################
+    134- 
+    135- # activate the virtual environment
+    136- source ~/.nasaenv/bin/activate
+    137- 
+    138- CONFIG_UPDATES="grids:[${GRIDS}] main_path:/jad-cel/sandbox-cel/paraguay_lc/raster/grids
+    139- num_workers:${SLURM_CPUS_ON_NODE} cloud_mask:reset_db:${RESET_CLOUD_DB} 
+    140- cloud_mask:ref_res:${REF_RES} fusion:window_size:${WINDOW_SIZE} 
+    141- fusion:fill_max_years:${MAX_YEARS} fusion:fill_max_days:${MAX_DAYS} 
+    142- fusion:overwrite:${FOVERWRITE} reconstruct:input:${RINPUT} reconstruct:start_pad:${START_PAD} 
+    143- reconstruct:end_pad:${END_PAD} reconstruct:start:${START} reconstruct:end:${END} 
+    144- reconstruct:skip_interval:${SKIP_INTERVAL} reconstruct:skip_years:${SKIP_YEARS}
+    145- reconstruct:vi:${REC_VI} reconstruct:overwrite:${ROVERWRITE} reconstruct:chunks:${SM_CHUNKS}
+    146- reconstruct:smooth_kwargs:max_window:${DTS_MAX_WIN}
+    147- reconstruct:smooth_kwargs:min_window:${DTS_MIN_WIN}
+    148- reconstruct:smooth_kwargs:prefill_max_years:${PREFILL_YEARS}
+    149- reconstruct:smooth_kwargs:prefill_gaps:${PREFILL_GAPS} reconstruct:smooth_kwargs:t:${DTS_t}
+    150- reindex_vi:vi:${REX_VI} classify:lc_vector:${LC_VECTOR} classify:train_samples:${TRAIN_SAMPLES}
+    151- classify:model_file:${MODEL_FILE} classify:update_samples:${UPDATE_SAMPLES}
+    152- classify:overwrite_samples:${OVERWRITE_SAMPLES} classify:overwrite_model:${OVERWRITE_MODEL}
+    153- classify:overwrite_image:${OVERWRITE_IMAGE} classify:method:${CLSMETHOD} classify:input:${CINPUT}
+    154- classify:image_bands:${CLS_BANDS} classify:image_bands_pred:${CLS_BANDS}
+    155- classify:keep_features:${KEEP_FEATURES} classify:augment:n_iters:${CLS_NITERS}
+    156- segment:method:${SEGMETHOD} segment:image_bands:${SEG_BANDS}
+    157- segment:overwrite_model:${OVERWRITE_EDGE_MODEL} segment:overwrite_edges:${OVERWRITE_EDGE_IMAGE}
+    158- segment:overwrite_seg:${OVERWRITE_SEG_IMAGE} segment:training_path:${SEG_TRAIN_PATH}
+    159- segment:model_file:${SEG_MODEL_FILE} segment:augment:n_iters:${SEG_NITERS}
+    160- clean:remove_items:${REMOVE_ITEMS}"
+    161- 
+    162- if [ "$MASK_ONLY" == "yes" ]; then
+    163- if [ "$STEP" == "preprocess" ]; then
+    164- tuyau $STEP --config-updates $CONFIG_UPDATES --mask-only
+    165- else
+    166- tuyau $STEP --config-updates $CONFIG_UPDATES
+    167- fi
+    168- else
+    169- tuyau $STEP --config-updates $CONFIG_UPDATES
+    170- fi
+    171-
+    172- deactivate
 
-deactivate
-```
-Most lines should stay as they are.  
-**the lines that you need to change are:**  
-* **Grid info:** `#SBATCH --array= ` (line 10 here). This is where you enter the gridcells you are processing.  
-     You can enter a range (e.g. 898-908), But be mindful that you are not hogging all the computer bandwidth.
+Most lines should stay as they are.\
+**the lines that you need to change are:**\
+\* **Grid info:** `#SBATCH --array=` (line 10 here). This is where you enter the gridcells you are processing.\
+You can enter a range (e.g. 898-908), But be mindful that you are not hogging all the computer bandwidth.
 :::{admonition}You can limit the number of cells that are processed at one time by adding %n
 For example, 898-908%4 would process 4 cells at a time. When the first 4 finish, the next will start.
+\* **Step:** (line 36 here). Run script for one step, then change to other. 
+For initial processing, should be 'preprocess' or 'reconstruct'
 
 ## Run the process
-```
-#if not already in bash directory, navigate there:
-cd ~/code/bash/
-#submit the command:
-sbatch pipeline_eri.sh
-``` 
-:::{note}
+
+    #if not already in bash directory, navigate there:
+    cd ~/code/bash/
+    #submit the command:
+    sbatch pipeline_eri.sh
+
 Current run-time estimates for single grid cells:
-* Preprocess
-    * preprocess
-    * Mask
-    * Fusion
-    * Topo
-    * Reconstruct
-    * Re-Index_vi
-    * Segment
-    * Classify
-    * Assess
-    * Clean
-:::
+\* Preprocess
+\* preprocess
+
+\* Reconstruct
+\* Segment
+\* Classify
+\* Assess
+\* Clean
 
 ## Get grid pipeline status
 
-To generate the Pipeline Progress figure: 
-```
-#Activate virtual environment:
-source .nasaenv/bin/activate
-#Run status command:
-tuyau status --config-updates status:project_path:/jad-cel/sandbox-cel/paraguay_lc/raster/grids status:out_path:<PNG location> status:grid_file:/jad-cel/sandbox-cel/paraguay_lc/vector/pry_grids.gpkg status:zoom:True
-#Deactivate virtual environment:
-deactivate
-```
+To generate the Pipeline Progress figure:
+
+    #Activate virtual environment:
+    source .nasaenv/bin/activate
+    #Run status command:
+    tuyau status --config-updates status:project_path:/jad-cel/sandbox-cel/paraguay_lc/raster/grids status:out_path:<PNG location> status:grid_file:/jad-cel/sandbox-cel/paraguay_lc/vector/pry_grids.gpkg status:zoom:True
+    #Deactivate virtual environment:
+    deactivate
+
 To view the Download Progress figure:
 Download file to view on local computer:
-```
-rsync -raz --progress <username>@ssh.eri.ucsb.edu:<ERI path> <local path>
-```
+
+    rsync -raz --progress <username>@ssh.eri.ucsb.edu:<ERI path> <local path>
+
 Alternatively, you can view the file though an FPT such as WinSCP.
+:::

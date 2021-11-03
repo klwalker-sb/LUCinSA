@@ -20,14 +20,10 @@ Revisit the [Processing overview](processing_overview) for the conceptual workfl
     * Landsat 8
 5. Run Pipeline process ([see here](pipeline))
     * Preprocess
-    * Mask
-    * Fusion
-    * ~~Topo~~ (skip this for now)
     * Reconstruct
-    * Re-Index_vi
-    * Segment
-    * Classify
-    * Assess
+    * Segment -- (do after Preprocess and Reconstruct are done for a large chunk of grids)
+    * Classify -- (do after Segment is done for a large chunk of grids)
+    * Assess  -- (do after validation data are available)
     * Clean
 
 Processing products, at various stages, are housed under the following file structure:

@@ -200,7 +200,7 @@ mkdir ~/code/bash
 cp /jad-cel/sandbox-cel/paraguay_lc/templates/eosvault_download_eri_pry.sh ~/code/bash/download_eri_pry.sh
 cp /jad-cel/sandbox-cel/paraguay_lc/templates/eosvault_download_eri_single_pry.sh ~/code/bash/download_eri_single_pry.sh
 cp /jad-cel/sandbox-cel/paraguay_lc/templates/eosvault_post_eri_pry.sh ~/code/bash/post_eri_pry.sh
-cp /jad-cel/sandbox-cel/paraguay_lc/templates/paraguay_lc/pytuyau_pipeline_eri.sh ~/code/bash/pipeline_pty.sh
+cp /jad-cel/sandbox-cel/paraguay_lc/templates/pytuyau_pipeline_eri.sh ~/code/bash/pipeline_pry.sh
 #If working on Chile:
 cp /jad-cel/sandbox-cel/chile_lc/templates/eosvault_download_eri_chile.sh ~/code/bash/download_eri_chile.sh
 cp /jad-cel/sandbox-cel/chile_lc/templates/eosvault_download_eri_single_chile.sh ~/code/bash/download_eri_single_chile.sh

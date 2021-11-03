@@ -118,11 +118,6 @@
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="environment_setup.html">
-   Setting up your remote environment
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="TransferingFiles.html">
    Transfering Files to/from cluster
   </a>
@@ -154,9 +149,16 @@
    Post-download processing
   </a>
  </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  New project configuration
+ </span>
+</p>
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="Pipeline.html">
-   Pipeline process
+  <a class="reference internal" href="Setting_up_new_project.html">
+   Setting up a new project
   </a>
  </li>
 </ul>
@@ -310,17 +312,13 @@
 <li><p>Landsat 8</p></li>
 </ul>
 </li>
-<li><p>Run Pipeline process (<a class="reference internal" href="Pipeline.html#pipeline"><span class="std std-ref">see here</span></a>)</p>
+<li><p>Run Pipeline process (<span class="xref myst">see here</span>)</p>
 <ul class="simple">
 <li><p>Preprocess</p></li>
-<li><p>Mask</p></li>
-<li><p>Fusion</p></li>
-<li><p>~~Topo~~ (skip this for now)</p></li>
 <li><p>Reconstruct</p></li>
-<li><p>Re-Index_vi</p></li>
-<li><p>Segment</p></li>
-<li><p>Classify</p></li>
-<li><p>Assess</p></li>
+<li><p>Segment – (do after Preprocess and Reconstruct are done for a large chunk of grids)</p></li>
+<li><p>Classify – (do after Segment is done for a large chunk of grids)</p></li>
+<li><p>Assess  – (do after validation data are available)</p></li>
 <li><p>Clean</p></li>
 </ul>
 </li>
