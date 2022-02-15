@@ -6,11 +6,11 @@ Jordan Graesser's `eosvault` script drives the download process, [see here](http
 To run the script:
 (GetCells)=
 ## 1. Get gridcells to download
-Find a block of cells in need of processing in the `cell_blocks.txt` file in `jad-cel/sandbox-cel/paraguay_lc` (anything without an X next to it is free)
+Find a block of cells in need of processing in the `cell_blocks.txt` file in `raid-cel/sandbox/sandbox-cel/paraguay_lc` (anything without an X next to it is free)
 (if working ion another country, replace 'paraguay' with your country name) 
 ```
 cd ~/../../
-cd jad-cel/sandbox-cel/paraguay_lc/
+cd raid-cel/sandbox/sandbox-cel/paraguay_lc/
 vim cell_blocks.txt
 #"check out" a block of cells by putting an X and your initials next to it. Note your range(s) somewhere.
 #save the file:
@@ -58,7 +58,7 @@ This is the default script (with line numbering added for reference below):
 28-  # As an array job
 29-  GRID_ID=$SLURM_ARRAY_TASK_ID
 30-  
-31-  PROJECT_HOME="/jad-cel/sandbox/sandbox-cel/paraguay_lc"
+31-  PROJECT_HOME="/raid-cel/sandbox/sandbox/sandbox-cel/paraguay_lc"
 32-  OUT_DIR="${PROJECT_HOME}/raster/grids"
 33-  
 34-  MY_USERNAME=""
@@ -238,9 +238,9 @@ You can also generate a figure to see which cells downloaded fully:
 source .nasaenv/bin/activate
 #Run status command (choose a cell number to zoom around for zoom-grid, usually in the middle of your line):
 #For Paraguay:
-eosvault status --config-file ~/project/config/config_eri_pry.yaml --out-dir ~/code/bash --grid-file /jad-cel/sandbox-cel/paraguay_lc/vector/pry_grids.gpkg --zoom-grid <id # of cell to zoom to> --zoom-offset 200000
+eosvault status --config-file ~/project/config/config_eri_pry.yaml --out-dir ~/code/bash --grid-file /raid-cel/sandbox/sandbox-cel/paraguay_lc/vector/pry_grids.gpkg --zoom-grid <id # of cell to zoom to> --zoom-offset 200000
 #For Chile:
-eosvault status --config-file ~/project/config/config_eri_chile.yaml --out-dir ~/code/bash --grid-file /jad-cel/sandbox-cel/chile_lc/vector/chl_grids.gpkg --zoom-grid <id # of cell to zoom to> --zoom-offset 200000
+eosvault status --config-file ~/project/config/config_eri_chile.yaml --out-dir ~/code/bash --grid-file /raid-cel/sandbox/sandbox-cel/chile_lc/vector/chl_grids.gpkg --zoom-grid <id # of cell to zoom to> --zoom-offset 200000
 
 #Deactivate virtual environment:
 deactivate
@@ -332,8 +332,8 @@ The script is copied below with line numbers added for reference.
 37- GRID_ID=$SLURM_ARRAY_TASK_ID
 38- 
 39- MY_USERNAME=""
-40- OUT_DIR="/jad-cel/sandbox-cel/paraguay_lc/raster/grids"
-41- GRID_FILE="/jad-cel/sandbox-cel/paraguay_lc/vector/pry_grids.gpkg"
+40- OUT_DIR="/raid-cel/andbox/sandbox-cel/paraguay_lc/raster/grids"
+41- GRID_FILE="/raid-cel/sandbox/sandbox-cel/paraguay_lc/vector/pry_grids.gpkg"
 42- CONFIG_FILE="/home/${MY_USERNAME}/project/config/config_eri.yaml"
 43- CRS_PROJ4="+proj=aea +lat_1=-5 +lat_2=-42 +lat_0=-32 +lon_0=-60 +x_0=0 +y_0=0 +ellps=aust_SA +units=m +no_defs "
 44- RES=10.0

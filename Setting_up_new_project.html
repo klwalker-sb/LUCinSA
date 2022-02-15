@@ -52,7 +52,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Intro to git" href="intro_to_git.html" />
-    <link rel="prev" title="Pipeline process" href="Pipeline.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="Pipeline.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -118,11 +118,6 @@
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="environment_setup.html">
-   Install Python tools/packages and dependencies from project github scripts:
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="TransferingFiles.html">
    Transfering Files to/from cluster
   </a>
@@ -152,11 +147,6 @@
  <li class="toctree-l1">
   <a class="reference internal" href="Pre_Pipeline.html">
    Post-download processing
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Pipeline.html">
-   Pipeline process
   </a>
  </li>
 </ul>
@@ -320,7 +310,7 @@
 <h1>Setting up a new project<a class="headerlink" href="#setting-up-a-new-project" title="Permalink to this headline">¶</a></h1>
 <p>======================================================================================================================================
 The following skeleton, containing the grid file and two index files is necessary for a new project:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">jad</span><span class="o">-</span><span class="n">cel</span><span class="o">/</span><span class="n">sandbox</span><span class="o">-</span><span class="n">cel</span><span class="o">/&lt;</span><span class="n">country</span><span class="o">&gt;</span><span class="n">_lc</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">raid</span><span class="o">-</span><span class="n">cel</span><span class="o">/</span><span class="n">sandox</span><span class="o">/</span><span class="n">sandbox</span><span class="o">-</span><span class="n">cel</span><span class="o">/&lt;</span><span class="n">country</span><span class="o">&gt;</span><span class="n">_lc</span>
     <span class="n">raster</span>
         <span class="n">grids</span>
         <span class="n">landsat_index</span>
@@ -384,6 +374,7 @@ for Landsat: gs://gcp-public-data-landsat/index.csv.gz and for Sentinel: gs://gc
 <h2>Modifying the scripts:<a class="headerlink" href="#modifying-the-scripts" title="Permalink to this headline">¶</a></h2>
 <p>Make sure to modify the lines in <code class="docutils literal notranslate"><span class="pre">~/project/config/config.yaml</span></code> to point to the correct input and output locations.
 Also modify all downloading and processing scripts in <code class="docutils literal notranslate"><span class="pre">~/code/bash</span></code></p>
+<p>In the downloading scripts, you need to enter the crs in proj4js format. You can look this up at <a class="reference external" href="http://spatialreference.org">spatialreference.org</a>, or can convert using earthpy (i.e: proj4 = et.epsg[‘32613’])</p>
 </div>
 </div>
 
@@ -412,7 +403,7 @@ Also modify all downloading and processing scripts in <code class="docutils lite
         
         <div class='prev-next-bottom'>
             
-    <a class='left-prev' id="prev-link" href="Pipeline.html" title="previous page">Pipeline process</a>
+    <a class='left-prev' id="prev-link" href="Pipeline.html" title="previous page">&lt;no title&gt;</a>
     <a class='right-next' id="next-link" href="intro_to_git.html" title="next page">Intro to git</a>
 
         </div>

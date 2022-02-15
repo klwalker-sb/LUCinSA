@@ -2,7 +2,7 @@
 ======================================================================================================================================
 The following skeleton, containing the grid file and two index files is necessary for a new project:
 ```
-jad-cel/sandbox-cel/<country>_lc
+raid-cel/sandox/sandbox-cel/<country>_lc
     raster
         grids
         landsat_index
@@ -63,3 +63,5 @@ Note: `zones.grid` can be found [here](https://github.com/jgrss/zones/blob/maste
 ## Modifying the scripts:
 Make sure to modify the lines in `~/project/config/config.yaml` to point to the correct input and output locations.
 Also modify all downloading and processing scripts in `~/code/bash`
+
+In the downloading scripts, you need to enter the crs in proj4js format. You can look this up at spatialreference.org, or can convert using earthpy (i.e: proj4 = et.epsg['32613'])
