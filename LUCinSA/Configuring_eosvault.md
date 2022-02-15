@@ -77,7 +77,7 @@ If working on Paraguay, <cntry> = pry. if working on Chile, <cntry> = chile.
 ```
 #Create project/config directory if it doesn't already exist
 mkdir -p ~/project/config
-cp /jad-cel/sandbox-cel/templates/eosvault_config_eri.yaml ~/project/config/config_eri_<cntry>.yaml
+cp /raid-cel/sandbox/sandbox-cel/templates/eosvault_config_eri.yaml ~/project/config/config_eri_<cntry>.yaml
 ```
 
 **Open the template in the vim editor** 
@@ -86,10 +86,10 @@ vim ~/project/config/config_eri_<cntry>.yaml
 ```
 To edit a line, type `i`, edit as desired, then hit `Esc` key and type `:wq`. Hit `Enter` key. For help editing in Vim, [see Vim Commands](VimCommands).
 **Edit the following lines to match your paths:** 
-* `MY_USERNAME` (line 1 of the template below): enter your ERI username between the quotes. This is a variable and should autofill everywhere else it says ${MY_USERNAME}
-* `MY_COUNTRY` (line 3 of the template below): enter the name of the country you are working on between the quotes (without caps). This is a variable and should autofill everywhere else it says ${MY_CONUTRY}
-* `Google secret key` (line 18 below): Edit path to match that of the secret key you uploaded in step #2 above
-* `angles` (lines 22-23 of the template below): Make sure that the path matches yours. (You need to **extract the angle files** into the corresponding directory): 
+* `<<MY_USERNAME>>` Change every instance of <<MY_USERNAME>> to your username (delete << brackets)
+*`<<MY_COUNTRY>>` Change every instance of <<MY_COUNTRY>> to your country (paraguay/uruguay/chile). (delete << brackets)
+* `Google secret key` (line 14 below): Edit path to match that of the secret key you uploaded in step #2 above
+* `angles` (lines 18-19 of the template below): Make sure that the path matches yours. (You need to **extract the angle files** into the corresponding directory): 
   ```
     #make the directory if it doesn't alreay exist:
     mkdir -p ~/code/bin/
@@ -100,116 +100,111 @@ To edit a line, type `i`, edit as desired, then hit `Esc` key and type `:wq`. Hi
     extract the angle files:
     tar -xzvf ESPA.tar.gz
     ```
-* `Nasa Earthdata`: In line 72, modify your username to match the username you used for your NASA Earthdata account. Check that the paths in lines 74 and 75 match where you put your Nasa Earth key and code in step 3.
+* `Nasa Earthdata`: In line 68, modify your username to match the username you used for your NASA Earthdata account. Check that the paths in lines 70 and 71 match where you put your Nasa Earth key and code in step 3.
 
 config_eri.yaml template (with added line #s for reference):
 ```
-1- MY_USERNAME=""
-2- # Current country options(note no caps): paraguay, chile
-3- MY_COUNTRY=""
-4- 
-5- project_path: '/jad-cel/sandbox-cel/${MY_COUNTRY}_lc/raster/grids'
-6- 
-7- # Root directory for the GCP index files
-8- index_dir: '/jad-cel/sandbox-cel/{MY_COUNTRY}_lc/raster'
-9-
-10- # Directory to save text files of incomplete batch jobs
-11- log_dir: '/home/${MY_USERNAME}/code/bash'
-12- 
-13- # Length (in meters) on each side of grid
-14- grid_size: 20000
+1- project_path: '/raid-cel/sandbox/sandbox-cel/<<MY_COUNTRY>>_lc/raster/grids'
+2- 
+3- # Root directory for the GCP index files
+4- index_dir: '/raid-cel/sandbox/sandbox-cel/<<MY_COUNTRY>>_lc/raster'
+5-
+6- # Directory to save text files of incomplete batch jobs
+7- log_dir: '/home/<<MY_USERNAME>>/code/bash'
+8- 
+9- # Length (in meters) on each side of grid
+10- grid_size: 20000
+11- 
+12- google:
+13- 
+14- secret_key: '<key>.json'
 15- 
-16- google:
+16- angles:
 17- 
-18- secret_key: '<key>.json'
-19- 
-20- angles:
-21- 
-22- l57_angles_path: '/home/${MY_USERNAME}/code/bin/ESPA/landsat_angles'
-23- l8_angles_path: '/home/${MY_USERNAME}/code/bin/ESPA/l8_angles'
-24- subsample: 10
-25- resampling: 'bilinear'
+18- l57_angles_path: '/home/$<<MY_USERNAME>>/code/bin/ESPA/landsat_angles'
+19- l8_angles_path: '/home/$<<MY_USERNAME>>/code/bin/ESPA/l8_angles'
+20- subsample: 10
+21- resampling: 'bilinear'
+22-
+23- sixs:
+24-
+25-  coarse_res: 100.0
 26-
-27- sixs:
+27- io:
 28-
-29-  coarse_res: 100.0
-30-
-31- io:
-32-
-33-  # netcdf | geotiff
-34-  file_format: 'netcdf'
-35-  chunks: 512
-36-  resampling: 'cubic'
-37-  num_threads: 2
-38-  nodataval: 65535
+29-  # netcdf | geotiff
+30-  file_format: 'netcdf'
+31-  chunks: 512
+32-  resampling: 'cubic'
+33-  num_threads: 2
+34-  nodataval: 65535
+35-
+36-  to_netcdf_kwargs:
+37-    zlib: True
+38-    complevel: 5
 39-
-40-  to_netcdf_kwargs:
-41-    zlib: True
-42-    complevel: 5
-43-
-44-  to_raster_kwargs:
-45-    overwrite: True
-46-    compress: 'lzw'
-47-    tiled: True
-48-    n_workers: 1
-49-    n_threads: 2
-50-
-51-  post:
-52-
-53-    # Chunk read size
-54-    chunks: 1024
-55-
-56- storage:
-57-
-58-  crs: 'utm'
-59-  res: 10.0
-60-  bands:
-61-    - 'blue'
-62-    - 'green'
-63-    - 'red'
-64-    - 'nir'
-65-    - 'swir1'
-66-    - 'swir2'
-67-
-68- nasaearth:
+40-  to_raster_kwargs:
+41-    overwrite: True
+42-    compress: 'lzw'
+43-    tiled: True
+44-    n_workers: 1
+45-    n_threads: 2
+46-
+47-  post:
+48-
+49-    # Chunk read size
+50-    chunks: 1024
+51-
+52- storage:
+53-
+54-  crs: 'utm'
+55-  res: 10.0
+56-  bands:
+57-    - 'blue'
+58-    - 'green'
+59-    - 'red'
+60-    - 'nir'
+61-    - 'swir1'
+62-    - 'swir2'
+63-
+64- nasaearth:
+65-
+66-  # The NASA Earthdata username your username for the following account:
+67-  # https://urs.earthdata.nasa.gov/
+68-  username: '<username>'
 69-
-70-  # The NASA Earthdata username your username for the following account:
-71-  # https://urs.earthdata.nasa.gov/
-72-  username: '<username>'
-73-
-74-  key_file: '/home/${MY_USERNAME}/.eosvault/nasaearth.key'
-75-  code_file: '/home/${MY_USERNAME}/.eosvault/nasaearth.code'
+70-  key_file: '/home/<<MY_USERNAME>>/.eosvault/nasaearth.key'
+71-  code_file: '/home/<<MY_USERNAME>>/.eosvault/nasaearth.code'
+72-
+73- srtm:
+74-
+75-  srtm_path: '/raid-cel/sandbox/sandbox-cel/<<MY_COUNTRY>>_lc/raster/srtm'
 76-
-77- srtm:
+77- masks:
 78-
-79-  srtm_path: '/jad-cel/cel-sandbox/${MY_COUNTRY}_lc/raster/srtm'
-80-
-81- masks:
-82-
-83-  # 0-100 range
-84-  s2cloudless_thresh: 60
+79-  # 0-100 range
+80-  s2cloudless_thresh: 60
 ``` 
 
 ## 5. Copy processing scripts
 Copy the three primary processing scripts to the folder from which you will be submitting commands(home/<username>/code/bash).
+    Replace <country> and <cntry> with text that corresponds to the country you are working in:
+    For Paraguay: <country> = paraguay and <cntry> = pry
+    For Uruguay: <country> = uruguay and <cntry> = ury
+    For Chile: <country> = chile and <cntry> = chile
 ```
-#Make code/bash directory:
+#if it doesn't already exist, Make code/bash directory:
 mkdir ~/code/bash
 #Copy scripts over:
-#If working on Paraguay:
-cp /jad-cel/sandbox-cel/paraguay_lc/templates/eosvault_download_eri_pry.sh ~/code/bash/download_eri_pry.sh
-cp /jad-cel/sandbox-cel/paraguay_lc/templates/eosvault_download_eri_single_pry.sh ~/code/bash/download_eri_single_pry.sh
-cp /jad-cel/sandbox-cel/paraguay_lc/templates/eosvault_post_eri_pry.sh ~/code/bash/post_eri_pry.sh
-cp /jad-cel/sandbox-cel/paraguay_lc/templates/pytuyau_pipeline_eri.sh ~/code/bash/pipeline_pry.sh
-#If working on Chile:
-cp /jad-cel/sandbox-cel/chile_lc/templates/eosvault_download_eri_chile.sh ~/code/bash/download_eri_chile.sh
-cp /jad-cel/sandbox-cel/chile_lc/templates/eosvault_download_eri_single_chile.sh ~/code/bash/download_eri_single_chile.sh
-cp /jad-cel/sandbox-cel/chile_lc/templates/eosvault_post_eri_chile.sh ~/code/bash/post_eri_chile.sh    
+cp /raid-cel/sandbox/sandbox-cel/<country>_lc/templates/eosvault_download_eri_<cntry>.sh ~/code/bash/download_eri_<cntry>.sh
+cp /raid-cel/sandbox/sandbox-cel/<country>_lc/templates/eosvault_download_eri_single_<cntry>.sh ~/code/bash/download_eri_single_<cntry>.sh
+cp /raid-cel/sandbox/sandbox-cel/<country>_lc/templates/eosvault_post_eri_<cntry>.sh ~/code/bash/post_eri_<cntry>.sh
+cp /raid-cel/sandbox/sandbox-cel/<country>_lc/templates/pipeline_eri_<cntry>.sh ~/code/bash/pipeline_<cntry>.sh
 ```   
     
-Edit the "download_eri.sh" "download_eri_single.sh" and "post_eri.sh" scripts to point to enter your username between the quotes in the line: MY_USERNAME=""
+Edit the "download_eri.sh" "download_eri_single.sh" and "post_eri.sh" scripts. enter your username between the quotes in the line: MY_USERNAME=""
 (For help editing in Vim, [see Vim Commands](VimCommands).)
-(if working on Chile, replace pry with chile below:)
+(if working on Uruguay/Chile, replace pry with ury/chile below:)
 ```
 vim ~/code/bash/download_eri_pry.sh
 # Find line: MY_USERNAME="" and enter your username between the quotes

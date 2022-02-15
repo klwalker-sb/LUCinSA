@@ -46,7 +46,7 @@ Default script
 31- GRID_ID=$SLURM_ARRAY_TASK_ID
 32- 
 33- MY_USERNAME=""
-34- IN_DIR="/jad-cel/sandbox-cel/paraguay_lc/raster/grids"
+34- IN_DIR="/raid-cel/sandbox/sandbox-cel/paraguay_lc/raster/grids"
 35- CONFIG_FILE="/home/${MY_USERNAME}/project/config/config_eri.yaml"
 36- 
 37- #############################################

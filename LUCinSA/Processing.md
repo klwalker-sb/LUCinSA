@@ -28,7 +28,7 @@ Revisit the [Processing overview](processing_overview) for the conceptual workfl
 
 Processing products, at various stages, are housed under the following file structure:
 ```
-jad-cel/cel-sandbox/paraguay_lc/raster/grids/
+raid-cel/sandbox/sandbox-cel/paraguay_lc/raster/grids/
     /grids  
     --000001  
     --000002  

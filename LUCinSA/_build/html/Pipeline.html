@@ -436,7 +436,7 @@ Pipeline template (with line numbers added for reference below):
     135- # activate the virtual environment
     136- source ~/.nasaenv/bin/activate
     137- 
-    138- CONFIG_UPDATES=&quot;grids:[${GRIDS}] main_path:/jad-cel/sandbox-cel/paraguay_lc/raster/grids
+    138- CONFIG_UPDATES=&quot;grids:[${GRIDS}] main_path:/raid-cel/sandbox/sandbox-cel/paraguay_lc/raster/grids
     139- num_workers:${SLURM_CPUS_ON_NODE} cloud_mask:reset_db:${RESET_CLOUD_DB} 
     140- cloud_mask:ref_res:${REF_RES} fusion:window_size:${WINDOW_SIZE} 
     141- fusion:fill_max_years:${MAX_YEARS} fusion:fill_max_days:${MAX_DAYS} 
@@ -505,7 +505,7 @@ To generate the Pipeline Progress figure:
     #Activate virtual environment:
     source .nasaenv/bin/activate
     #Run status command:
-    tuyau status --config-updates status:project_path:/jad-cel/sandbox-cel/paraguay_lc/raster/grids status:out_path:&lt;PNG location&gt; status:grid_file:/jad-cel/sandbox-cel/paraguay_lc/vector/pry_grids.gpkg status:zoom:True
+    tuyau status --config-updates status:project_path:/raid-cel/sandbox/sandbox-cel/paraguay_lc/raster/grids status:out_path:&lt;PNG location&gt; status:grid_file:/jad-cel/sandbox-cel/paraguay_lc/vector/pry_grids.gpkg status:zoom:True
     #Deactivate virtual environment:
     deactivate
 
