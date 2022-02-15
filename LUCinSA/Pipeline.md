@@ -204,6 +204,49 @@ You can enter a range (e.g. 898-908), But be mindful that you are not hogging a
 For example, 898-908%4 would process 4 cells at a time. When the first 4 finish, the next will start.
 \* **Step:** (line 36 here). Run script for one step, then change to other. 
 For initial processing, should be 'preprocess' or 'reconstruct'
+\* **Rec_VI** (If running **Reconstruct**), set vegetation index here (see options in next section). To get multiple vegetation indices for a cell, run reconstruct multiple times.
+
+### Choices for vegetation indices:
+Current options for vegetation indices are:
+\* avi = ?? (removed?)
+\* evi2 = 2.5 * ( NIR - RED) / ( NIR + 2.4 * RED + 1.0 )
+\* gcvi= scaled index using Green & NIR
+\* kndvi= tanh(( NIR - RED) / ( NIR + 2.4 * RED + 1.0 ))^2)
+\* nbr = (NIR - SWIR2) / (NIR + SWIR2) + 1e-9)
+\* wi = 0 if (red + SWIR1) > 0.5, else 1.0 - ((red + SWIR1) / 0.5))
+
+:::{note}To add a new vegetation index to the code, edits need to be made to both the `vis.py` and `check_reconstruction.py` scripts in `~/tmp/pytuyau/pytuyau/steps`. ie, to add NDVI:
+   in `check_reconstruction.py` around line 169, add:
+   ```
+   elif params['reconstruct']['vi'] == 'ndvi':
+       band_names = ['nir', 'red'] 
+   ```
+   in `vis.py` around line 6, add name or your index to the list:
+   ```AVAIL_VIS = ['avi', 'evi2', 'gcvi', 'kndvi', 'nbr', 'wi','ndvi']```
+   in `vis.py` around line 27 add:
+   ```
+   elif params['reconstruct']['vi'] == 'ndvi':
+       vi_data = data_src.gw.ndvi(nodata=0, scale_factor=1)
+   ```
+   in `vis.py` under @staticmethod (around line 75) add:
+   ```
+   def ndvi(self, data):
+        return self._norm(data[1], data[0])
+   ```
+   (note that `_norm` is defined above that as `(b2 - b1) / ((b2 + b1) + 1e-9)` there are currently another option of  
+   ` _scale_min_max: ((((max_out - min_out) * (xv - min_in)) / (max_in - min_in)) + min_out)\ .clip(min_out, max_out)`, or can 
+   create a different equation without self argument)
+   
+   After modifying script, reinstall:
+   ```
+   cd ~
+   source .nasaenv/bin/activate
+   cd tmp/pytuyau
+   python setup.py build && pip install .
+   ```
+:::
+
+
 
 ## Run the process
 
@@ -214,13 +257,12 @@ For initial processing, should be 'preprocess' or 'reconstruct'
 
 Current run-time estimates for single grid cells:
 \* Preprocess
-\* preprocess
-
 \* Reconstruct
 \* Segment
 \* Classify
 \* Assess
 \* Clean
+
 
 ## Get grid pipeline status
 
@@ -229,11 +271,11 @@ To generate the Pipeline Progress figure:
     #Activate virtual environment:
     source .nasaenv/bin/activate
     #Run status command:
-    tuyau status --config-updates status:project_path:/raid-cel/sandbox/sandbox-cel/paraguay_lc/raster/grids status:out_path:<PNG location> status:grid_file:/jad-cel/sandbox-cel/paraguay_lc/vector/pry_grids.gpkg status:zoom:True
+    tuyau status --config-updates status:project_path:/raid-cel/sandbox/sandbox-cel/paraguay_lc/raster/grids status:out_path:<PNG location> status:grid_file:/raid-cel/sandbox/sandbox-cel/paraguay_lc/vector/pry_grids.gpkg status:zoom:True
     #Deactivate virtual environment:
     deactivate
 
-To view the Download Progress figure:
+To view the Processing Progress figure:
 Download file to view on local computer:
 
     rsync -raz --progress <username>@ssh.eri.ucsb.edu:<ERI path> <local path>
