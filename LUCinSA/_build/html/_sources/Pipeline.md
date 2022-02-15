@@ -1,4 +1,4 @@
-(pipeline)=
+(Pipeline)=
 # Pipeline process
 ======================================================================
 
@@ -189,7 +189,7 @@ For example, 898-908%4 would process 4 cells at a time. When the first 4 finish,
 For initial processing, should be 'preprocess' or 'reconstruct'
 \* **Rec_VI** (If running **Reconstruct**), set vegetation index here (see options in next section). To get multiple vegetation indices for a cell, run reconstruct multiple times.
 
-### Choices for vegetation indices:
+## Choices for vegetation indices:
 Current options for vegetation indices are:
 \* avi = ?? (removed?)
 \* evi2 = 2.5 * ( NIR - RED) / ( NIR + 2.4 * RED + 1.0 )
