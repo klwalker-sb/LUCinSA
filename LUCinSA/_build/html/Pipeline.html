@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>&lt;no title&gt; &#8212; LUCinSA</title>
+    <title>Pipeline process &#8212; LUCinSA</title>
     
   <link href="_static/css/theme.css" rel="stylesheet" />
   <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -133,7 +133,7 @@
   Processing
  </span>
 </p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="Processing.html">
    Processing
@@ -147,6 +147,11 @@
  <li class="toctree-l1">
   <a class="reference internal" href="Pre_Pipeline.html">
    Post-download processing
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Pipeline process
   </a>
  </li>
 </ul>
@@ -279,7 +284,22 @@
                 <i class="fas fa-list"></i> Contents
             </div>
             <nav id="bd-toc-nav">
-                <ul class="simple visible nav section-nav flex-column">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#choices-for-vegetation-indices">
+   Choices for vegetation indices:
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#run-the-process">
+   Run the process
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#get-grid-pipeline-status">
+   Get grid pipeline status
+  </a>
+ </li>
 </ul>
 
             </nav>
@@ -291,231 +311,274 @@
         
               <div>
                 
-  <div class="highlight-{.cell notranslate"><div class="highlight"><pre><span></span>(pipeline)=
-\# Pipeline process
-===============================================================================================================================
-
-Jordan Graesser&#39;s `pytuyau` script drives the pipeline process, [see here](https://github.com/jgrss/pytuyau#readme) for more information on the script process.
-
-Pipeline template (with line numbers added for reference below):
-
-    1-   #!/bin/bash -l
-    2-  
-    3-   #SBATCH -N 1 # number of nodes
-    4-   #SBATCH -n 8 # number of cores
-    5-   #SBATCH -t 0-08:00 # time (D-HH:MM)
-    6-   #SBATCH -p basic 
-    7-   #SBATCH -o slpipe.%N.%a.%j.out # STDOUT
-    8-   #SBATCH -e slpipe.%N.%a.%j.err # STDERR
-    9-   #SBATCH --job-name=&quot;slpipe-pre&quot;
-    10-  #SBATCH --array=910-914%4
-    11-
-    12-  #############################################
-    13-  # Turn off NumPy parallelism and rely on dask
-    14-  #############################################
-    15-  export OPENBLAS_NUM_THREADS=1
-    16-  export MKL_NUM_THREADS=1
-    17-  # This should be sufficient for OpenBlas and MKL
-    18-  export OMP_NUM_THREADS=1
-    19-  ################################################
-    20-
-    21-  # Choices are {preprocess, fusion, topo, reconstruct, segment, classify}
-    22-  # 1. preprocess
-    23-  #    a. Checks &#39;no data&#39; images
-    24-  #    b. Co-registers Sentinel
-    25-  # 5. reconstruct
-    26-  #    - Reconstructs weekly time series using dynamic temporal smoothing (DTS)
-    27-  # 7. segment
-    28-  #    - Segments vegetation objects using SACFEI
-    29-  # 8. classify
-    30-  #    - Classifies land cover
-    31-  # 9. assess
-    32-  #    - Assesses land cover predictions
-    33-  # 10. clean
-    34-  #    - Removes unwanted files
-    35-
-    36-  STEP=&quot;preprocess&quot;
-    37-
-    38-  GRIDS=&quot;${SLURM_ARRAY_TASK_ID}&quot;
-    39-
-    40-  #########
-    41-  # MASKING
-    42-  #########
-    43-
-    44-  MASK_ONLY=&quot;no&quot;
-    45-  REF_RES=40.0
-    46-  RESET_CLOUD_DB=&quot;False&quot;
-    47-
-    48- #######
-    49- # CLEAN
-    50- #######
-    51- 
-    52- # masks, downloads, nodata, nocoreg, fusion, vis, vrts, old_seg
-    53- #REMOVE_ITEMS=&quot;[downloads,masks,nodata,nocoreg,fusion,vis,vrts]&quot;
-    54- REMOVE_ITEMS=&quot;[]&quot;
-    55-
-    56- ########
-    57- # FUSION
-    58- ########
-    59- 
-    60- WINDOW_SIZE=9
-    61- MAX_YEARS=2
-    62- MAX_DAYS=15
-    63- FOVERWRITE=&quot;True&quot;
-    64-
-    65- #############
-    66- # RECONSTRUCT
-    67- #############
-    68- 
-    69- RINPUT=&quot;ms&quot;
-    70- START_PAD=&quot;2010-03-01&quot;
-    71- START=&quot;2010-07-01&quot;
-    72- END_PAD=&quot;2020-11-01&quot;
-    73- END=&quot;2020-07-01&quot;
-    74- SKIP_INTERVAL=7
-    75- SKIP_YEARS=10
-    76- REC_VI=&quot;gcvi&quot;
-    77- ROVERWRITE=&quot;False&quot;
-    78- SM_CHUNKS=512
-    79- PREFILL_GAPS=&quot;True&quot;
-    80- DTS_MAX_WIN=61
-    81- DTS_MIN_WIN=15
-    82- PREFILL_YEARS=2
-    83- DTS_t=5
-    84- 
-    85- ############
-    86- # REINDEX VI
-    87- ############
-    88- REX_VI=&quot;evi2&quot;
-    89- 
-    90- ##########
-    91- # CLASSIFY
-    92- ##########
-    93-
-    94- # sample | fit | fit_predict | predict
-    95- CLSMETHOD=&quot;fit&quot;
-    96- CINPUT=&quot;ms&quot;
-    97- # temperate_gss_vi2; tropical_gss_vi2
-    98- CLS_REGION_NAME=&quot;tropical_gss_vi2&quot;
-    99- CLS_MODEL_NAME=&quot;${CLS_REGION_NAME}_11_11&quot;
-    100- LC_VECTOR=&quot;.kml&quot;
-    101- KEEP_FEATURES=&quot;[1,1,1,1]&quot;
-    102- # update/overwrite the sample stack
-    103- UPDATE_SAMPLES=&quot;True&quot;
-    104- # overwrite each grid sample dataset
-    105- OVERWRITE_SAMPLES=&quot;False&quot;
-    106- OVERWRITE_MODEL=&quot;True&quot;
-    107- OVERWRITE_IMAGE=&quot;False&quot;
-    108- CLS_BANDS=&quot;[evi2,wi]&quot;
-    109- CLS_NITERS=2000
-    110-
-    111- # OUTPUT files
-    112- TRAIN_SAMPLES=&quot;/training/south_america_extract_${CLS_REGION_NAME}.gpkg&quot;
-    113- MODEL_FILE=&quot;/training/south_america_${CLS_MODEL_NAME}.model&quot;
-    114-
-    115- #########
-    116- # SEGMENT
-    117- #########
-    118- 
-    119- # fit | fit_predict | predict
-    120- SEGMETHOD=&quot;predict&quot;
-    121- OVERWRITE_EDGE_MODEL=&quot;False&quot;
-    122- OVERWRITE_EDGE_IMAGE=&quot;True&quot;
-    123- OVERWRITE_SEG_IMAGE=&quot;True&quot;
-    124- SEG_REGION_NAME=&quot;temperate_gss_vi2&quot;
-    125- SEG_BANDS=&quot;[evi2,wi]&quot;
-    126- SEG_NITERS=2000
-    127-
-    128- SEG_TRAIN_PATH=&quot;/training/edges&quot;
-    129- SEG_MODEL_FILE=&quot;/training/south_america_extract_${SEG_REGION_NAME}.edges&quot;
-    130-
-    131- ###############################
-    132- # DO NOT MODIFY BELOW THIS LINE
-    133- ###############################
-    134- 
-    135- # activate the virtual environment
-    136- source ~/.nasaenv/bin/activate
-    137- 
-    138- CONFIG_UPDATES=&quot;grids:[${GRIDS}] main_path:/raid-cel/sandbox/sandbox-cel/paraguay_lc/raster/grids
-    139- num_workers:${SLURM_CPUS_ON_NODE} cloud_mask:reset_db:${RESET_CLOUD_DB} 
-    140- cloud_mask:ref_res:${REF_RES} fusion:window_size:${WINDOW_SIZE} 
-    141- fusion:fill_max_years:${MAX_YEARS} fusion:fill_max_days:${MAX_DAYS} 
-    142- fusion:overwrite:${FOVERWRITE} reconstruct:input:${RINPUT} reconstruct:start_pad:${START_PAD} 
-    143- reconstruct:end_pad:${END_PAD} reconstruct:start:${START} reconstruct:end:${END} 
-    144- reconstruct:skip_interval:${SKIP_INTERVAL} reconstruct:skip_years:${SKIP_YEARS}
-    145- reconstruct:vi:${REC_VI} reconstruct:overwrite:${ROVERWRITE} reconstruct:chunks:${SM_CHUNKS}
-    146- reconstruct:smooth_kwargs:max_window:${DTS_MAX_WIN}
-    147- reconstruct:smooth_kwargs:min_window:${DTS_MIN_WIN}
-    148- reconstruct:smooth_kwargs:prefill_max_years:${PREFILL_YEARS}
-    149- reconstruct:smooth_kwargs:prefill_gaps:${PREFILL_GAPS} reconstruct:smooth_kwargs:t:${DTS_t}
-    150- reindex_vi:vi:${REX_VI} classify:lc_vector:${LC_VECTOR} classify:train_samples:${TRAIN_SAMPLES}
-    151- classify:model_file:${MODEL_FILE} classify:update_samples:${UPDATE_SAMPLES}
-    152- classify:overwrite_samples:${OVERWRITE_SAMPLES} classify:overwrite_model:${OVERWRITE_MODEL}
-    153- classify:overwrite_image:${OVERWRITE_IMAGE} classify:method:${CLSMETHOD} classify:input:${CINPUT}
-    154- classify:image_bands:${CLS_BANDS} classify:image_bands_pred:${CLS_BANDS}
-    155- classify:keep_features:${KEEP_FEATURES} classify:augment:n_iters:${CLS_NITERS}
-    156- segment:method:${SEGMETHOD} segment:image_bands:${SEG_BANDS}
-    157- segment:overwrite_model:${OVERWRITE_EDGE_MODEL} segment:overwrite_edges:${OVERWRITE_EDGE_IMAGE}
-    158- segment:overwrite_seg:${OVERWRITE_SEG_IMAGE} segment:training_path:${SEG_TRAIN_PATH}
-    159- segment:model_file:${SEG_MODEL_FILE} segment:augment:n_iters:${SEG_NITERS}
-    160- clean:remove_items:${REMOVE_ITEMS}&quot;
-    161- 
-    162- if [ &quot;$MASK_ONLY&quot; == &quot;yes&quot; ]; then
-    163- if [ &quot;$STEP&quot; == &quot;preprocess&quot; ]; then
-    164- tuyau $STEP --config-updates $CONFIG_UPDATES --mask-only
-    165- else
-    166- tuyau $STEP --config-updates $CONFIG_UPDATES
-    167- fi
-    168- else
-    169- tuyau $STEP --config-updates $CONFIG_UPDATES
-    170- fi
-    171-
-    172- deactivate
-
-Most lines should stay as they are.\
-**the lines that you need to change are:**\
-\* **Grid info:** `#SBATCH --array=` (line 10 here). This is where you enter the gridcells you are processing.\
-You can enter a range (e.g. 898-908), But be mindful that you are not hogging all the computer bandwidth.
-:::{admonition}You can limit the number of cells that are processed at one time by adding %n
-For example, 898-908%4 would process 4 cells at a time. When the first 4 finish, the next will start.
-\* **Step:** (line 36 here). Run script for one step, then change to other. 
-For initial processing, should be &#39;preprocess&#39; or &#39;reconstruct&#39;
-
-## Run the process
-
-    #if not already in bash directory, navigate there:
-    cd ~/code/bash/
-    #submit the command:
-    sbatch pipeline_eri.sh
-
-Current run-time estimates for single grid cells:
-\* Preprocess
-\* preprocess
-
-\* Reconstruct
-\* Segment
-\* Classify
-\* Assess
-\* Clean
-
-## Get grid pipeline status
-
-To generate the Pipeline Progress figure:
-
-    #Activate virtual environment:
-    source .nasaenv/bin/activate
-    #Run status command:
-    tuyau status --config-updates status:project_path:/raid-cel/sandbox/sandbox-cel/paraguay_lc/raster/grids status:out_path:&lt;PNG location&gt; status:grid_file:/jad-cel/sandbox-cel/paraguay_lc/vector/pry_grids.gpkg status:zoom:True
-    #Deactivate virtual environment:
-    deactivate
-
-To view the Download Progress figure:
-Download file to view on local computer:
-
-    rsync -raz --progress &lt;username&gt;@ssh.eri.ucsb.edu:&lt;ERI path&gt; &lt;local path&gt;
-
-Alternatively, you can view the file though an FPT such as WinSCP.
+  <div class="section" id="pipeline-process">
+<span id="pipeline"></span><h1>Pipeline process<a class="headerlink" href="#pipeline-process" title="Permalink to this headline">¶</a></h1>
+<p>======================================================================</p>
+<p>Jordan Graesser’s <code class="docutils literal notranslate"><span class="pre">pytuyau</span></code> script drives the pipeline process, <a class="reference external" href="https://github.com/jgrss/pytuyau#readme">see here</a> for more information on the script process.</p>
+<p>Pipeline template (with line numbers added for reference below):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>1-   #!/bin/bash -l
+2-  
+3-   #SBATCH -N 1 # number of nodes
+4-   #SBATCH -n 8 # number of cores
+5-   #SBATCH -t 0-08:00 # time (D-HH:MM)
+6-   #SBATCH -p basic 
+7-   #SBATCH -o slpipe.%N.%a.%j.out # STDOUT
+8-   #SBATCH -e slpipe.%N.%a.%j.err # STDERR
+9-   #SBATCH --job-name=&quot;slpipe-pre&quot;
+10-  #SBATCH --array=910-914%4
+11-
+12-  #############################################
+13-  # Turn off NumPy parallelism and rely on dask
+14-  #############################################
+15-  export OPENBLAS_NUM_THREADS=1
+16-  export MKL_NUM_THREADS=1
+17-  # This should be sufficient for OpenBlas and MKL
+18-  export OMP_NUM_THREADS=1
+19-  ################################################
+20-
+21-  # Choices are {preprocess, fusion, topo, reconstruct, segment, classify}
+22-  # 1. preprocess
+23-  #    a. Checks &#39;no data&#39; images
+24-  #    b. Co-registers Sentinel
+25-  # 5. reconstruct
+26-  #    - Reconstructs weekly time series using dynamic temporal smoothing (DTS)
+27-  # 7. segment
+28-  #    - Segments vegetation objects using SACFEI
+29-  # 8. classify
+30-  #    - Classifies land cover
+31-  # 9. assess
+32-  #    - Assesses land cover predictions
+33-  # 10. clean
+34-  #    - Removes unwanted files
+35-
+36-  STEP=&quot;preprocess&quot;
+37-
+38-  GRIDS=&quot;${SLURM_ARRAY_TASK_ID}&quot;
+39-
+40-  #########
+41-  # MASKING
+42-  #########
+43-
+44-  MASK_ONLY=&quot;no&quot;
+45-  REF_RES=40.0
+46-  RESET_CLOUD_DB=&quot;False&quot;
+47-
+48- #######
+49- # CLEAN
+50- #######
+51- 
+52- # masks, downloads, nodata, nocoreg, fusion, vis, vrts, old_seg
+53- #REMOVE_ITEMS=&quot;[downloads,masks,nodata,nocoreg,fusion,vis,vrts]&quot;
+54- REMOVE_ITEMS=&quot;[]&quot;
+55-
+56- ########
+57- # FUSION
+58- ########
+59- 
+60- WINDOW_SIZE=9
+61- MAX_YEARS=2
+62- MAX_DAYS=15
+63- FOVERWRITE=&quot;True&quot;
+64-
+65- #############
+66- # RECONSTRUCT
+67- #############
+68- 
+69- RINPUT=&quot;ms&quot;
+70- START_PAD=&quot;2010-03-01&quot;
+71- START=&quot;2010-07-01&quot;
+72- END_PAD=&quot;2020-11-01&quot;
+73- END=&quot;2020-07-01&quot;
+74- SKIP_INTERVAL=7
+75- SKIP_YEARS=10
+76- REC_VI=&quot;gcvi&quot;
+77- ROVERWRITE=&quot;False&quot;
+78- SM_CHUNKS=512
+79- PREFILL_GAPS=&quot;True&quot;
+80- DTS_MAX_WIN=61
+81- DTS_MIN_WIN=15
+82- PREFILL_YEARS=2
+83- DTS_t=5
+84- 
+85- ############
+86- # REINDEX VI
+87- ############
+88- REX_VI=&quot;evi2&quot;
+89- 
+90- ##########
+91- # CLASSIFY
+92- ##########
+93-
+94- # sample | fit | fit_predict | predict
+95- CLSMETHOD=&quot;fit&quot;
+96- CINPUT=&quot;ms&quot;
+97- # temperate_gss_vi2; tropical_gss_vi2
+98- CLS_REGION_NAME=&quot;tropical_gss_vi2&quot;
+99- CLS_MODEL_NAME=&quot;${CLS_REGION_NAME}_11_11&quot;
+100- LC_VECTOR=&quot;.kml&quot;
+101- KEEP_FEATURES=&quot;[1,1,1,1]&quot;
+102- # update/overwrite the sample stack
+103- UPDATE_SAMPLES=&quot;True&quot;
+104- # overwrite each grid sample dataset
+105- OVERWRITE_SAMPLES=&quot;False&quot;
+106- OVERWRITE_MODEL=&quot;True&quot;
+107- OVERWRITE_IMAGE=&quot;False&quot;
+108- CLS_BANDS=&quot;[evi2,wi]&quot;
+109- CLS_NITERS=2000
+110-
+111- # OUTPUT files
+112- TRAIN_SAMPLES=&quot;/training/south_america_extract_${CLS_REGION_NAME}.gpkg&quot;
+113- MODEL_FILE=&quot;/training/south_america_${CLS_MODEL_NAME}.model&quot;
+114-
+115- #########
+116- # SEGMENT
+117- #########
+118- 
+119- # fit | fit_predict | predict
+120- SEGMETHOD=&quot;predict&quot;
+121- OVERWRITE_EDGE_MODEL=&quot;False&quot;
+122- OVERWRITE_EDGE_IMAGE=&quot;True&quot;
+123- OVERWRITE_SEG_IMAGE=&quot;True&quot;
+124- SEG_REGION_NAME=&quot;temperate_gss_vi2&quot;
+125- SEG_BANDS=&quot;[evi2,wi]&quot;
+126- SEG_NITERS=2000
+127-
+128- SEG_TRAIN_PATH=&quot;/training/edges&quot;
+129- SEG_MODEL_FILE=&quot;/training/south_america_extract_${SEG_REGION_NAME}.edges&quot;
+130-
+131- ###############################
+132- # DO NOT MODIFY BELOW THIS LINE
+133- ###############################
+134- 
+135- # activate the virtual environment
+136- source ~/.nasaenv/bin/activate
+137- 
+138- CONFIG_UPDATES=&quot;grids:[${GRIDS}] main_path:/raid-cel/sandbox/sandbox-cel/paraguay_lc/raster/grids
+139- num_workers:${SLURM_CPUS_ON_NODE} cloud_mask:reset_db:${RESET_CLOUD_DB} 
+140- cloud_mask:ref_res:${REF_RES} fusion:window_size:${WINDOW_SIZE} 
+141- fusion:fill_max_years:${MAX_YEARS} fusion:fill_max_days:${MAX_DAYS} 
+142- fusion:overwrite:${FOVERWRITE} reconstruct:input:${RINPUT} reconstruct:start_pad:${START_PAD} 
+143- reconstruct:end_pad:${END_PAD} reconstruct:start:${START} reconstruct:end:${END} 
+144- reconstruct:skip_interval:${SKIP_INTERVAL} reconstruct:skip_years:${SKIP_YEARS}
+145- reconstruct:vi:${REC_VI} reconstruct:overwrite:${ROVERWRITE} reconstruct:chunks:${SM_CHUNKS}
+146- reconstruct:smooth_kwargs:max_window:${DTS_MAX_WIN}
+147- reconstruct:smooth_kwargs:min_window:${DTS_MIN_WIN}
+148- reconstruct:smooth_kwargs:prefill_max_years:${PREFILL_YEARS}
+149- reconstruct:smooth_kwargs:prefill_gaps:${PREFILL_GAPS} reconstruct:smooth_kwargs:t:${DTS_t}
+150- reindex_vi:vi:${REX_VI} classify:lc_vector:${LC_VECTOR} classify:train_samples:${TRAIN_SAMPLES}
+151- classify:model_file:${MODEL_FILE} classify:update_samples:${UPDATE_SAMPLES}
+152- classify:overwrite_samples:${OVERWRITE_SAMPLES} classify:overwrite_model:${OVERWRITE_MODEL}
+153- classify:overwrite_image:${OVERWRITE_IMAGE} classify:method:${CLSMETHOD} classify:input:${CINPUT}
+154- classify:image_bands:${CLS_BANDS} classify:image_bands_pred:${CLS_BANDS}
+155- classify:keep_features:${KEEP_FEATURES} classify:augment:n_iters:${CLS_NITERS}
+156- segment:method:${SEGMETHOD} segment:image_bands:${SEG_BANDS}
+157- segment:overwrite_model:${OVERWRITE_EDGE_MODEL} segment:overwrite_edges:${OVERWRITE_EDGE_IMAGE}
+158- segment:overwrite_seg:${OVERWRITE_SEG_IMAGE} segment:training_path:${SEG_TRAIN_PATH}
+159- segment:model_file:${SEG_MODEL_FILE} segment:augment:n_iters:${SEG_NITERS}
+160- clean:remove_items:${REMOVE_ITEMS}&quot;
+161- 
+162- if [ &quot;$MASK_ONLY&quot; == &quot;yes&quot; ]; then
+163- if [ &quot;$STEP&quot; == &quot;preprocess&quot; ]; then
+164- tuyau $STEP --config-updates $CONFIG_UPDATES --mask-only
+165- else
+166- tuyau $STEP --config-updates $CONFIG_UPDATES
+167- fi
+168- else
+169- tuyau $STEP --config-updates $CONFIG_UPDATES
+170- fi
+171-
+172- deactivate
 </pre></div>
+</div>
+<p>Most lines should stay as they are.<br />
+<strong>the lines that you need to change are:</strong><br />
+* <strong>Grid info:</strong> <code class="docutils literal notranslate"><span class="pre">#SBATCH</span> <span class="pre">--array=</span></code> (line 10 here). This is where you enter the gridcells you are processing.<br />
+You can enter a range (e.g. 898-908), But be mindful that you are not hogging all the computer bandwidth.</p>
+<div class="section" id="choices-for-vegetation-indices">
+<h2>Choices for vegetation indices:<a class="headerlink" href="#choices-for-vegetation-indices" title="Permalink to this headline">¶</a></h2>
+<p>Current options for vegetation indices are:
+* avi = ?? (removed?)
+* evi2 = 2.5 * ( NIR - RED) / ( NIR + 2.4 * RED + 1.0 )
+* gcvi= scaled index using Green &amp; NIR
+* kndvi= tanh(( NIR - RED) / ( NIR + 2.4 * RED + 1.0 ))^2)
+* nbr = (NIR - SWIR2) / (NIR + SWIR2) + 1e-9)
+* wi = 0 if (red + SWIR1) &gt; 0.5, else 1.0 - ((red + SWIR1) / 0.5))</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To add a new vegetation index to the code, edits need to be made to both the <code class="docutils literal notranslate"><span class="pre">vis.py</span></code> and <code class="docutils literal notranslate"><span class="pre">check_reconstruction.py</span></code> scripts in <code class="docutils literal notranslate"><span class="pre">~/tmp/pytuyau/pytuyau/steps</span></code>. ie, to add NDVI:
+in <code class="docutils literal notranslate"><span class="pre">check_reconstruction.py</span></code> around line 169, add:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">elif</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;reconstruct&#39;</span><span class="p">][</span><span class="s1">&#39;vi&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;ndvi&#39;</span><span class="p">:</span>
+    <span class="n">band_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;nir&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">]</span> 
+</pre></div>
+</div>
+<p>in <code class="docutils literal notranslate"><span class="pre">vis.py</span></code> around line 6, add name or your index to the list:
+<code class="docutils literal notranslate"><span class="pre">AVAIL_VIS</span> <span class="pre">=</span> <span class="pre">['avi',</span> <span class="pre">'evi2',</span> <span class="pre">'gcvi',</span> <span class="pre">'kndvi',</span> <span class="pre">'nbr',</span> <span class="pre">'wi','ndvi']</span></code>
+in <code class="docutils literal notranslate"><span class="pre">vis.py</span></code> around line 27 add:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">elif</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;reconstruct&#39;</span><span class="p">][</span><span class="s1">&#39;vi&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;ndvi&#39;</span><span class="p">:</span>
+    <span class="n">vi_data</span> <span class="o">=</span> <span class="n">data_src</span><span class="o">.</span><span class="n">gw</span><span class="o">.</span><span class="n">ndvi</span><span class="p">(</span><span class="n">nodata</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale_factor</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>in <code class="docutils literal notranslate"><span class="pre">vis.py</span></code> under &#64;staticmethod (around line 75) add:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">ndvi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_norm</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>(note that <code class="docutils literal notranslate"><span class="pre">_norm</span></code> is defined above that as <code class="docutils literal notranslate"><span class="pre">(b2</span> <span class="pre">-</span> <span class="pre">b1)</span> <span class="pre">/</span> <span class="pre">((b2</span> <span class="pre">+</span> <span class="pre">b1)</span> <span class="pre">+</span> <span class="pre">1e-9)</span></code> there are currently another option of<br />
+<code class="docutils literal notranslate"> <span class="pre">_scale_min_max:</span> <span class="pre">((((max_out</span> <span class="pre">-</span> <span class="pre">min_out)</span> <span class="pre">*</span> <span class="pre">(xv</span> <span class="pre">-</span> <span class="pre">min_in))</span> <span class="pre">/</span> <span class="pre">(max_in</span> <span class="pre">-</span> <span class="pre">min_in))</span> <span class="pre">+</span> <span class="pre">min_out)\</span> <span class="pre">.clip(min_out,</span> <span class="pre">max_out)</span></code>, or can
+create a different equation without self argument)</p>
+<p>After modifying script, reinstall:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">~</span>
+<span class="n">source</span> <span class="o">.</span><span class="n">nasaenv</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
+<span class="n">cd</span> <span class="n">tmp</span><span class="o">/</span><span class="n">pytuyau</span>
+<span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">build</span> <span class="o">&amp;&amp;</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">.</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition-you-can-limit-the-number-of-cells-that-are-processed-at-one-time-by-adding-n admonition">
+<p class="admonition-title">You can limit the number of cells that are processed at one time by adding %n</p>
+<p>For example, 898-908%4 would process 4 cells at a time. When the first 4 finish, the next will start.
+* <strong>Step:</strong> (line 36 here). Run script for one step, then change to other.
+For initial processing, should be ‘preprocess’ or ‘reconstruct’
+* <strong>Rec_VI</strong> (If running <strong>Reconstruct</strong>), set vegetation index here (see options in next section). To get multiple vegetation indices for a cell, run reconstruct multiple times.</p>
+</div>
+<div class="section" id="run-the-process">
+<h2>Run the process<a class="headerlink" href="#run-the-process" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>#if not already in bash directory, navigate there:
+cd ~/code/bash/
+#submit the command:
+sbatch pipeline_eri.sh
+</pre></div>
+</div>
+<p>Current run-time estimates for single grid cells:
+* Preprocess
+* Reconstruct
+* Segment
+* Classify
+* Assess
+* Clean</p>
+</div>
+<div class="section" id="get-grid-pipeline-status">
+<h2>Get grid pipeline status<a class="headerlink" href="#get-grid-pipeline-status" title="Permalink to this headline">¶</a></h2>
+<p>To generate the Pipeline Progress figure:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>#Activate virtual environment:
+source .nasaenv/bin/activate
+#Run status command:
+tuyau status --config-updates status:project_path:/raid-cel/sandbox/sandbox-cel/paraguay_lc/raster/grids status:out_path:&lt;PNG location&gt; status:grid_file:/raid-cel/sandbox/sandbox-cel/paraguay_lc/vector/pry_grids.gpkg status:zoom:True
+#Deactivate virtual environment:
+deactivate
+</pre></div>
+</div>
+<p>To view the Processing Progress figure:
+Download file to view on local computer:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>rsync -raz --progress &lt;username&gt;@ssh.eri.ucsb.edu:&lt;ERI path&gt; &lt;local path&gt;
+</pre></div>
+</div>
+<p>Alternatively, you can view the file though an FPT such as WinSCP.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
