@@ -491,29 +491,45 @@
 </pre></div>
 </div>
 <p>Most lines should stay as they are.<br />
-<strong>the lines that you need to change are:</strong><br />
-* <strong>Grid info:</strong> <code class="docutils literal notranslate"><span class="pre">#SBATCH</span> <span class="pre">--array=</span></code> (line 10 here). This is where you enter the gridcells you are processing.<br />
-You can enter a range (e.g. 898-908), But be mindful that you are not hogging all the computer bandwidth.</p>
+<strong>the lines that you need to change are:</strong>\</p>
+<ul class="simple">
+<li><p><strong>Grid info:</strong> <code class="docutils literal notranslate"><span class="pre">#SBATCH</span> <span class="pre">--array=</span></code> (line 10 here). This is where you enter the gridcells you are processing.<br />
+You can enter a range (e.g. 898-908), But be mindful that you are not hogging all the computer bandwidth.</p></li>
+</ul>
+<div class="admonition-you-can-limit-the-number-of-cells-that-are-processed-at-one-time-by-adding-n admonition">
+<p class="admonition-title">You can limit the number of cells that are processed at one time by adding %n</p>
+<p>For example, 898-908%4 would process 4 cells at a time. When the first 4 finish, the next will start.</p>
+</div>
+<ul class="simple">
+<li><p><strong>Step:</strong> (line 36 here). Run script for one step, then change to other.
+For initial processing, should be ‘preprocess’ or ‘reconstruct’</p></li>
+<li><p><strong>Rec_VI</strong> (If running <strong>Reconstruct</strong>), set vegetation index here (see options in next section). To get multiple vegetation indices for a cell, run reconstruct multiple times.</p></li>
+</ul>
 <div class="section" id="choices-for-vegetation-indices">
 <h2>Choices for vegetation indices:<a class="headerlink" href="#choices-for-vegetation-indices" title="Permalink to this headline">¶</a></h2>
-<p>Current options for vegetation indices are:
-* avi = ?? (removed?)
-* evi2 = 2.5 * ( NIR - RED) / ( NIR + 2.4 * RED + 1.0 )
-* gcvi= scaled index using Green &amp; NIR
-* kndvi= tanh(( NIR - RED) / ( NIR + 2.4 * RED + 1.0 ))^2)
-* nbr = (NIR - SWIR2) / (NIR + SWIR2) + 1e-9)
-* wi = 0 if (red + SWIR1) &gt; 0.5, else 1.0 - ((red + SWIR1) / 0.5))</p>
+<p>Current options for vegetation indices are:</p>
+<ul class="simple">
+<li><p>avi = ?? (removed?)</p></li>
+<li><p>evi2 = 2.5 * ( NIR - RED) / ( NIR + 2.4 * RED + 1.0 )</p></li>
+<li><p>gcvi= scaled index using Green &amp; NIR</p></li>
+<li><p>kndvi= tanh(( NIR - RED) / ( NIR + 2.4 * RED + 1.0 ))^2)</p></li>
+<li><p>nbr = (NIR - SWIR2) / (NIR + SWIR2) + 1e-9)</p></li>
+<li><p>wi = 0 if (red + SWIR1) &gt; 0.5, else 1.0 - ((red + SWIR1) / 0.5))</p></li>
+</ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>To add a new vegetation index to the code, edits need to be made to both the <code class="docutils literal notranslate"><span class="pre">vis.py</span></code> and <code class="docutils literal notranslate"><span class="pre">check_reconstruction.py</span></code> scripts in <code class="docutils literal notranslate"><span class="pre">~/tmp/pytuyau/pytuyau/steps</span></code>. ie, to add NDVI:
+<p>To add a new vegetation index to the code, edits need to be made to both the <code class="docutils literal notranslate"><span class="pre">vis.py</span></code> and <code class="docutils literal notranslate"><span class="pre">check_reconstruction.py</span></code> scripts in <code class="docutils literal notranslate"><span class="pre">~/tmp/pytuyau/pytuyau/steps</span></code>.
+ie, to add NDVI:
 in <code class="docutils literal notranslate"><span class="pre">check_reconstruction.py</span></code> around line 169, add:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">elif</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;reconstruct&#39;</span><span class="p">][</span><span class="s1">&#39;vi&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;ndvi&#39;</span><span class="p">:</span>
     <span class="n">band_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;nir&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">]</span> 
 </pre></div>
 </div>
-<p>in <code class="docutils literal notranslate"><span class="pre">vis.py</span></code> around line 6, add name or your index to the list:
-<code class="docutils literal notranslate"><span class="pre">AVAIL_VIS</span> <span class="pre">=</span> <span class="pre">['avi',</span> <span class="pre">'evi2',</span> <span class="pre">'gcvi',</span> <span class="pre">'kndvi',</span> <span class="pre">'nbr',</span> <span class="pre">'wi','ndvi']</span></code>
-in <code class="docutils literal notranslate"><span class="pre">vis.py</span></code> around line 27 add:</p>
+<p>in <code class="docutils literal notranslate"><span class="pre">vis.py</span></code> around line 6, add name or your index to the list:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AVAIL_VIS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;avi&#39;</span><span class="p">,</span> <span class="s1">&#39;evi2&#39;</span><span class="p">,</span> <span class="s1">&#39;gcvi&#39;</span><span class="p">,</span> <span class="s1">&#39;kndvi&#39;</span><span class="p">,</span> <span class="s1">&#39;nbr&#39;</span><span class="p">,</span> <span class="s1">&#39;wi&#39;</span><span class="p">,</span><span class="s1">&#39;ndvi&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>in <code class="docutils literal notranslate"><span class="pre">vis.py</span></code> around line 27 add:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">elif</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;reconstruct&#39;</span><span class="p">][</span><span class="s1">&#39;vi&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;ndvi&#39;</span><span class="p">:</span>
     <span class="n">vi_data</span> <span class="o">=</span> <span class="n">data_src</span><span class="o">.</span><span class="n">gw</span><span class="o">.</span><span class="n">ndvi</span><span class="p">(</span><span class="n">nodata</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale_factor</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
@@ -534,13 +550,6 @@ create a different equation without self argument)</p>
 </pre></div>
 </div>
 </div>
-</div>
-<div class="admonition-you-can-limit-the-number-of-cells-that-are-processed-at-one-time-by-adding-n admonition">
-<p class="admonition-title">You can limit the number of cells that are processed at one time by adding %n</p>
-<p>For example, 898-908%4 would process 4 cells at a time. When the first 4 finish, the next will start.
-* <strong>Step:</strong> (line 36 here). Run script for one step, then change to other.
-For initial processing, should be ‘preprocess’ or ‘reconstruct’
-* <strong>Rec_VI</strong> (If running <strong>Reconstruct</strong>), set vegetation index here (see options in next section). To get multiple vegetation indices for a cell, run reconstruct multiple times.</p>
 </div>
 <div class="section" id="run-the-process">
 <h2>Run the process<a class="headerlink" href="#run-the-process" title="Permalink to this headline">¶</a></h2>
@@ -575,9 +584,6 @@ Download file to view on local computer:</p>
 </pre></div>
 </div>
 <p>Alternatively, you can view the file though an FPT such as WinSCP.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
 </div>
 </div>
 

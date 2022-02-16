@@ -181,31 +181,35 @@ Pipeline template (with line numbers added for reference below):
 
 Most lines should stay as they are.\
 **the lines that you need to change are:**\
-\* **Grid info:** `#SBATCH --array=` (line 10 here). This is where you enter the gridcells you are processing.\
+ * **Grid info:** `#SBATCH --array=` (line 10 here). This is where you enter the gridcells you are processing.\
 You can enter a range (e.g. 898-908), But be mindful that you are not hogging all the computer bandwidth.
 :::{admonition}You can limit the number of cells that are processed at one time by adding %n
 For example, 898-908%4 would process 4 cells at a time. When the first 4 finish, the next will start.
-\* **Step:** (line 36 here). Run script for one step, then change to other. 
+:::
+ * **Step:** (line 36 here). Run script for one step, then change to other. 
 For initial processing, should be 'preprocess' or 'reconstruct'
-\* **Rec_VI** (If running **Reconstruct**), set vegetation index here (see options in next section). To get multiple vegetation indices for a cell, run reconstruct multiple times.
+ * **Rec_VI** (If running **Reconstruct**), set vegetation index here (see options in next section). To get multiple vegetation indices for a cell, run reconstruct multiple times.
 
 ## Choices for vegetation indices:
 Current options for vegetation indices are:
-\* avi = ?? (removed?)
-\* evi2 = 2.5 * ( NIR - RED) / ( NIR + 2.4 * RED + 1.0 )
-\* gcvi= scaled index using Green & NIR
-\* kndvi= tanh(( NIR - RED) / ( NIR + 2.4 * RED + 1.0 ))^2)
-\* nbr = (NIR - SWIR2) / (NIR + SWIR2) + 1e-9)
-\* wi = 0 if (red + SWIR1) > 0.5, else 1.0 - ((red + SWIR1) / 0.5))
+ * avi = ?? (removed?)
+ * evi2 = 2.5 * ( NIR - RED) / ( NIR + 2.4 * RED + 1.0 )
+ * gcvi= scaled index using Green & NIR
+ * kndvi= tanh(( NIR - RED) / ( NIR + 2.4 * RED + 1.0 ))^2)
+ * nbr = (NIR - SWIR2) / (NIR + SWIR2) + 1e-9)
+ * wi = 0 if (red + SWIR1) > 0.5, else 1.0 - ((red + SWIR1) / 0.5))
 
-:::{note}To add a new vegetation index to the code, edits need to be made to both the `vis.py` and `check_reconstruction.py` scripts in `~/tmp/pytuyau/pytuyau/steps`. ie, to add NDVI:
+:::{note}To add a new vegetation index to the code, edits need to be made to both the `vis.py` and `check_reconstruction.py` scripts in `~/tmp/pytuyau/pytuyau/steps`. 
+ie, to add NDVI:
    in `check_reconstruction.py` around line 169, add:
    ```
    elif params['reconstruct']['vi'] == 'ndvi':
        band_names = ['nir', 'red'] 
    ```
    in `vis.py` around line 6, add name or your index to the list:
-   ```AVAIL_VIS = ['avi', 'evi2', 'gcvi', 'kndvi', 'nbr', 'wi','ndvi']```
+   ```
+   AVAIL_VIS = ['avi', 'evi2', 'gcvi', 'kndvi', 'nbr', 'wi','ndvi']
+   ```
    in `vis.py` around line 27 add:
    ```
    elif params['reconstruct']['vi'] == 'ndvi':
@@ -228,8 +232,6 @@ Current options for vegetation indices are:
    python setup.py build && pip install .
    ```
 :::
-
-
 
 ## Run the process
 
@@ -264,4 +266,3 @@ Download file to view on local computer:
     rsync -raz --progress <username>@ssh.eri.ucsb.edu:<ERI path> <local path>
 
 Alternatively, you can view the file though an FPT such as WinSCP.
-:::
