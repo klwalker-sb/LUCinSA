@@ -194,9 +194,13 @@ For initial processing, should be 'preprocess' or 'reconstruct'
 Current options for vegetation indices are:
  * avi = ?? (removed?)
  * evi2 = 2.5 * ( NIR - RED) / ( NIR + 2.4 * RED + 1.0 )
+     Enhanced Vegetation Index, good for areas of high LAI (leaf-area index), where NDVI tends to saturate
  * gcvi= scaled index using Green & NIR
+     Green Chlorophyll Vegetation Index, useful for crop classification
  * kndvi= tanh(( NIR - RED) / ( NIR + 2.4 * RED + 1.0 ))^2)
+     See [Camps-Valls et al 2021, A unified vegetation index for quantifying the terrestrial biosphere](https://www.science.org/doi/10.1126/sciadv.abc7447)
  * nbr = (NIR - SWIR2) / (NIR + SWIR2) + 1e-9)
+     Normalized Burn Index
  * wi = 0 if (red + SWIR1) > 0.5, else 1.0 - ((red + SWIR1) / 0.5))
 
 :::{note}To add a new vegetation index to the code, edits need to be made to both the `vis.py` and `check_reconstruction.py` scripts in `~/tmp/pytuyau/pytuyau/steps`. 
@@ -215,14 +219,14 @@ ie, to add NDVI:
    elif params['reconstruct']['vi'] == 'ndvi':
        vi_data = data_src.gw.ndvi(nodata=0, scale_factor=1)
    ```
-   in `vis.py` under @staticmethod (around line 75) add:
+   in `vis.py` under other index methods (around line 75) add:
    ```
    def ndvi(self, data):
         return self._norm(data[1], data[0])
    ```
    (note that `_norm` is defined above that as `(b2 - b1) / ((b2 + b1) + 1e-9)` there are currently another option of  
    ` _scale_min_max: ((((max_out - min_out) * (xv - min_in)) / (max_in - min_in)) + min_out)\ .clip(min_out, max_out)`, or can 
-   create a different equation without self argument)
+   create a different equation without self argument (use `@staticmethod` on line above index definition)
    
    After modifying script, reinstall:
    ```
