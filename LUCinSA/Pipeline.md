@@ -81,103 +81,109 @@ Pipeline template (with line numbers added for reference below):
     73- END="2020-07-01"
     74- SKIP_INTERVAL=7
     75- SKIP_YEARS=10
-    76- REC_VI="gcvi"
+    76- REC_VI="evi2"
     77- ROVERWRITE="False"
     78- SM_CHUNKS=512
     79- PREFILL_GAPS="True"
-    80- DTS_MAX_WIN=61
-    81- DTS_MIN_WIN=15
-    82- PREFILL_YEARS=2
-    83- DTS_t=5
-    84- 
-    85- ############
-    86- # REINDEX VI
-    87- ############
-    88- REX_VI="evi2"
-    89- 
-    90- ##########
-    91- # CLASSIFY
-    92- ##########
-    93-
-    94- # sample | fit | fit_predict | predict
-    95- CLSMETHOD="fit"
-    96- CINPUT="ms"
-    97- # temperate_gss_vi2; tropical_gss_vi2
-    98- CLS_REGION_NAME="tropical_gss_vi2"
-    99- CLS_MODEL_NAME="${CLS_REGION_NAME}_11_11"
-    100- LC_VECTOR=".kml"
-    101- KEEP_FEATURES="[1,1,1,1]"
-    102- # update/overwrite the sample stack
-    103- UPDATE_SAMPLES="True"
-    104- # overwrite each grid sample dataset
-    105- OVERWRITE_SAMPLES="False"
-    106- OVERWRITE_MODEL="True"
-    107- OVERWRITE_IMAGE="False"
-    108- CLS_BANDS="[evi2,wi]"
-    109- CLS_NITERS=2000
-    110-
-    111- # OUTPUT files
-    112- TRAIN_SAMPLES="/training/south_america_extract_${CLS_REGION_NAME}.gpkg"
-    113- MODEL_FILE="/training/south_america_${CLS_MODEL_NAME}.model"
-    114-
-    115- #########
-    116- # SEGMENT
-    117- #########
-    118- 
-    119- # fit | fit_predict | predict
-    120- SEGMETHOD="predict"
-    121- OVERWRITE_EDGE_MODEL="False"
-    122- OVERWRITE_EDGE_IMAGE="True"
-    123- OVERWRITE_SEG_IMAGE="True"
-    124- SEG_REGION_NAME="temperate_gss_vi2"
-    125- SEG_BANDS="[evi2,wi]"
-    126- SEG_NITERS=2000
-    127-
-    128- SEG_TRAIN_PATH="/training/edges"
-    129- SEG_MODEL_FILE="/training/south_america_extract_${SEG_REGION_NAME}.edges"
-    130-
-    131- ###############################
-    132- # DO NOT MODIFY BELOW THIS LINE
-    133- ###############################
-    134- 
-    135- # activate the virtual environment
-    136- source ~/.nasaenv/bin/activate
-    137- 
-    138- CONFIG_UPDATES="grids:[${GRIDS}] main_path:/raid-cel/sandbox/sandbox-cel/paraguay_lc/raster/grids
-    139- num_workers:${SLURM_CPUS_ON_NODE} cloud_mask:reset_db:${RESET_CLOUD_DB} 
-    140- cloud_mask:ref_res:${REF_RES} fusion:window_size:${WINDOW_SIZE} 
-    141- fusion:fill_max_years:${MAX_YEARS} fusion:fill_max_days:${MAX_DAYS} 
-    142- fusion:overwrite:${FOVERWRITE} reconstruct:input:${RINPUT} reconstruct:start_pad:${START_PAD} 
-    143- reconstruct:end_pad:${END_PAD} reconstruct:start:${START} reconstruct:end:${END} 
-    144- reconstruct:skip_interval:${SKIP_INTERVAL} reconstruct:skip_years:${SKIP_YEARS}
-    145- reconstruct:vi:${REC_VI} reconstruct:overwrite:${ROVERWRITE} reconstruct:chunks:${SM_CHUNKS}
-    146- reconstruct:smooth_kwargs:max_window:${DTS_MAX_WIN}
-    147- reconstruct:smooth_kwargs:min_window:${DTS_MIN_WIN}
-    148- reconstruct:smooth_kwargs:prefill_max_years:${PREFILL_YEARS}
-    149- reconstruct:smooth_kwargs:prefill_gaps:${PREFILL_GAPS} reconstruct:smooth_kwargs:t:${DTS_t}
-    150- reindex_vi:vi:${REX_VI} classify:lc_vector:${LC_VECTOR} classify:train_samples:${TRAIN_SAMPLES}
-    151- classify:model_file:${MODEL_FILE} classify:update_samples:${UPDATE_SAMPLES}
-    152- classify:overwrite_samples:${OVERWRITE_SAMPLES} classify:overwrite_model:${OVERWRITE_MODEL}
-    153- classify:overwrite_image:${OVERWRITE_IMAGE} classify:method:${CLSMETHOD} classify:input:${CINPUT}
-    154- classify:image_bands:${CLS_BANDS} classify:image_bands_pred:${CLS_BANDS}
-    155- classify:keep_features:${KEEP_FEATURES} classify:augment:n_iters:${CLS_NITERS}
-    156- segment:method:${SEGMETHOD} segment:image_bands:${SEG_BANDS}
-    157- segment:overwrite_model:${OVERWRITE_EDGE_MODEL} segment:overwrite_edges:${OVERWRITE_EDGE_IMAGE}
-    158- segment:overwrite_seg:${OVERWRITE_SEG_IMAGE} segment:training_path:${SEG_TRAIN_PATH}
-    159- segment:model_file:${SEG_MODEL_FILE} segment:augment:n_iters:${SEG_NITERS}
-    160- clean:remove_items:${REMOVE_ITEMS}"
-    161- 
-    162- if [ "$MASK_ONLY" == "yes" ]; then
-    163- if [ "$STEP" == "preprocess" ]; then
-    164- tuyau $STEP --config-updates $CONFIG_UPDATES --mask-only
-    165- else
-    166- tuyau $STEP --config-updates $CONFIG_UPDATES
-    167- fi
-    168- else
-    169- tuyau $STEP --config-updates $CONFIG_UPDATES
-    170- fi
-    171-
-    172- deactivate
+    80- PREFILL_MAX_DAYS=50
+    81- DTS_MAX_WIN=61
+    82- DTS_MIN_WIN=15
+    83- PREFILL_YEARS=2
+    84- DTS_t=5
+    85- 
+    86- ############
+    87- # REINDEX VI
+    88- ############
+    89- REX_VI="evi2"
+    90- 
+    91- ##########
+    92- # CLASSIFY
+    93- ##########
+    94-
+    95- # sample | fit | fit_predict | predict
+    96- CLSMETHOD="fit"
+    97- CINPUT="ms"
+    98- # temperate_gss_vi2; tropical_gss_vi2
+    99- CLS_REGION_NAME="tropical_gss_vi2"
+    100- CLS_MODEL_NAME="${CLS_REGION_NAME}_11_11"
+    101- LC_VECTOR=".kml"
+    102- KEEP_FEATURES="[1,1,1,1]"
+    103- # update/overwrite the sample stack
+    104- UPDATE_SAMPLES="True"
+    105- # overwrite each grid sample dataset
+    106- OVERWRITE_SAMPLES="False"
+    107- OVERWRITE_MODEL="True"
+    108- OVERWRITE_IMAGE="False"
+    109- CLS_BANDS="[evi2,wi]"
+    110- CLS_NITERS=2000
+    111-
+    112- # OUTPUT files
+    113- TRAIN_SAMPLES="/training/south_america_extract_${CLS_REGION_NAME}.gpkg"
+    114- MODEL_FILE="/training/south_america_${CLS_MODEL_NAME}.model"
+    115-
+    116- #########
+    117- # SEGMENT
+    118- #########
+    119- 
+    120- # fit | fit_predict | predict
+    121- SEGMETHOD="predict"
+    122- OVERWRITE_EDGE_MODEL="False"
+    123- OVERWRITE_EDGE_IMAGE="True"
+    124- OVERWRITE_SEG_IMAGE="True"
+    125- SEG_REGION_NAME="temperate_gss_vi2"
+    126- SEG_BANDS="[evi2,wi]"
+    127- SEG_NITERS=2000
+    128-
+    129- SEG_TRAIN_PATH="/training/edges"
+    130- SEG_MODEL_FILE="/training/south_america_extract_${SEG_REGION_NAME}.edges"
+    131-
+    132- ###############################
+    133- # DO NOT MODIFY BELOW THIS LINE
+    134- ###############################
+    135- 
+    136- # activate the virtual environment
+    137- source ~/.nasaenv/bin/activate
+    138- 
+    139- CONFIG_UPDATES="grids:[${GRIDS}] 
+    140- main_path:/raid-cel/sandbox/sandbox-cel/paraguay_lc/raster/grids
+    141- backup_path:/raid-cel/sandbox/sandbox-cel/backup/chile_lc/raster/grids
+    142- num_workers:${SLURM_CPUS_ON_NODE} cloud_mask:reset_db:${RESET_CLOUD_DB} 
+    143- cloud_mask:ref_res:${REF_RES} fusion:window_size:${WINDOW_SIZE} 
+    144- fusion:fill_max_years:${MAX_YEARS} fusion:fill_max_days:${MAX_DAYS} 
+    145- fusion:overwrite:${FOVERWRITE} reconstruct:input:${RINPUT} reconstruct:start_pad:${START_PAD} 
+    146- reconstruct:end_pad:${END_PAD} reconstruct:start:${START} reconstruct:end:${END} 
+    147- reconstruct:skip_interval:${SKIP_INTERVAL} reconstruct:skip_years:${SKIP_YEARS}
+    148- reconstruct:vi:${REC_VI} reconstruct:overwrite:${ROVERWRITE} reconstruct:chunks:${SM_CHUNKS}
+    149- reconstruct:smooth_kwargs:max_window:${DTS_MAX_WIN}
+    150- reconstruct:smooth_kwargs:min_window:${DTS_MIN_WIN}
+    151- reconstruct:smooth_kwargs:prefill_max_years:${PREFILL_YEARS}
+    152- reconstruct:smooth_kwargs:prefill_gaps:${PREFILL_GAPS} 
+    153- reconstruct:smooth_kwargs:prefill_max_days:${PREFILL_MAX_DAYS}
+    154- reconstruct:smooth_kwargs:t:${DTS_t}
+    155- reindex_vi:vi:${REX_VI} 
+    156- classify:lc_vector:${LC_VECTOR} classify:train_samples:${TRAIN_SAMPLES}
+    157- classify:model_file:${MODEL_FILE} classify:update_samples:${UPDATE_SAMPLES}
+    158- classify:overwrite_samples:${OVERWRITE_SAMPLES} classify:overwrite_model:${OVERWRITE_MODEL}
+    159- classify:overwrite_image:${OVERWRITE_IMAGE} classify:method:${CLSMETHOD} classify:input:${CINPUT}
+    160- classify:image_bands:${CLS_BANDS} classify:image_bands_pred:${CLS_BANDS}
+    161- classify:keep_features:${KEEP_FEATURES} classify:augment:n_iters:${CLS_NITERS}
+    162- segment:method:${SEGMETHOD} segment:image_bands:${SEG_BANDS}
+    163- segment:overwrite_model:${OVERWRITE_EDGE_MODEL} segment:overwrite_edges:${OVERWRITE_EDGE_IMAGE}
+    164- segment:overwrite_seg:${OVERWRITE_SEG_IMAGE} segment:training_path:${SEG_TRAIN_PATH}
+    165- segment:model_file:${SEG_MODEL_FILE} segment:augment:n_iters:${SEG_NITERS}
+    166- clean:remove_items:${REMOVE_ITEMS}"
+    167- 
+    168- if [ "$MASK_ONLY" == "yes" ]; then
+    169- if [ "$STEP" == "preprocess" ]; then
+    170- tuyau $STEP --config-updates $CONFIG_UPDATES --mask-only
+    171- else
+    172- tuyau $STEP --config-updates $CONFIG_UPDATES
+    173- fi
+    174- else
+    175- tuyau $STEP --config-updates $CONFIG_UPDATES
+    176- fi
+    177-
+    178- deactivate
 
 Most lines should stay as they are.\
 **the lines that you need to change are:**\
