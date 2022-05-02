@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Setting up a new project &#8212; LUCinSA</title>
+    <title>Using Jupyter Notebook to interact with data on cluster &#8212; LUCinSA</title>
     
   <link href="_static/css/theme.css" rel="stylesheet" />
   <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -51,8 +51,8 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Intro to git" href="intro_to_git.html" />
-    <link rel="prev" title="Using Jupyter Notebook to interact with data on cluster" href="Jupyter_Notebook.html" />
+    <link rel="next" title="Setting up a new project" href="Setting_up_new_project.html" />
+    <link rel="prev" title="Pipeline process" href="Pipeline.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -133,7 +133,7 @@
   Processing
  </span>
 </p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="Processing.html">
    Processing
@@ -154,8 +154,8 @@
    Pipeline process
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Jupyter_Notebook.html">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    Using Jupyter Notebook to interact with data on cluster
   </a>
  </li>
@@ -165,9 +165,9 @@
   New project configuration
  </span>
 </p>
-<ul class="current nav bd-sidenav">
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Setting_up_new_project.html">
    Setting up a new project
   </a>
  </li>
@@ -244,7 +244,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/Setting_up_new_project.md"><button type="button"
+        <a class="dropdown-buttons" href="_sources/Jupyter_Notebook.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -264,7 +264,7 @@
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://klwalker-sb.github.io/LUCinSA//issues/new?title=Issue%20on%20page%20%2FSetting_up_new_project.html&body=Your%20issue%20content%20here."><button
+            href="https://klwalker-sb.github.io/LUCinSA//issues/new?title=Issue%20on%20page%20%2FJupyter_Notebook.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
         
@@ -291,18 +291,13 @@
             <nav id="bd-toc-nav">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#getting-the-indices">
-   Getting the indices:
+  <a class="reference internal nav-link" href="#install-jupyter-notebooks-on-cluster">
+   Install Jupyter notebooks on cluster
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#creating-the-grid-file">
-   Creating the grid file:
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#modifying-the-scripts">
-   Modifying the scripts:
+  <a class="reference internal nav-link" href="#connect-to-cluster-via-ssh-with-tunnel-to-port-for-jupyter">
+   Connect to cluster via ssh with tunnel to port for Jupyter
   </a>
  </li>
 </ul>
@@ -316,75 +311,50 @@
         
               <div>
                 
-  <div class="section" id="setting-up-a-new-project">
-<h1>Setting up a new project<a class="headerlink" href="#setting-up-a-new-project" title="Permalink to this headline">¶</a></h1>
-<p>======================================================================================================================================
-The following skeleton, containing the grid file and two index files is necessary for a new project:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">raid</span><span class="o">-</span><span class="n">cel</span><span class="o">/</span><span class="n">sandox</span><span class="o">/</span><span class="n">sandbox</span><span class="o">-</span><span class="n">cel</span><span class="o">/&lt;</span><span class="n">country</span><span class="o">&gt;</span><span class="n">_lc</span>
-    <span class="n">raster</span>
-        <span class="n">grids</span>
-        <span class="n">landsat_index</span>
-            <span class="n">index</span><span class="o">.</span><span class="n">csv</span><span class="o">.</span><span class="n">gz</span>
-        <span class="n">sentinel</span><span class="o">-</span><span class="mi">2</span><span class="n">_index</span>
-            <span class="n">index</span><span class="o">.</span><span class="n">csv</span><span class="o">.</span><span class="n">gz</span>
-        <span class="n">srtm</span>
-    <span class="n">vector</span>
-        <span class="n">grids</span><span class="o">.</span><span class="n">gpkg</span>
+  <div class="section" id="using-jupyter-notebook-to-interact-with-data-on-cluster">
+<h1>Using Jupyter Notebook to interact with data on cluster<a class="headerlink" href="#using-jupyter-notebook-to-interact-with-data-on-cluster" title="Permalink to this headline">¶</a></h1>
+<p>================================================================================================================================</p>
+<p>a bit about Jupyter Notebook…</p>
+<div class="section" id="install-jupyter-notebooks-on-cluster">
+<h2>Install Jupyter notebooks on cluster<a class="headerlink" href="#install-jupyter-notebooks-on-cluster" title="Permalink to this headline">¶</a></h2>
+<p>Create a folder in your home directory to house your Jupyter notebooks (e.g. <code class="docutils literal notranslate"><span class="pre">mkdir</span> <span class="pre">~/Jupyter</span></code>)
+You can copy LUCinSA notebooks from the Notebook directory of the repo for this guide <a class="reference external" href="https://github.com/klwalker-sb/LUCinSA/tree/master/Notebooks">here</a> or you can make your own after connecting to Jupyter.</p>
+<p>Install Jupyter Notebook into your virtual environment on the cluster:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="o">.</span><span class="n">nasaenv</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">jupyter</span> <span class="n">notebook</span>
 </pre></div>
 </div>
-<div class="section" id="getting-the-indices">
-<h2>Getting the indices:<a class="headerlink" href="#getting-the-indices" title="Permalink to this headline">¶</a></h2>
-<p>The <code class="docutils literal notranslate"><span class="pre">index.csv.gz</span></code> files are complete catalogues of available imagery with basic parameters such as date and extent. You can use index files from other projects, but to get the most up-to-date indices, copy them from Google cloud:
-for Landsat: gs://gcp-public-data-landsat/index.csv.gz and for Sentinel: gs://gcp-public-data-sentinel-2/index.csv.gz</p>
 </div>
-<div class="section" id="creating-the-grid-file">
-<h2>Creating the grid file:<a class="headerlink" href="#creating-the-grid-file" title="Permalink to this headline">¶</a></h2>
-<p>Script to create gridfile (from Jordan Graesser’s <a class="reference external" href="https://github.com/jgrss/eosvault">EOSvault Github page</a>)</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">zones</span>
-<span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
-
-<span class="n">df</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="o">&lt;</span><span class="n">vector</span> <span class="n">file</span> <span class="k">with</span> <span class="n">target</span> <span class="n">bounds</span><span class="o">&gt;</span><span class="p">)</span>
-
-<span class="n">left</span><span class="p">,</span> <span class="n">bottom</span><span class="p">,</span> <span class="n">right</span><span class="p">,</span> <span class="n">top</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">total_bounds</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-
-<span class="k">def</span> <span class="nf">round10</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">offset</span><span class="p">):</span>
-    <span class="c1">#Round to the nearest 10</span>
-    <span class="k">return</span> <span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">number</span> <span class="o">/</span> <span class="mf">10.0</span><span class="p">)</span> <span class="o">*</span> <span class="mf">10.0</span><span class="p">)</span> <span class="o">+</span> <span class="n">offset</span>
-
-<span class="n">left</span> <span class="o">=</span> <span class="n">round10</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">)</span>
-<span class="n">bottom</span> <span class="o">=</span> <span class="n">round10</span><span class="p">(</span><span class="n">bottom</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">)</span>
-<span class="n">right</span> <span class="o">=</span> <span class="n">round10</span><span class="p">(</span><span class="n">right</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
-<span class="n">top</span> <span class="o">=</span> <span class="n">round10</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
-
-<span class="c1"># Target grid size (in meters)</span>
-<span class="n">grid_size</span> <span class="o">=</span> <span class="mi">20000</span>
-
-<span class="c1"># Target cell storage size (in meters)</span>
-<span class="n">cell_size</span> <span class="o">=</span> <span class="mf">10.0</span>
-
-<span class="c1">#Create the Grids</span>
-<span class="n">df_grids</span> <span class="o">=</span> <span class="n">zones</span><span class="o">.</span><span class="n">grid</span><span class="p">((</span><span class="n">left</span><span class="p">,</span> <span class="n">bottom</span><span class="p">,</span> <span class="n">right</span><span class="p">,</span> <span class="n">top</span><span class="p">),</span>
-                       <span class="n">grid_size</span><span class="p">,</span> <span class="n">grid_size</span><span class="p">,</span>
-                       <span class="n">cell_size</span><span class="p">,</span> <span class="n">cell_size</span><span class="p">,</span>
-                       <span class="n">crs</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">crs</span><span class="p">)</span>
-                       
-<span class="c1">#Take the intersecting grids only:</span>
-<span class="n">df_grids</span> <span class="o">=</span> <span class="n">df_grids</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="n">geom</span><span class="o">.</span><span class="n">intersects</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">for</span> <span class="n">geom</span> <span class="ow">in</span> <span class="n">df_grids</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">values</span><span class="p">]]</span>
-
-<span class="c1">#Add unique ids:</span>
-<span class="n">df_grids</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;UNQ&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">df_grids</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
-
-<span class="c1">#Save tp file:</span>
-<span class="n">df_grids</span><span class="o">.</span><span class="n">to_file</span><span class="p">(</span><span class="s1">&#39;rgrids.gpkg&#39;</span><span class="p">,</span> <span class="n">driver</span><span class="o">=</span><span class="s1">&#39;GPKG&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Note: <code class="docutils literal notranslate"><span class="pre">zones.grid</span></code> can be found <a class="reference external" href="https://github.com/jgrss/zones/blob/master/zones/base.py">here</a></p>
-</div>
-<div class="section" id="modifying-the-scripts">
-<h2>Modifying the scripts:<a class="headerlink" href="#modifying-the-scripts" title="Permalink to this headline">¶</a></h2>
-<p>Make sure to modify the lines in <code class="docutils literal notranslate"><span class="pre">~/project/config/config.yaml</span></code> to point to the correct input and output locations.
-Also modify all downloading and processing scripts in <code class="docutils literal notranslate"><span class="pre">~/code/bash</span></code></p>
-<p>In the downloading scripts, you need to enter the crs in proj4js format. You can look this up at <a class="reference external" href="http://spatialreference.org">spatialreference.org</a>, or can convert using earthpy (i.e: proj4 = et.epsg[‘32613’])</p>
+<div class="section" id="connect-to-cluster-via-ssh-with-tunnel-to-port-for-jupyter">
+<h2>Connect to cluster via ssh with tunnel to port for Jupyter<a class="headerlink" href="#connect-to-cluster-via-ssh-with-tunnel-to-port-for-jupyter" title="Permalink to this headline">¶</a></h2>
+<p>If using PuTTY:</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="text-align:center head"><p><strong>To connect to Jupyter via PuTTY:</strong></p></th>
+<th class="text-align:center head"><p></p></th>
+<th class="text-align:center head"><p></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-align:center"><p><img alt="" src="_images/PuttyForJupyter1.jpg" /></p></td>
+<td class="text-align:center"><p><img alt="" src="_images/PuttyForJupyter2.jpg" /></p></td>
+<td class="text-align:center"><p><img alt="" src="_images/PuttyForJupyter3.jpg" /></p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:center"><p><strong>1.</strong> on first PuTTY screen, enter SSH address to bula as normal</p></td>
+<td class="text-align:center"><p><strong>2.</strong> click <code class="docutils literal notranslate"><span class="pre">SSH</span></code>, then <code class="docutils literal notranslate"><span class="pre">Tunnels</span></code> on menu on left. In “Source Port”, enter <port> (where <port> is 8889 here. Maybe pick a different number to avoid possible conflicts)</p></td>
+<td class="text-align:center"><p><strong>3.</strong> add another Tunnel to bellows in the same way, with something like 222 in the “Source Port” and <user>&#64;bellows.eri.ucsb.edu:22 in the destination port. (the last number should match your original local port from the first PuTTY screen). Click “Add”.</p></td>
+</tr>
+</tbody>
+</table>
+<p>Go back to session and save session with name (e.g. <code class="docutils literal notranslate"><span class="pre">JupyterOnERI</span></code> here) for future use</p>
+<ul class="simple">
+<li><p>Click “Open” to open the connection and enter password as normal.</p></li>
+<li><p>Activate your virtual environment that has Jupyter installed on it (i.e: <code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">.nasaenv/bin/activate</span></code>)</p></li>
+<li><p>At next prompt, enter: <code class="docutils literal notranslate"><span class="pre">jupyter</span> <span class="pre">notebook</span> <span class="pre">--no-browser</span> <span class="pre">--port=&lt;port&gt;</span></code> (using the port number from step 2 of your SSH connection)</p></li>
+<li><p>Leave this window running and open a browser from your computer and enter into the address bar: <code class="docutils literal notranslate"><span class="pre">http://localhost:&lt;port&gt;/</span></code>
+You should now see a Jupter tree of your home directory on the cluster. Navigate to the notebook you want to use.</p></li>
+</ul>
+<p>(you can create a permanant password by entering <code class="docutils literal notranslate"><span class="pre">jupyter</span> <span class="pre">notebook</span> <span class="pre">password</span></code> at the prompt after activating a virtual environment with Jupyter installed, before entering the )</p>
 </div>
 </div>
 
@@ -413,8 +383,8 @@ Also modify all downloading and processing scripts in <code class="docutils lite
         
         <div class='prev-next-bottom'>
             
-    <a class='left-prev' id="prev-link" href="Jupyter_Notebook.html" title="previous page">Using Jupyter Notebook to interact with data on cluster</a>
-    <a class='right-next' id="next-link" href="intro_to_git.html" title="next page">Intro to git</a>
+    <a class='left-prev' id="prev-link" href="Pipeline.html" title="previous page">Pipeline process</a>
+    <a class='right-next' id="next-link" href="Setting_up_new_project.html" title="next page">Setting up a new project</a>
 
         </div>
         
