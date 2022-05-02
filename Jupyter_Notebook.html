@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Land-Use Change in South America (LUCinSA) Computing Guide &#8212; LUCinSA</title>
+    <title>Using Jupyter Notebook to interact with data on cluster &#8212; LUCinSA</title>
     
   <link href="_static/css/theme.css" rel="stylesheet" />
   <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -51,7 +51,8 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Project background" href="Background.html" />
+    <link rel="next" title="Setting up a new project" href="Setting_up_new_project.html" />
+    <link rel="prev" title="Pipeline process" href="Pipeline.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -82,8 +83,8 @@
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
     <div class="bd-toc-item active">
         <ul class="nav bd-sidenav">
- <li class="toctree-l1 current">
-  <a class="reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
    Land-Use Change in South America (LUCinSA) Computing Guide
   </a>
  </li>
@@ -132,7 +133,7 @@
   Processing
  </span>
 </p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="Processing.html">
    Processing
@@ -153,8 +154,8 @@
    Pipeline process
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Jupyter_Notebook.html">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    Using Jupyter Notebook to interact with data on cluster
   </a>
  </li>
@@ -243,7 +244,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/intro.md"><button type="button"
+        <a class="dropdown-buttons" href="_sources/Jupyter_Notebook.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -263,7 +264,7 @@
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://klwalker-sb.github.io/LUCinSA//issues/new?title=Issue%20on%20page%20%2Fintro.html&body=Your%20issue%20content%20here."><button
+            href="https://klwalker-sb.github.io/LUCinSA//issues/new?title=Issue%20on%20page%20%2FJupyter_Notebook.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
         
@@ -284,6 +285,24 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#install-jupyter-notebooks-on-cluster">
+   Install Jupyter notebooks on cluster
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#connect-to-cluster-via-ssh-with-tunnel-to-port-for-jupyter">
+   Connect to cluster via ssh with tunnel to port for Jupyter
+  </a>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -292,34 +311,50 @@
         
               <div>
                 
-  <div class="section" id="land-use-change-in-south-america-lucinsa-computing-guide">
-<h1>Land-Use Change in South America (LUCinSA) Computing Guide<a class="headerlink" href="#land-use-change-in-south-america-lucinsa-computing-guide" title="Permalink to this headline">¶</a></h1>
-<p>================================================================================================================================
-Guide to computer setup and processing for remote-sensing projects on Land-Use Change in South America in Robert Heilmayr’s lab, based on methods and code by Jordan Graesser
-|<br />
-|<br />
-|<br />
-|<br />
-|<br />
-|<br />
-|<br />
-|<br />
-|<br />
-|<br />
-|<br />
-|<br />
-|<br />
-|<br />
-|</p>
-<div class="toctree-wrapper compound">
+  <div class="section" id="using-jupyter-notebook-to-interact-with-data-on-cluster">
+<h1>Using Jupyter Notebook to interact with data on cluster<a class="headerlink" href="#using-jupyter-notebook-to-interact-with-data-on-cluster" title="Permalink to this headline">¶</a></h1>
+<p>================================================================================================================================</p>
+<p>a bit about Jupyter Notebook…</p>
+<div class="section" id="install-jupyter-notebooks-on-cluster">
+<h2>Install Jupyter notebooks on cluster<a class="headerlink" href="#install-jupyter-notebooks-on-cluster" title="Permalink to this headline">¶</a></h2>
+<p>Create a folder in your home directory to house your Jupyter notebooks (e.g. <code class="docutils literal notranslate"><span class="pre">mkdir</span> <span class="pre">~/Jupyter</span></code>)
+You can copy LUCinSA notebooks from the Notebook directory of the repo for this guide <a class="reference external" href="https://github.com/klwalker-sb/LUCinSA/tree/master/Notebooks">here</a> or you can make your own after connecting to Jupyter.</p>
+<p>Install Jupyter Notebook into your virtual environment on the cluster:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="o">.</span><span class="n">nasaenv</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">jupyter</span> <span class="n">notebook</span>
+</pre></div>
 </div>
-<div class="toctree-wrapper compound">
 </div>
-<div class="toctree-wrapper compound">
-</div>
-<div class="toctree-wrapper compound">
-</div>
-<div class="toctree-wrapper compound">
+<div class="section" id="connect-to-cluster-via-ssh-with-tunnel-to-port-for-jupyter">
+<h2>Connect to cluster via ssh with tunnel to port for Jupyter<a class="headerlink" href="#connect-to-cluster-via-ssh-with-tunnel-to-port-for-jupyter" title="Permalink to this headline">¶</a></h2>
+<p>If using PuTTY:</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="text-align:center head"><p><strong>To connect to Jupyter via PuTTY:</strong></p></th>
+<th class="text-align:center head"><p></p></th>
+<th class="text-align:center head"><p></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-align:center"><p><img alt="" src="_images/PuttyForJupyter1.jpg" /></p></td>
+<td class="text-align:center"><p><img alt="" src="_images/PuttyForJupyter2.jpg" /></p></td>
+<td class="text-align:center"><p><img alt="" src="_images/PuttyForJupyter3.jpg" /></p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:center"><p><strong>1.</strong> on first PuTTY screen, enter SSH address to bula as normal</p></td>
+<td class="text-align:center"><p><strong>2.</strong> click <code class="docutils literal notranslate"><span class="pre">SSH</span></code>, then <code class="docutils literal notranslate"><span class="pre">Tunnels</span></code> on menu on left. In “Source Port”, enter <port> (where <port> is 8889 here. Maybe pick a different number to avoid possible conflicts)</p></td>
+<td class="text-align:center"><p><strong>3.</strong> add another Tunnel to bellows in the same way, with something like 222 in the “Source Port” and <user>&#64;bellows.eri.ucsb.edu:22 in the destination port. (the last number should match your original local port from the first PuTTY screen). Click “Add”.</p></td>
+</tr>
+</tbody>
+</table>
+<p>Go back to session and save session with name (e.g. <code class="docutils literal notranslate"><span class="pre">JupyterOnERI</span></code> here) for future use</p>
+<ul class="simple">
+<li><p>Click “Open” to open the connection and enter password as normal.</p></li>
+<li><p>Activate your virtual environment that has Jupyter installed on it (i.e: <code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">.nasaenv/bin/activate</span></code>)</p></li>
+<li><p>At next prompt, enter: <code class="docutils literal notranslate"><span class="pre">jupyter</span> <span class="pre">notebook</span> <span class="pre">--no-browser</span> <span class="pre">--port=&lt;port&gt;</span></code> (using the port number from step 2 of your SSH connection)</p></li>
+<li><p>Leave this window running and open a browser from your computer and enter into the address bar: <code class="docutils literal notranslate"><span class="pre">http://localhost:&lt;port&gt;/</span></code>
+You should now see a Jupter tree of your home directory on the cluster. Navigate to the notebook you want to use.</p></li>
+</ul>
+<p>(you can create a permanant password by entering <code class="docutils literal notranslate"><span class="pre">jupyter</span> <span class="pre">notebook</span> <span class="pre">password</span></code> at the prompt after activating a virtual environment with Jupyter installed, before entering the )</p>
 </div>
 </div>
 
@@ -348,7 +383,8 @@ Guide to computer setup and processing for remote-sensing projects on Land-Use C
         
         <div class='prev-next-bottom'>
             
-    <a class='right-next' id="next-link" href="Background.html" title="next page">Project background</a>
+    <a class='left-prev' id="prev-link" href="Pipeline.html" title="previous page">Pipeline process</a>
+    <a class='right-next' id="next-link" href="Setting_up_new_project.html" title="next page">Setting up a new project</a>
 
         </div>
         
