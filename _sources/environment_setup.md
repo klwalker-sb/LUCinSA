@@ -1,21 +1,5 @@
----
-jupyter:
-  jupytext:
-    text_representation:
-      extension: .md
-      format_name: pandoc
-      format_version: 2.12
-      jupytext_version: 1.11.4
-  kernelspec:
-    display_name: Python 3
-    language: python
-    name: python3
-  nbformat: 4
-  nbformat_minor: 5
----
-
-::: {.cell .markdown}
-# \# Setting up your remote environment {\#-setting-up-your-remote-environment} {#-setting-up-your-remote-environment--setting-up-your-remote-environment}
+# Setting up your remote environment 
+==========================================================================================================================================
 
 ## The general cluster environment
 
@@ -53,65 +37,64 @@ Or in git for Windows enter: `git config --global credential.helper wincred`
 
 **While in your home directory,** enter the following commands to setup your Python environment:
 
-    ​
     # Activate the virtual environment
     source .nasaenv/bin/activate
-    ​
+    
     # First update pip and other install tools
     (.nasaenv) pip install -U pip setuptools wheel
-    ​
+    
     # Install numpy and cython required for compiling .c code
     (.nasaenv) pip install cython numpy
-    ​
+    
     # Install extra dependencies not installed with packages below
     (.nasaenv) pip install gsutil descartes ray requests opencv-python
-    ​
+    
     # Install geowombatdev package from github(the dependencies here will take care of most other dependencies)
     (.nasaenv) mkdir tmp
     (.nasaenv) cd tmp/
     (.nasaenv) git clone https://github.com/jgrss/geowombatdev.git
     (.nasaenv) cd geowombatdev/
     (.nasaenv) python setup.py build && pip install .
-    ​
+    
     # Install eosvault package from github
     (.nasaenv) cd ~/tmp/
     (.nasaenv) git clone https://github.com/jgrss/eosvault.git
     (.nasaenv) cd eosvault/
     (.nasaenv) python setup.py build && pip install .
-    ​
+    
     # Install rastercrf from github
     (.nasaenv) cd ~/tmp/
     (.nasaenv) git clone https://github.com/jgrss/rastercrf.git
     (.nasaenv) cd rastercrf/
     (.nasaenv) python setup.py build && pip install .
-    ​
+    
     # Install satsmooth from github
     (.nasaenv) cd ~/tmp/
     (.nasaenv) git clone https://github.com/jgrss/satsmooth.git
     (.nasaenv) cd satsmooth/
     (.nasaenv) python setup.py build && pip install .
-    ​
+    
     # Install sacfei from github
     (.nasaenv) cd ~/tmp/
     (.nasaenv) git clone https://github.com/jgrss/sacfei.git
     (.nasaenv) cd sacfei/
     (.nasaenv) python setup.py build && pip install .
-    ​
+    
     # Install pymorph3 from github
     (.nasaenv) cd ~/tmp/
     (.nasaenv) git clone https://github.com/jgrss/pymorph3.git
     (.nasaenv) cd pymorph3/
     (.nasaenv) python setup.py build && pip install .
-    ​
+    
     # Install pytuyau from github
     (.nasaenv) cd ~/tmp/
     (.nasaenv) git clone https://github.com/jgrss/pytuyau.git
     (.nasaenv) cd pytuyau/
     (.nasaenv) python setup.py build && pip install .
-    ​
+    
     # Install IPython
     (.nasaenv) pip install ipython[all]
-    ​
+    
     # Deactivate the virtual environment when finished
     (.nasaenv) deactivate
 
@@ -134,7 +117,7 @@ Here is an example of a `.vimrc` doc (you can clone this from /jad-cel/cel-sandb
 
     # Add line numbers
     set number
-    ​
+    
     au BufNewFile,BufRead *.py
         \ set tabstop=4 |
         \ set softtabstop=4 |
@@ -146,17 +129,17 @@ Here is an example of a `.vimrc` doc (you can clone this from /jad-cel/cel-sandb
     	
     highlight BadWhitespace ctermbg=red guibg=darkred
     au BufRead,BufNewFile *.py,*.pyw,*.pyx,*.pxd,*.c,*.h match BadWhitespace /\s\+$/
-    ​
+    
     set encoding=utf-8
-    ​
+    
     let python_highlight_all=1
     syntax on
-    ​
+    
     set cursorline
-    ​
+    
     set foldmethod=indent
     set foldlevel=99
-    ​
+    
     set ic
 
 ### Add a personalized .profile file (optional) {#add-a-personalized-profile-file-optional}
@@ -170,12 +153,12 @@ Here is an example of things you might want in a `.profile` doc (you can clone t
     export PS1="\[\033[36m\]\u\[\033[m\]@\[\033[32m\]\h:\[\033[33;1m\]\w\[\033[m\]\$ "
     export CLICOLOR=1
     export LSCOLORS=ExFxBxDxCxegedabagacad
-    ​
+    
     #simpler file navigation:
     alias .1='cd ../'
     alias .2='cd ../..'
     alias .3='cd ../../..'
-    ​
+    
     # shortcut to list SLURM job status ([username] = your username)
     alias qs="squeue -u [username]"
 
@@ -184,11 +167,11 @@ Here is an example of things you might want in a `.profile` doc (you can clone t
         . "$HOME/.bashrc"
       fi
     fi
-    ​
+    
     if [ -d "$HOME/bin" ] ; then
       PATH="$HOME/bin:$PATH"
     fi
-    ​
+    
     # global vars for GDAL
     export CPLUS_INCLUDE_PATH=/usr/include/gdal
     export C_INCLUDE_PATH=/usr/include/gdal

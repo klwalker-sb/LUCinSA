@@ -118,6 +118,11 @@
   </a>
  </li>
  <li class="toctree-l1">
+  <a class="reference internal" href="environment_setup.html">
+   Setting up your remote environment
+  </a>
+ </li>
+ <li class="toctree-l1">
   <a class="reference internal" href="TransferingFiles.html">
    Transfering Files to/from cluster
   </a>
@@ -320,6 +325,10 @@
 <span id="pipeline"></span><h1>Pipeline process<a class="headerlink" href="#pipeline-process" title="Permalink to this headline">¶</a></h1>
 <p>======================================================================</p>
 <p>Jordan Graesser’s <code class="docutils literal notranslate"><span class="pre">pytuyau</span></code> script drives the pipeline process, <a class="reference external" href="https://github.com/jgrss/pytuyau#readme">see here</a> for more information on the script process.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The CEL drive space on the cluster is setup such that all products through step #1 of Pipeline are saved on the sandbox space (<code class="docutils literal notranslate"><span class="pre">raid-cel/sandbox/sandbox-cel</span></code> or just <code class="docutils literal notranslate"><span class="pre">/home/sandbox-cel</span></code>). These files are not backed up for more than 10 days (if you lose important files, you can probably get them recovered within 10 days, but not after). Products from step#5 of Pipeline and above are saved to the downspout space (<code class="docutils literal notranslate"><span class="pre">raid-cel/r/downspout-cel</span></code> or just <code class="docutils literal notranslate"><span class="pre">/home/downspout-cel</span></code>), which has a separate long term backup.</p>
+</div>
 <p>Pipeline template (with line numbers added for reference below):</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>1-   #!/bin/bash -l
 2-  
@@ -461,7 +470,7 @@
 138- 
 139- CONFIG_UPDATES=&quot;grids:[${GRIDS}] 
 140- main_path:/raid-cel/sandbox/sandbox-cel/paraguay_lc/raster/grids
-141- backup_path:/raid-cel/sandbox/sandbox-cel/backup/chile_lc/raster/grids
+141- backup_path:/raid-cel/r/downspout-cel/chile_lc/raster/grids
 142- num_workers:${SLURM_CPUS_ON_NODE} cloud_mask:reset_db:${RESET_CLOUD_DB} 
 143- cloud_mask:ref_res:${REF_RES} fusion:window_size:${WINDOW_SIZE} 
 144- fusion:fill_max_years:${MAX_YEARS} fusion:fill_max_days:${MAX_DAYS} 
@@ -521,14 +530,26 @@ For initial processing, should be ‘preprocess’ or ‘reconstruct’</p></li>
 <p>Current options for vegetation indices are:</p>
 <ul class="simple">
 <li><p>avi = ?? (removed?)</p></li>
-<li><p>evi2 = 2.5 * ( NIR - RED) / ( NIR + 2.4 * RED + 1.0 )
-Enhanced Vegetation Index, good for areas of high LAI (leaf-area index), where NDVI tends to saturate</p></li>
-<li><p>gcvi= scaled index using Green &amp; NIR
-Green Chlorophyll Vegetation Index, useful for crop classification</p></li>
-<li><p>kndvi= tanh(( NIR - RED) / ( NIR + 2.4 * RED + 1.0 ))^2)
-See <a class="reference external" href="https://www.science.org/doi/10.1126/sciadv.abc7447">Camps-Valls et al 2021, A unified vegetation index for quantifying the terrestrial biosphere</a></p></li>
-<li><p>nbr = (NIR - SWIR2) / (NIR + SWIR2) + 1e-9)
-Normalized Burn Index</p></li>
+<li><p>evi2 = 2.5 * ( NIR - RED) / ( NIR + 2.4 * RED + 1.0 )</p>
+<ul>
+<li><p>Enhanced Vegetation Index, good for areas of high LAI (leaf-area index), where NDVI tends to saturate</p></li>
+</ul>
+</li>
+<li><p>gcvi= scaled index using Green &amp; NIR</p>
+<ul>
+<li><p>Green Chlorophyll Vegetation Index, useful for crop classification</p></li>
+</ul>
+</li>
+<li><p>kndvi= tanh(( NIR - RED) / ( NIR + 2.4 * RED + 1.0 ))^2)</p>
+<ul>
+<li><p>See <a class="reference external" href="https://www.science.org/doi/10.1126/sciadv.abc7447">Camps-Valls et al 2021, A unified vegetation index for quantifying the terrestrial biosphere</a></p></li>
+</ul>
+</li>
+<li><p>nbr = (NIR - SWIR2) / (NIR + SWIR2) + 1e-9)</p>
+<ul>
+<li><p>Normalized Burn Index</p></li>
+</ul>
+</li>
 <li><p>wi = 0 if (red + SWIR1) &gt; 0.5, else 1.0 - ((red + SWIR1) / 0.5))</p></li>
 </ul>
 <div class="admonition note">
@@ -638,7 +659,7 @@ Download file to view on local computer:</p>
     <div class="container">
       <p>
         
-          By Kendra Walker (editor)<br/>
+          By Kendra Walker<br/>
         
             &copy; Copyright 2021.<br/>
       </p>

@@ -332,7 +332,7 @@ The script is copied below with line numbers added for reference.
 37- GRID_ID=$SLURM_ARRAY_TASK_ID
 38- 
 39- MY_USERNAME=""
-40- OUT_DIR="/raid-cel/andbox/sandbox-cel/paraguay_lc/raster/grids"
+40- OUT_DIR="/raid-cel/sandbox/sandbox-cel/paraguay_lc/raster/grids"
 41- GRID_FILE="/raid-cel/sandbox/sandbox-cel/paraguay_lc/vector/pry_grids.gpkg"
 42- CONFIG_FILE="/home/${MY_USERNAME}/project/config/config_eri.yaml"
 43- CRS_PROJ4="+proj=aea +lat_1=-5 +lat_2=-42 +lat_0=-32 +lon_0=-60 +x_0=0 +y_0=0 +ellps=aust_SA +units=m +no_defs "

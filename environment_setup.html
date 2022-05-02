@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>&lt;no title&gt; &#8212; LUCinSA</title>
+    <title>Setting up your remote environment &#8212; LUCinSA</title>
     
   <link href="_static/css/theme.css" rel="stylesheet" />
   <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -111,10 +111,15 @@
   Computer setup
  </span>
 </p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="Connecting_to_cluster.html">
    Connecting to the ERI cluster
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Setting up your remote environment
   </a>
  </li>
  <li class="toctree-l1">
@@ -152,6 +157,11 @@
  <li class="toctree-l1">
   <a class="reference internal" href="Pipeline.html">
    Pipeline process
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Jupyter_Notebook.html">
+   Using Jupyter Notebook to interact with data on cluster
   </a>
  </li>
 </ul>
@@ -284,7 +294,17 @@
                 <i class="fas fa-list"></i> Contents
             </div>
             <nav id="bd-toc-nav">
-                <ul class="simple visible nav section-nav flex-column">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-general-cluster-environment">
+   The general cluster environment
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#setting-up-a-virtual-environment">
+   Setting up a virtual environment
+  </a>
+ </li>
 </ul>
 
             </nav>
@@ -296,22 +316,22 @@
         
               <div>
                 
-  <div class="highlight-{.cell notranslate"><div class="highlight"><pre><span></span># \# Setting up your remote environment {\#-setting-up-your-remote-environment} {#-setting-up-your-remote-environment--setting-up-your-remote-environment}
-
-## The general cluster environment
-
-As with most cluster computers, the ERI system uses a UNIX-based shell called &quot;BASH&quot;. This is a very simplified system that interprets code via command-line interface. To interact with the system, you need to use Shell scripting, which is based on UNIX/Linux command language. For a quick review of basic UNIX commands, [see here](Unix). For a more comprehensive coverage of working with BASH scripting, see these hpc-carpentry lessons on [navigating in bash](http://www.hpc-carpentry.org/hpc-shell/02-navigation/index.html) and [file manipulation in bash](http://www.hpc-carpentry.org/hpc-shell/03-files/index.html).
-
-The point of high-performance computing is to manage and process large work loads. This is acheived through a work load manager, SLURM (Simple Linux Utility for Resource Management). Ultimate processing commands are sent to SLURM from .sh scripts in the bash directory via the command `sbatch`. Any other non-UNIX-based commands are processed within a virtual environment (e.g. via a Python interpreter).
-
-## Setting up a virtual environment
-
-Virtual environments allow us to customize our coding toolkit and preferences for each project within its own container so that it does not risk interfering with those of other projects or users. Within a virtual environment, you can define the version of Python that will be used, install packages specific to the project, and customize settings to facilitate your interactions, including aliases, which are shortcuts to replace frequently used or cumbersome commands. After connecting to bellows via ssh for the first time, you will need to set up your environment.
-:::{admonition}Make sure you are in your home directory when creating/changing environment settings!
-You should see your username \@bellows in the command prompt.
-(there may be numbers in front; this is fine for now and can be taken care of later [here](profileIssue)).\
-If you are unsure whether you are in your home directory, type cd \~/
-</pre></div>
+  <div class="section" id="setting-up-your-remote-environment">
+<h1>Setting up your remote environment<a class="headerlink" href="#setting-up-your-remote-environment" title="Permalink to this headline">¶</a></h1>
+<p>==========================================================================================================================================</p>
+<div class="section" id="the-general-cluster-environment">
+<h2>The general cluster environment<a class="headerlink" href="#the-general-cluster-environment" title="Permalink to this headline">¶</a></h2>
+<p>As with most cluster computers, the ERI system uses a UNIX-based shell called “BASH”. This is a very simplified system that interprets code via command-line interface. To interact with the system, you need to use Shell scripting, which is based on UNIX/Linux command language. For a quick review of basic UNIX commands, <a class="reference internal" href="commandLine_bash.html#unix"><span class="std std-ref">see here</span></a>. For a more comprehensive coverage of working with BASH scripting, see these hpc-carpentry lessons on <a class="reference external" href="http://www.hpc-carpentry.org/hpc-shell/02-navigation/index.html">navigating in bash</a> and <a class="reference external" href="http://www.hpc-carpentry.org/hpc-shell/03-files/index.html">file manipulation in bash</a>.</p>
+<p>The point of high-performance computing is to manage and process large work loads. This is acheived through a work load manager, SLURM (Simple Linux Utility for Resource Management). Ultimate processing commands are sent to SLURM from .sh scripts in the bash directory via the command <code class="docutils literal notranslate"><span class="pre">sbatch</span></code>. Any other non-UNIX-based commands are processed within a virtual environment (e.g. via a Python interpreter).</p>
+</div>
+<div class="section" id="setting-up-a-virtual-environment">
+<h2>Setting up a virtual environment<a class="headerlink" href="#setting-up-a-virtual-environment" title="Permalink to this headline">¶</a></h2>
+<p>Virtual environments allow us to customize our coding toolkit and preferences for each project within its own container so that it does not risk interfering with those of other projects or users. Within a virtual environment, you can define the version of Python that will be used, install packages specific to the project, and customize settings to facilitate your interactions, including aliases, which are shortcuts to replace frequently used or cumbersome commands. After connecting to bellows via ssh for the first time, you will need to set up your environment.</p>
+<div class="admonition-make-sure-you-are-in-your-home-directory-when-creating-changing-environment-settings admonition">
+<p class="admonition-title">Make sure you are in your home directory when creating/changing environment settings!</p>
+<p>You should see your username &#64;bellows in the command prompt.
+(there may be numbers in front; this is fine for now and can be taken care of later <span class="xref myst">here</span>).<br />
+If you are unsure whether you are in your home directory, type cd ~/</p>
 </div>
 <div class="highlight-{.cell notranslate"><div class="highlight"><pre><span></span>For this project, we will create a virtual environment in Python 3 called .nasaenv (output -\&gt; \~/.nasaenv):
 
@@ -333,65 +353,64 @@ Or in git for Windows enter: `git config --global credential.helper wincred`
 
 **While in your home directory,** enter the following commands to setup your Python environment:
 
-    ​
     # Activate the virtual environment
     source .nasaenv/bin/activate
-    ​
+    
     # First update pip and other install tools
     (.nasaenv) pip install -U pip setuptools wheel
-    ​
+    
     # Install numpy and cython required for compiling .c code
     (.nasaenv) pip install cython numpy
-    ​
+    
     # Install extra dependencies not installed with packages below
     (.nasaenv) pip install gsutil descartes ray requests opencv-python
-    ​
+    
     # Install geowombatdev package from github(the dependencies here will take care of most other dependencies)
     (.nasaenv) mkdir tmp
     (.nasaenv) cd tmp/
     (.nasaenv) git clone https://github.com/jgrss/geowombatdev.git
     (.nasaenv) cd geowombatdev/
     (.nasaenv) python setup.py build &amp;&amp; pip install .
-    ​
+    
     # Install eosvault package from github
     (.nasaenv) cd ~/tmp/
     (.nasaenv) git clone https://github.com/jgrss/eosvault.git
     (.nasaenv) cd eosvault/
     (.nasaenv) python setup.py build &amp;&amp; pip install .
-    ​
+    
     # Install rastercrf from github
     (.nasaenv) cd ~/tmp/
     (.nasaenv) git clone https://github.com/jgrss/rastercrf.git
     (.nasaenv) cd rastercrf/
     (.nasaenv) python setup.py build &amp;&amp; pip install .
-    ​
+    
     # Install satsmooth from github
     (.nasaenv) cd ~/tmp/
     (.nasaenv) git clone https://github.com/jgrss/satsmooth.git
     (.nasaenv) cd satsmooth/
     (.nasaenv) python setup.py build &amp;&amp; pip install .
-    ​
+    
     # Install sacfei from github
     (.nasaenv) cd ~/tmp/
     (.nasaenv) git clone https://github.com/jgrss/sacfei.git
     (.nasaenv) cd sacfei/
     (.nasaenv) python setup.py build &amp;&amp; pip install .
-    ​
+    
     # Install pymorph3 from github
     (.nasaenv) cd ~/tmp/
     (.nasaenv) git clone https://github.com/jgrss/pymorph3.git
     (.nasaenv) cd pymorph3/
     (.nasaenv) python setup.py build &amp;&amp; pip install .
-    ​
+    
     # Install pytuyau from github
     (.nasaenv) cd ~/tmp/
     (.nasaenv) git clone https://github.com/jgrss/pytuyau.git
     (.nasaenv) cd pytuyau/
     (.nasaenv) python setup.py build &amp;&amp; pip install .
-    ​
+    
     # Install IPython
     (.nasaenv) pip install ipython[all]
-    ​
+    
     # Deactivate the virtual environment when finished
     (.nasaenv) deactivate
 
@@ -414,7 +433,7 @@ Here is an example of a `.vimrc` doc (you can clone this from /jad-cel/cel-sandb
 
     # Add line numbers
     set number
-    ​
+    
     au BufNewFile,BufRead *.py
         \ set tabstop=4 |
         \ set softtabstop=4 |
@@ -426,17 +445,17 @@ Here is an example of a `.vimrc` doc (you can clone this from /jad-cel/cel-sandb
     	
     highlight BadWhitespace ctermbg=red guibg=darkred
     au BufRead,BufNewFile *.py,*.pyw,*.pyx,*.pxd,*.c,*.h match BadWhitespace /\s\+$/
-    ​
+    
     set encoding=utf-8
-    ​
+    
     let python_highlight_all=1
     syntax on
-    ​
+    
     set cursorline
-    ​
+    
     set foldmethod=indent
     set foldlevel=99
-    ​
+    
     set ic
 
 ### Add a personalized .profile file (optional) {#add-a-personalized-profile-file-optional}
@@ -450,12 +469,12 @@ Here is an example of things you might want in a `.profile` doc (you can clone t
     export PS1=&quot;\[\033[36m\]\u\[\033[m\]@\[\033[32m\]\h:\[\033[33;1m\]\w\[\033[m\]\$ &quot;
     export CLICOLOR=1
     export LSCOLORS=ExFxBxDxCxegedabagacad
-    ​
+    
     #simpler file navigation:
     alias .1=&#39;cd ../&#39;
     alias .2=&#39;cd ../..&#39;
     alias .3=&#39;cd ../../..&#39;
-    ​
+    
     # shortcut to list SLURM job status ([username] = your username)
     alias qs=&quot;squeue -u [username]&quot;
 
@@ -464,11 +483,11 @@ Here is an example of things you might want in a `.profile` doc (you can clone t
         . &quot;$HOME/.bashrc&quot;
       fi
     fi
-    ​
+    
     if [ -d &quot;$HOME/bin&quot; ] ; then
       PATH=&quot;$HOME/bin:$PATH&quot;
     fi
-    ​
+    
     # global vars for GDAL
     export CPLUS_INCLUDE_PATH=/usr/include/gdal
     export C_INCLUDE_PATH=/usr/include/gdal
@@ -505,6 +524,8 @@ export TMOUT=0
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
 </pre></div>
+</div>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
@@ -543,7 +564,7 @@ export TMOUT=0
     <div class="container">
       <p>
         
-          By Kendra Walker (editor)<br/>
+          By Kendra Walker<br/>
         
             &copy; Copyright 2021.<br/>
       </p>
