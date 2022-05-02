@@ -4,6 +4,9 @@
 
 Jordan Graesser's `pytuyau` script drives the pipeline process, [see here](https://github.com/jgrss/pytuyau#readme) for more information on the script process.
 
+:::{note}The CEL drive space on the cluster is setup such that all products through step #1 of Pipeline are saved on the sandbox space (`raid-cel/sandbox/sandbox-cel` or just `/home/sandbox-cel`). These files are not backed up for more than 10 days (if you lose important files, you can probably get them recovered within 10 days, but not after). Products from step#5 of Pipeline and above are saved to the downspout space (`raid-cel/r/downspout-cel` or just `/home/downspout-cel`), which has a separate long term backup.
+:::
+
 Pipeline template (with line numbers added for reference below):
 
     1-   #!/bin/bash -l
@@ -146,7 +149,7 @@ Pipeline template (with line numbers added for reference below):
     138- 
     139- CONFIG_UPDATES="grids:[${GRIDS}] 
     140- main_path:/raid-cel/sandbox/sandbox-cel/paraguay_lc/raster/grids
-    141- backup_path:/raid-cel/sandbox/sandbox-cel/backup/chile_lc/raster/grids
+    141- backup_path:/raid-cel/r/downspout-cel/chile_lc/raster/grids
     142- num_workers:${SLURM_CPUS_ON_NODE} cloud_mask:reset_db:${RESET_CLOUD_DB} 
     143- cloud_mask:ref_res:${REF_RES} fusion:window_size:${WINDOW_SIZE} 
     144- fusion:fill_max_years:${MAX_YEARS} fusion:fill_max_days:${MAX_DAYS} 
@@ -200,13 +203,13 @@ For initial processing, should be 'preprocess' or 'reconstruct'
 Current options for vegetation indices are:
  * avi = ?? (removed?)
  * evi2 = 2.5 * ( NIR - RED) / ( NIR + 2.4 * RED + 1.0 )
-     Enhanced Vegetation Index, good for areas of high LAI (leaf-area index), where NDVI tends to saturate
+     * Enhanced Vegetation Index, good for areas of high LAI (leaf-area index), where NDVI tends to saturate
  * gcvi= scaled index using Green & NIR
-     Green Chlorophyll Vegetation Index, useful for crop classification
+     * Green Chlorophyll Vegetation Index, useful for crop classification
  * kndvi= tanh(( NIR - RED) / ( NIR + 2.4 * RED + 1.0 ))^2)
-     See [Camps-Valls et al 2021, A unified vegetation index for quantifying the terrestrial biosphere](https://www.science.org/doi/10.1126/sciadv.abc7447)
+     * See [Camps-Valls et al 2021, A unified vegetation index for quantifying the terrestrial biosphere](https://www.science.org/doi/10.1126/sciadv.abc7447)
  * nbr = (NIR - SWIR2) / (NIR + SWIR2) + 1e-9)
-     Normalized Burn Index
+     * Normalized Burn Index
  * wi = 0 if (red + SWIR1) > 0.5, else 1.0 - ((red + SWIR1) / 0.5))
 
 :::{note}To add a new vegetation index to the code, edits need to be made to both the `vis.py` and `check_reconstruction.py` scripts in `~/tmp/pytuyau/pytuyau/steps`. 

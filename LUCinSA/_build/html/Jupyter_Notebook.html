@@ -118,6 +118,11 @@
   </a>
  </li>
  <li class="toctree-l1">
+  <a class="reference internal" href="environment_setup.html">
+   Setting up your remote environment
+  </a>
+ </li>
+ <li class="toctree-l1">
   <a class="reference internal" href="TransferingFiles.html">
    Transfering Files to/from cluster
   </a>
@@ -314,7 +319,8 @@
   <div class="section" id="using-jupyter-notebook-to-interact-with-data-on-cluster">
 <h1>Using Jupyter Notebook to interact with data on cluster<a class="headerlink" href="#using-jupyter-notebook-to-interact-with-data-on-cluster" title="Permalink to this headline">¶</a></h1>
 <p>================================================================================================================================</p>
-<p>a bit about Jupyter Notebook…</p>
+<p>Jupyter notebooks provide a platform to create and share documents that contain live code, equations, visualizations, and text.
+via Jupyter notebook, you can visualize and analyze data straight on the cluster without needing to tansfer files or install new code.</p>
 <div class="section" id="install-jupyter-notebooks-on-cluster">
 <h2>Install Jupyter notebooks on cluster<a class="headerlink" href="#install-jupyter-notebooks-on-cluster" title="Permalink to this headline">¶</a></h2>
 <p>Create a folder in your home directory to house your Jupyter notebooks (e.g. <code class="docutils literal notranslate"><span class="pre">mkdir</span> <span class="pre">~/Jupyter</span></code>)
@@ -340,9 +346,9 @@ You can copy LUCinSA notebooks from the Notebook directory of the repo for this 
 <td class="text-align:center"><p><img alt="" src="_images/PuttyForJupyter2.jpg" /></p></td>
 <td class="text-align:center"><p><img alt="" src="_images/PuttyForJupyter3.jpg" /></p></td>
 </tr>
-<tr class="row-odd"><td class="text-align:center"><p><strong>1.</strong> on first PuTTY screen, enter SSH address to bula as normal</p></td>
-<td class="text-align:center"><p><strong>2.</strong> click <code class="docutils literal notranslate"><span class="pre">SSH</span></code>, then <code class="docutils literal notranslate"><span class="pre">Tunnels</span></code> on menu on left. In “Source Port”, enter <port> (where <port> is 8889 here. Maybe pick a different number to avoid possible conflicts)</p></td>
-<td class="text-align:center"><p><strong>3.</strong> add another Tunnel to bellows in the same way, with something like 222 in the “Source Port” and <user>&#64;bellows.eri.ucsb.edu:22 in the destination port. (the last number should match your original local port from the first PuTTY screen). Click “Add”.</p></td>
+<tr class="row-odd"><td class="text-align:center"><p><strong>1)</strong> on first PuTTY screen, enter SSH address to bula as normal</p></td>
+<td class="text-align:center"><p><strong>2)</strong> click <code class="docutils literal notranslate"><span class="pre">SSH</span></code>, then <code class="docutils literal notranslate"><span class="pre">Tunnels</span></code> on menu on left. In “Source Port”, enter port number (8889 here. Pick a different number to avoid conflicts)</p></td>
+<td class="text-align:center"><p><strong>3)</strong> add another Tunnel to bellows in the same way, with something like 222 in the “Source Port” and <user>&#64;bellows.eri.ucsb.edu:22 in the destination port. (the last number should match your original local port from the first PuTTY screen). Click “Add”.</p></td>
 </tr>
 </tbody>
 </table>
@@ -394,7 +400,7 @@ You should now see a Jupter tree of your home directory on the cluster. Navigate
     <div class="container">
       <p>
         
-          By Kendra Walker (editor)<br/>
+          By Kendra Walker<br/>
         
             &copy; Copyright 2021.<br/>
       </p>
