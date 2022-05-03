@@ -7,7 +7,7 @@ via Jupyter notebook, you can visualize and analyze data straight on the cluster
 ## Install Jupyter notebooks on cluster
 
 Create a folder in your home directory to house your Jupyter notebooks (e.g. `mkdir ~/Jupyter`)
-You can copy LUCinSA notebooks from the Notebook directory of the repo for this guide [here](https://github.com/klwalker-sb/LUCinSA/tree/master/Notebooks) or you can make your own after connecting to Jupyter.
+You can clone the LUCinSA_helper repo [here](https://github.com/klwalker-sb/LUCinSA_helpers) or you can make your own after connecting to Jupyter.
 
 Install Jupyter Notebook into your virtual environment on the cluster:
 ```
